@@ -1,0 +1,1002 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "rhoe",
+  "homepage": "https://ui.syadah.my.id",
+  "items": [
+    {
+      "name": "foundation",
+      "type": "registry:style",
+      "title": "Rhoe UI",
+      "description": "Shared color, type, surface, and motion tokens for Rhoe UI components.",
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/theme-tailwind.css",
+          "type": "registry:style",
+          "target": "components/rhoe/theme-tailwind.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Filled, bordered, text, and animated action buttons across semantic tones.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Compact semantic status labels with filled and bordered surfaces.",
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/badge/badge.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/badge/badge.tsx"
+        }
+      ]
+    },
+    {
+      "name": "toast",
+      "type": "registry:ui",
+      "title": "Toast",
+      "description": "Stacked viewport notifications with semantic tones, surface variants, and six positions.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/toast/toast.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/toast/toast.tsx"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Circular icon triggers that reveal concise contextual help on hover or keyboard focus.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/tooltip/tooltip.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/tooltip/tooltip.tsx"
+        }
+      ]
+    },
+    {
+      "name": "code-block",
+      "type": "registry:ui",
+      "title": "Code Block",
+      "description": "Server-rendered syntax highlighting with filename and embedded variants.",
+      "dependencies": [
+        "lucide-react",
+        "shiki"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/code-block/code-block.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/code-block/code-block.tsx"
+        },
+        {
+          "path": "registry/components/code-block/code-block-view.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/code-block/code-block-view.tsx"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Accessible filled and bordered inputs with icons, validation, clear actions, and incremental character reveals.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/input/input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/input/input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "A multiline Input companion with optional automatic height and a character counter when maxLength is set.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/textarea/textarea.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/textarea/textarea.tsx"
+        }
+      ]
+    },
+    {
+      "name": "password-strength",
+      "type": "registry:ui",
+      "title": "Password Strength",
+      "description": "A password input with four live requirements, named strength levels, and an accessible percentage bar.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/input/input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/input/input.tsx"
+        },
+        {
+          "path": "registry/components/password-strength/password-strength.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/password-strength/password-strength.tsx"
+        }
+      ]
+    },
+    {
+      "name": "currency-input",
+      "type": "registry:ui",
+      "title": "Currency Input",
+      "description": "A localized numeric input with a morphing symbol and expanding searchable currency selector.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/input/input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/input/input.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/text-reveal/text-reveal.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/text-reveal/text-reveal.tsx"
+        },
+        {
+          "path": "registry/components/currency-input/currency-input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/currency-input/currency-input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "Compact and full calendars with day, month, and year views plus morphing selected dates.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/calendar/calendar.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/calendar/calendar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "todo-calendar",
+      "type": "registry:block",
+      "title": "To-do Calendar",
+      "description": "A weekly agenda card whose seven-day strip morphs into a compact month calendar.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/blocks/todo-calendar/todo-calendar.tsx",
+          "type": "registry:block",
+          "target": "components/rhoe/blocks/todo-calendar.tsx"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "A single or multiple select that grows downward from the Input surface with optional search and leading content.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/input/input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/input/input.tsx"
+        },
+        {
+          "path": "registry/components/text-reveal/text-reveal.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/text-reveal/text-reveal.tsx"
+        },
+        {
+          "path": "registry/components/select/select.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/select/select.tsx"
+        }
+      ]
+    },
+    {
+      "name": "number-input",
+      "type": "registry:ui",
+      "title": "Number Input",
+      "description": "A numeric input with step controls and rolling digit transitions.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/input/input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/input/input.tsx"
+        },
+        {
+          "path": "registry/components/rolling-number/rolling-number.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/rolling-number/rolling-number.tsx"
+        },
+        {
+          "path": "registry/components/number-input/number-input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/number-input/number-input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "expanding-search",
+      "type": "registry:ui",
+      "title": "Expanding Search",
+      "description": "A compact search trigger that expands from a fixed anchor into an input and result panel.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/input/input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/input/input.tsx"
+        },
+        {
+          "path": "registry/components/animated-list/animated-list.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/animated-list/animated-list.tsx"
+        },
+        {
+          "path": "registry/components/expanding-search/expanding-search.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/expanding-search/expanding-search.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "A button surface that morphs into an accessible action menu.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/dropdown-menu/dropdown-menu.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/dropdown-menu/dropdown-menu.tsx"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "A free-form panel that morphs from its trigger and closes with Escape or an outside press.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/popover/popover.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/popover/popover.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A morphing modal dialog with semantic feedback and contextual actions.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/dialog/dialog.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/dialog/dialog.tsx"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "Accessible standalone and grouped checkboxes with labels and supporting descriptions.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/checkbox/checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/checkbox/checkbox.tsx"
+        }
+      ]
+    },
+    {
+      "name": "radio",
+      "type": "registry:ui",
+      "title": "Radio",
+      "description": "Accessible standalone and list-based radios for selecting one value.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/radio/radio.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/radio/radio.tsx"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "An accessible binary control with optional active icon and flexible label placement.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/switch/switch.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/switch/switch.tsx"
+        }
+      ]
+    },
+    {
+      "name": "sidebar-navigation",
+      "type": "registry:ui",
+      "title": "Sidebar Navigation",
+      "description": "Grouped sidebar navigation with collapsible sections and an animated parent guide.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/sidebar-navigation/sidebar-navigation.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/sidebar-navigation/sidebar-navigation.tsx"
+        }
+      ]
+    },
+    {
+      "name": "table-of-contents",
+      "type": "registry:ui",
+      "title": "Table of Contents",
+      "description": "A scroll-aware page outline with an animated active-section rail.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/table-of-contents/table-of-contents.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/table-of-contents/table-of-contents.tsx"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Accessible flat and grouped tabs with optional icons and a moving active indicator.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/tabs/tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/tabs/tabs.tsx"
+        }
+      ]
+    },
+    {
+      "name": "expandable-card",
+      "type": "registry:ui",
+      "title": "Expandable Card",
+      "description": "An interruptible card that grows at its real width and height without stretching its content.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/expandable-card/expandable-card.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/expandable-card/expandable-card.tsx"
+        }
+      ]
+    },
+    {
+      "name": "animated-list",
+      "type": "registry:ui",
+      "title": "Animated List",
+      "description": "An accessible list that reveals data or custom content once or again in a chosen scroll direction.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/animated-list/animated-list.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/animated-list/animated-list.tsx"
+        }
+      ]
+    },
+    {
+      "name": "curved-carousel",
+      "type": "registry:ui",
+      "title": "Curved Carousel",
+      "description": "An infinite landscape carousel whose side images taper along a cylindrical visual track with mirrored reflections.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/curved-carousel/curved-carousel.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/curved-carousel/curved-carousel.tsx"
+        }
+      ]
+    },
+    {
+      "name": "icon-morph",
+      "type": "registry:ui",
+      "title": "Icon Morph",
+      "description": "Path morphing for compatible SVGs with a universal scale and opacity fallback.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        }
+      ]
+    },
+    {
+      "name": "text-reveal",
+      "type": "registry:ui",
+      "title": "Text Reveal",
+      "description": "Accessible character, word, and line reveals triggered in view.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/text-reveal/text-reveal.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/text-reveal/text-reveal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "morphing-text",
+      "type": "registry:ui",
+      "title": "Morphing Text",
+      "description": "Measured text transitions that keep shared characters still.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "scramble-text",
+      "type": "registry:ui",
+      "title": "Scramble Text",
+      "description": "Random characters that resolve into an accessible final value.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/scramble-text/scramble-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/scramble-text/scramble-text.tsx"
+        }
+      ]
+    },
+    {
+      "name": "rolling-number",
+      "type": "registry:ui",
+      "title": "Rolling Number",
+      "description": "Locale-aware numbers with directional rolling digit transitions.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/rolling-number/rolling-number.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/rolling-number/rolling-number.tsx"
+        }
+      ]
+    }
+  ]
+}

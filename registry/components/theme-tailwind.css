@@ -1,0 +1,60 @@
+/* Import after foundation.css. Maps common Tailwind and shadcn semantic tokens. */
+:root {
+  --sya-canvas: var(--background, #eef1ed);
+  --sya-surface: var(--card, var(--background, #fcfdfb));
+  --sya-surface-muted: var(--muted, var(--card, #e2e6e1));
+  --sya-text: var(--foreground, #191b19);
+  --sya-text-secondary: var(--muted-foreground, #59605b);
+  --sya-border: var(--border, #d9ddd9);
+  --sya-primary: var(--primary, #252725);
+  --sya-primary-hover: var(--accent, var(--primary, #343734));
+  --sya-primary-foreground: var(--primary-foreground, #f8faf8);
+  --sya-success: var(--status-success, #18794e);
+  --sya-success-foreground: var(--status-success-foreground, #ffffff);
+  --sya-success-surface: var(--status-success-surface, #e7f6ec);
+  --sya-success-surface-foreground: var(--status-success-surface-foreground, #17653f);
+  --sya-warning: var(--status-warning, #946200);
+  --sya-warning-foreground: var(--status-warning-foreground, #ffffff);
+  --sya-warning-surface: var(--status-warning-surface, #fff3d6);
+  --sya-warning-surface-foreground: var(--status-warning-surface-foreground, #6b4600);
+  --sya-danger: var(--status-danger, var(--destructive, #b42318));
+  --sya-danger-foreground: var(--status-danger-foreground, var(--destructive-foreground, #ffffff));
+  --sya-danger-surface: var(--status-danger-surface, #fce8e6);
+  --sya-danger-surface-foreground: var(--status-danger-surface-foreground, #8f1d14);
+  --sya-focus: var(--ring, var(--primary, #3f6652));
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --sya-success: var(--status-success, #62c98f);
+    --sya-success-foreground: var(--status-success-foreground, #092416);
+    --sya-success-surface: var(--status-success-surface, #173526);
+    --sya-success-surface-foreground: var(--status-success-surface-foreground, #8ee0ae);
+    --sya-warning: var(--status-warning, #e9ad45);
+    --sya-warning-foreground: var(--status-warning-foreground, #291900);
+    --sya-warning-surface: var(--status-warning-surface, #3b2b12);
+    --sya-warning-surface-foreground: var(--status-warning-surface-foreground, #f2c66f);
+    --sya-danger: var(--status-danger, var(--destructive, #ff716b));
+    --sya-danger-foreground: var(--status-danger-foreground, var(--destructive-foreground, #260503));
+    --sya-danger-surface: var(--status-danger-surface, #3d1d1c);
+    --sya-danger-surface-foreground: var(--status-danger-surface-foreground, #ffaaa5);
+    --sya-focus: var(--ring, var(--primary, #93b7a2));
+  }
+}
+
+html[data-theme="dark"],
+.dark {
+  --sya-success: var(--status-success, #62c98f);
+  --sya-success-foreground: var(--status-success-foreground, #092416);
+  --sya-success-surface: var(--status-success-surface, #173526);
+  --sya-success-surface-foreground: var(--status-success-surface-foreground, #8ee0ae);
+  --sya-warning: var(--status-warning, #e9ad45);
+  --sya-warning-foreground: var(--status-warning-foreground, #291900);
+  --sya-warning-surface: var(--status-warning-surface, #3b2b12);
+  --sya-warning-surface-foreground: var(--status-warning-surface-foreground, #f2c66f);
+  --sya-danger: var(--status-danger, var(--destructive, #ff716b));
+  --sya-danger-foreground: var(--status-danger-foreground, var(--destructive-foreground, #260503));
+  --sya-danger-surface: var(--status-danger-surface, #3d1d1c);
+  --sya-danger-surface-foreground: var(--status-danger-surface-foreground, #ffaaa5);
+  --sya-focus: var(--ring, var(--primary, #93b7a2));
+}
