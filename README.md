@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://rhoe.syadah.my.id">
-    <img alt="Rhoe UI – Free React components with motion built in. Install with shadcn CLI." src="https://rhoe.syadah.my.id/og.png" width="100%">
+    <img alt="Rhoe UI – Free React components with motion built in. Install with shadcn CLI." src="./public/og-image.png" width="100%">
   </a>
 </p>
 
