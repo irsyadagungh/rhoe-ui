@@ -247,14 +247,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
   const hasAnimatingCharacters = characterState.items.some((item) => item.isNew);
 
   return (
-    <div className={["grid w-full gap-2", className].filter(Boolean).join(" ")}>
+    <div className={["relative grid w-full gap-2", expanded && "z-[120]", className].filter(Boolean).join(" ")}>
       {label ? <label className="text-[13px] leading-[1.4] font-[620] text-[var(--text)]" htmlFor={inputId}>{label}{required ? <span aria-hidden="true"> *</span> : null}</label> : null}
       <div className={[
+        "relative min-w-0",
+        expandedContent && controlHeightClass,
         externalTrailing && "grid min-w-0 grid-cols-[minmax(0,1fr)_var(--input-external-width,auto)] items-end gap-[var(--input-external-gap,4px)] transition-[grid-template-columns,gap] duration-[var(--duration-fast)] ease-[var(--ease-standard)]",
       ].filter(Boolean).join(" ")}>
         <div
           className={[
             "relative z-0 flex flex-col items-start overflow-hidden rounded-[18px] border text-[var(--text)] transition-[background-color,border-color,opacity] duration-[var(--duration-fast)] ease-[var(--ease-standard)] motion-reduce:duration-[0.01ms]",
+            expandedContent && "absolute inset-x-0 top-0 w-full",
             controlHeightClass,
             appearanceClass,
             disabled && "cursor-not-allowed opacity-[0.52]",
