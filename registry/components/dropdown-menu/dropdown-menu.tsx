@@ -115,7 +115,7 @@ export function DropdownMenu({ label, ariaLabel, icon, triggerContent = "icon-te
       variant === "filled" ? "border-transparent bg-[var(--surface-muted)]" : "border-[var(--border)] bg-[var(--surface)]",
       position.surface,
     ].join(" ")} data-open={open || undefined} data-variant={variant} style={{ width, height }}>
-      <MotionButton ref={triggerRef} type="button" variant="text" tone="primary" size="medium" className={["absolute top-0 flex h-[var(--dropdown-closed-height)] w-[var(--dropdown-closed-width)] items-center justify-center gap-2 border-0 bg-transparent px-[19px] text-[13px] whitespace-nowrap [transform-origin:inherit] hover:bg-[var(--surface-muted)]", position.trigger].join(" ")} aria-expanded={open} aria-controls={menuId} inert={open}
+      <MotionButton ref={triggerRef} type="button" variant="text" tone="primary" size="medium" className={["absolute top-0 flex h-[var(--dropdown-closed-height)] w-[var(--dropdown-closed-width)] items-center justify-center gap-2 border-0 bg-transparent px-[19px] text-[13px] whitespace-nowrap [transform-origin:inherit] hover:bg-[var(--surface-muted)]", position.trigger].join(" ")} aria-expanded={open} aria-controls={menuId} {...(open ? { inert: true } : {})}
         aria-label={iconOnly ? ariaLabel ?? (typeof label === "string" ? label : undefined) : undefined}
         initial={false} animate={open ? hidden : { opacity: 1, scale: 1, filter: "blur(0px)" }}
         transition={reduceMotion ? { duration: .1 } : open ? { duration: .1 } : { duration: .18, ease: motionTokens.ease.enter, delay: .08 }}
@@ -133,7 +133,7 @@ export function DropdownMenu({ label, ariaLabel, icon, triggerContent = "icon-te
           </motion.span>
         </AnimatePresence>
       </MotionButton>
-      <motion.div ref={menuRef} id={menuId} role="menu" className={["absolute top-0 grid w-[var(--dropdown-open-width)] [transform-origin:inherit]", position.menu].join(" ")} inert={!open} aria-label={typeof label === "string" ? label : "Menu"} onKeyDown={onMenuKeyDown}
+      <motion.div ref={menuRef} id={menuId} role="menu" className={["absolute top-0 grid w-[var(--dropdown-open-width)] [transform-origin:inherit]", position.menu].join(" ")} {...(!open ? { inert: true } : {})} aria-label={typeof label === "string" ? label : "Menu"} onKeyDown={onMenuKeyDown}
         initial={false} animate={open ? { opacity: 1, scale: 1, filter: "blur(0px)" } : { opacity: 0, scale: reduceMotion ? 1 : .97, filter: reduceMotion ? "blur(0px)" : `blur(${motionTokens.blur.subtle}px)` }}
         transition={reduceMotion ? { duration: .1 } : open ? { duration: .2, ease: motionTokens.ease.enter, delay: .1 } : { duration: .08 }}>
         {items.map((item, index) => <button ref={node => { itemRefs.current[index] = node; }} key={item.value} type="button" role="menuitem" className={[

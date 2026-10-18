@@ -132,7 +132,7 @@ export function ExpandableCard({
         <motion.div
           id={panelId}
           className="overflow-hidden bg-[var(--surface-muted)] shadow-[inset_0_1px_0_var(--border)]"
-          inert={!expanded}
+          {...(!expanded ? { inert: true } : {})}
           initial={false}
           animate={{ height: expanded ? "auto" : 0 }}
           transition={reduceMotion ? still : { ...motionTokens.spring.smooth, delay: expanded ? 0 : 0.06 }}

@@ -265,7 +265,10 @@ export function Select({
         )}
         expanded={open}
         expandedContent={(
-          <div className={`grid h-full min-h-0 ${searchable ? "grid-rows-[auto_minmax(0,1fr)] gap-2.5 p-2.5 pb-3" : "p-2.5"}`} inert={!open}>
+          <div
+            className={`grid h-full min-h-0 ${searchable ? "grid-rows-[auto_minmax(0,1fr)] gap-2.5 p-2.5 pb-3" : "p-2.5"}`}
+            {...(!open ? { inert: true } : {})}
+          >
             {searchable ? (
               <Input
                 ref={searchRef}

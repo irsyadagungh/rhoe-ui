@@ -275,7 +275,7 @@ export function Dialog({
               >
                 <motion.div
                   aria-hidden="true"
-                  inert
+                  {...({ inert: true } as Record<string, unknown>)}
                   className="pointer-events-none absolute inset-0 z-10 grid place-items-center whitespace-nowrap"
                   initial={{ opacity: hasTriggerOrigin ? 1 : 0 }}
                   animate={{ opacity: expanded ? 0 : 1 }}

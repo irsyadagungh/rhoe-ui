@@ -229,7 +229,7 @@ export function CurrencyInput({
             }
             expanded={open}
             expandedContent={
-              <div id={listId} className="grid h-[300px] grid-rows-[auto_minmax(0,1fr)] content-start gap-2.5 p-2.5 pb-3" inert={!open}>
+              <div id={listId} className="grid h-[300px] grid-rows-[auto_minmax(0,1fr)] content-start gap-2.5 p-2.5 pb-3" {...(!open ? { inert: true } : {})}>
                 <Input
                   ref={searchRef}
                   className="[&_input]:text-[13px]"

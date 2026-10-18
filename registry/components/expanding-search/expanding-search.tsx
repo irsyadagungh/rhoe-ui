@@ -224,20 +224,40 @@ export function ExpandingSearch({
   const surfaceWidth = useMotionValue(closedWidth);
   const shouldPortalSurface = backdrop && Boolean(portalContainer) && Boolean(portalPosition);
 
-  const updatePortalPosition = useCallback(() => {
+  const updatePortalPosition = useCallback((fitExpandedSurface = true) => {
     const rect = rootRef.current?.getBoundingClientRect();
     if (!rect) return;
+
     const anchorRatio = Number.parseFloat(anchorStyle.position) / 100;
-    setPortalPosition({ left: rect.left + rect.width * anchorRatio, top: rect.top });
-  }, [anchorStyle.position]);
+    const triggerAnchor = rect.left + rect.width * anchorRatio;
+    if (!fitExpandedSurface) {
+      setPortalPosition({ left: triggerAnchor, top: rect.top });
+      return;
+    }
+
+    const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+    const viewportInset = 12;
+    const renderedWidth = Math.min(openWidth, viewportWidth - viewportInset * 2);
+    const desiredLeft = triggerAnchor - renderedWidth * anchorRatio;
+    const clampedLeft = Math.min(
+      Math.max(desiredLeft, viewportInset),
+      Math.max(viewportInset, viewportWidth - viewportInset - renderedWidth),
+    );
+
+    setPortalPosition({
+      left: clampedLeft + renderedWidth * anchorRatio,
+      top: rect.top,
+    });
+  }, [anchorStyle.position, openWidth]);
 
   const setExpanded = useCallback((nextOpen: boolean) => {
+    if (!nextOpen) updatePortalPosition(false);
     if (open === undefined) setInternalOpen(nextOpen);
     onOpenChange?.(nextOpen);
-  }, [onOpenChange, open]);
+  }, [onOpenChange, open, updatePortalPosition]);
 
   const openSearch = useCallback(() => {
-    updatePortalPosition();
+    updatePortalPosition(true);
     setSearchContentVisible(true);
     setExpanded(true);
   }, [setExpanded, updatePortalPosition]);
@@ -305,12 +325,13 @@ export function ExpandingSearch({
   useLayoutEffect(() => {
     if (!shouldPortalSurface) return;
 
-    updatePortalPosition();
-    window.addEventListener("resize", updatePortalPosition);
-    window.addEventListener("scroll", updatePortalPosition, true);
+    const updateExpandedPosition = () => updatePortalPosition(true);
+    updateExpandedPosition();
+    window.addEventListener("resize", updateExpandedPosition);
+    window.addEventListener("scroll", updateExpandedPosition, true);
     return () => {
-      window.removeEventListener("resize", updatePortalPosition);
-      window.removeEventListener("scroll", updatePortalPosition, true);
+      window.removeEventListener("resize", updateExpandedPosition);
+      window.removeEventListener("scroll", updateExpandedPosition, true);
     };
   }, [expanded, searchContentVisible, shouldPortalSurface, updatePortalPosition]);
 
@@ -448,7 +469,7 @@ export function ExpandingSearch({
       <motion.div
         ref={surfaceRef}
         className={[
-          "absolute z-[1] top-0 left-[var(--expanding-search-anchor-position)] w-[var(--expanding-search-closed-width)] max-w-[calc(100vw-32px)] translate-x-[var(--expanding-search-anchor-shift)] origin-top rounded-[18px] border text-[var(--text)] transition-[background-color,border-color,opacity] duration-[var(--duration-fast)] ease-[var(--ease-standard)] will-change-[width] motion-reduce:duration-[0.01ms]",
+          "absolute z-[1] top-0 left-[var(--expanding-search-anchor-position)] w-[var(--expanding-search-closed-width)] max-w-[calc(100vw-24px)] translate-x-[var(--expanding-search-anchor-shift)] origin-top rounded-[18px] border text-[var(--text)] transition-[left,background-color,border-color,opacity] duration-[var(--duration-standard)] ease-[var(--ease-standard)] will-change-[left,width] motion-reduce:duration-[0.01ms]",
           variant === "filled"
             ? "border-transparent bg-[var(--surface-muted)]"
             : "border-[var(--border)] bg-[color-mix(in_srgb,var(--surface-muted)_58%,var(--surface))]",
@@ -469,7 +490,7 @@ export function ExpandingSearch({
         <>
             <motion.div
               className="relative z-[1] w-full"
-              inert={trigger !== "field" && !expanded}
+              {...(trigger !== "field" && !expanded ? { inert: true } : {})}
               aria-hidden={trigger !== "field" && !expanded}
               initial={false}
               animate={trigger === "field" || expanded
@@ -519,7 +540,7 @@ export function ExpandingSearch({
             {trigger !== "field" ? (
               <motion.div
                 className="absolute top-0 left-[var(--expanding-search-anchor-position)] z-[2] w-[var(--expanding-search-closed-width)] translate-x-[var(--expanding-search-anchor-shift)]"
-                inert={expanded}
+                {...(expanded ? { inert: true } : {})}
                 initial={false}
                 animate={expanded
                   ? {
@@ -560,7 +581,7 @@ export function ExpandingSearch({
                 id={resultsId}
                 data-expanding-search-results=""
                 className={[
-                  "m-0 grid max-h-[300px] w-full min-w-0 overflow-x-hidden overflow-y-auto overscroll-contain rounded-[18px] border p-1.5 list-none shadow-[var(--shadow-resting)] [&>li]:w-full [&>li]:min-w-0",
+                  "m-0 grid max-h-[min(300px,calc(100dvh-84px))] w-full min-w-0 overflow-x-hidden overflow-y-auto overscroll-contain rounded-[18px] border p-1.5 list-none shadow-[var(--shadow-resting)] [&>li]:w-full [&>li]:min-w-0",
                   resultSurfaceClass,
                   expanded ? "pointer-events-auto" : "pointer-events-none",
                 ].filter(Boolean).join(" ")}
@@ -578,7 +599,7 @@ export function ExpandingSearch({
                 id={resultsId}
                 data-expanding-search-results=""
                 className={[
-                  "m-0 grid max-h-[300px] w-full min-w-0 gap-1.5 overflow-x-hidden overflow-y-auto overscroll-contain rounded-[18px] border p-1.5 list-none shadow-[var(--shadow-resting)] [&>li]:w-full [&>li]:min-w-0",
+                  "m-0 grid max-h-[min(300px,calc(100dvh-84px))] w-full min-w-0 gap-1.5 overflow-x-hidden overflow-y-auto overscroll-contain rounded-[18px] border p-1.5 list-none shadow-[var(--shadow-resting)] [&>li]:w-full [&>li]:min-w-0",
                   resultSurfaceClass,
                   expanded ? "pointer-events-auto" : "pointer-events-none",
                 ].filter(Boolean).join(" ")}

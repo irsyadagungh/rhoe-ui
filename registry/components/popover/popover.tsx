@@ -228,7 +228,7 @@ export function Popover({
           aria-controls={isOpen ? panelId : undefined}
           aria-expanded={isOpen}
           aria-haspopup="dialog"
-          inert={isOpen}
+          {...(isOpen ? { inert: true } : {})}
           initial={false}
           animate={isOpen ? hiddenTrigger : { opacity: 1, scale: 1, filter: "blur(0px)" }}
           transition={reduceMotion ? { duration: 0.01 } : isOpen ? { duration: motionTokens.duration.fast } : { delay: 0.1, duration: motionTokens.duration.standard, ease: motionTokens.ease.enter }}
@@ -242,7 +242,7 @@ export function Popover({
           id={panelId}
           role="dialog"
           aria-label={ariaLabel ?? (typeof label === "string" ? label : "Popover")}
-          inert={!isOpen}
+          {...(!isOpen ? { inert: true } : {})}
           onKeyDown={onPanelKeyDown}
           className={["absolute z-10 inline-block w-max max-w-[min(26rem,calc(100vw-32px))]", activePosition.content, activePosition[align], contentClassName].filter(Boolean).join(" ")}
           initial={false}
