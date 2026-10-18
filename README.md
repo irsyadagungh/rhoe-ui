@@ -24,13 +24,13 @@
 
 ---
 
-Rhoe UI is a library of React components with motion built in. Every item is plain source code you own — no runtime package to keep in sync. Install anything with the shadcn CLI or copy the files by hand. Works with Next.js and Vite, with or without Tailwind.
+Rhoe UI is a library of React components with motion built in. Every item is plain source code you own — no runtime package to keep in sync. Install anything with the shadcn CLI or copy the files by hand. Works with Tailwind CSS v4 projects built with Next.js or Vite.
 
 This repository holds the **free, open source** part: **30 components and 1 block**, plus the design and motion tokens they share. Every component has a live preview at [rhoe.syadah.my.id](https://rhoe.syadah.my.id).
 
 ---
 
-Rhoe UI adalah library komponen React dengan animasi bawaan. Setiap item adalah source code murni yang langsung kamu miliki — tidak ada runtime package yang perlu dijaga sinkronnya. Install apapun dengan shadcn CLI atau salin filenya secara manual. Mendukung Next.js dan Vite, dengan atau tanpa Tailwind.
+Rhoe UI adalah library komponen React dengan animasi bawaan. Setiap item adalah source code murni yang langsung kamu miliki — tidak ada runtime package yang perlu dijaga sinkronnya. Install apapun dengan shadcn CLI atau salin filenya secara manual. Mendukung project Tailwind CSS v4 yang menggunakan Next.js atau Vite.
 
 Repository ini berisi bagian yang **gratis dan open source**: **30 komponen dan 1 block**, beserta design token dan motion token yang digunakan bersama. Setiap komponen memiliki live preview di [rhoe.syadah.my.id](https://rhoe.syadah.my.id).
 
@@ -58,19 +58,21 @@ Repository ini berisi bagian yang **gratis dan open source**: **30 komponen dan 
 
 - **React 19** with TypeScript
 - **Next.js** (App Router) or **Vite**
+- **Tailwind CSS v4**
 - **[motion](https://www.npmjs.com/package/motion)** for animation. Some items also use [lucide-react](https://lucide.dev); the CLI installs whatever an item needs.
 - The `@/*` import alias (Next.js and shadcn set it up by default)
 
-No Tailwind is required. Rhoe UI styles use CSS variables.
+Rhoe UI is Tailwind-first. Components use Tailwind utilities, while shared design and motion tokens are provided through CSS variables.
 
 ---
 
 - **React 19** dengan TypeScript
 - **Next.js** (App Router) atau **Vite**
+- **Tailwind CSS v4**
 - **[motion](https://www.npmjs.com/package/motion)** untuk animasi. Beberapa item juga menggunakan [lucide-react](https://lucide.dev); CLI akan menginstal semua yang dibutuhkan secara otomatis.
 - Import alias `@/*` (sudah diatur otomatis oleh Next.js dan shadcn)
 
-Tailwind tidak diperlukan. Style Rhoe UI menggunakan CSS variables.
+Rhoe UI menggunakan pendekatan Tailwind-first. Komponen memakai utility Tailwind, sementara design token dan motion token bersama tersedia melalui CSS variables.
 
 ### With the shadcn CLI
 

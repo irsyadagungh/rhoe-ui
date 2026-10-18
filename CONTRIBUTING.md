@@ -6,14 +6,14 @@ Thank you for your interest in contributing! / Terima kasih atas minat Anda untu
 
 - Check the [open issues](https://github.com/irsyadagungh/rhoe-ui/issues) to avoid duplicates
 - For large changes, open an issue first to discuss the approach
-- All components must work without Tailwind (CSS variables only)
+- Use Tailwind CSS utilities for component styling; use CSS variables for shared design and motion tokens
 - All animations must respect `prefers-reduced-motion`
 
 ---
 
 - Cek [issues yang ada](https://github.com/irsyadagungh/rhoe-ui/issues) untuk menghindari duplikasi
 - Untuk perubahan besar, buka issue terlebih dahulu untuk mendiskusikan pendekatannya
-- Semua komponen harus bekerja tanpa Tailwind (hanya CSS variables)
+- Gunakan utility Tailwind CSS untuk styling komponen; gunakan CSS variables untuk design token dan motion token bersama
 - Semua animasi harus menghormati `prefers-reduced-motion`
 
 ## Reporting Bugs / Melaporkan Bug
