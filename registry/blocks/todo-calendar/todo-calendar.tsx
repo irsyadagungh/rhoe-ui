@@ -182,7 +182,7 @@ export function TodoCalendar({
   onValueChange,
   onItemToggle,
   addTodoAction,
-  locale,
+  locale = "en-US",
   weekStartsOn = 0,
   defaultCalendarOpen = false,
   ariaLabel = "To-do calendar",

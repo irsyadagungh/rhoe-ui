@@ -51,7 +51,7 @@ export function NumberInput({
   min = Number.MIN_SAFE_INTEGER,
   max = Number.MAX_SAFE_INTEGER,
   step = 1,
-  locale,
+  locale = "en-US",
   format,
   decrementLabel = "Decrease value",
   incrementLabel = "Increase value",

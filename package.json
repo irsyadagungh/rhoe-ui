@@ -16,7 +16,8 @@
     "node": ">=20"
   },
   "scripts": {
-    "registry:build": "shadcn build",
+    "registry:build": "shadcn build && node scripts/prepare-registry.mjs",
+    "registry:check": "node scripts/check-registry.mjs",
     "typecheck": "tsc --noEmit",
     "lint": "eslint ."
   },

@@ -23,8 +23,8 @@ export type DialogTone = "neutral" | "success" | "warning" | "danger";
 export type DialogActions = "confirm" | "close";
 
 export interface DialogProps {
-  /** A native interactive element, usually a Sya UI Button, that opens the dialog. */
-  trigger: ReactNode;
+  /** Optional native interactive element that opens the dialog. */
+  trigger?: ReactNode;
   /** Visible dialog heading. */
   title: ReactNode;
   /** Optional supporting text below the heading. */
@@ -133,9 +133,9 @@ export function Dialog({
   className,
 }: DialogProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
-  const [triggerHidden, setTriggerHidden] = useState(defaultOpen);
+  const [triggerHidden, setTriggerHidden] = useState(defaultOpen && Boolean(trigger));
   const [hasTriggerOrigin, setHasTriggerOrigin] = useState(false);
-  const [surfaceVisible, setSurfaceVisible] = useState(defaultOpen);
+  const [surfaceVisible, setSurfaceVisible] = useState(false);
   const [morph, setMorph] = useState<{ from: DialogRect; to: DialogRect }>({
     from: { left: 0, top: 0, width: 1, height: 1 },
     to: { left: 0, top: 0, width: DIALOG_WIDTH, height: DIALOG_HEIGHT },
@@ -159,39 +159,60 @@ export function Dialog({
     onClose?.();
   }, [onClose, setExpanded]);
 
+  const calculateTargetRect = useCallback((): DialogRect => {
+    const width = Math.min(requestedWidth ?? DIALOG_WIDTH, window.innerWidth - 32);
+    const height = Math.min(
+      requestedHeight ?? (actions === "close" ? CLOSE_ONLY_DIALOG_HEIGHT : DIALOG_HEIGHT),
+      window.innerHeight - 32,
+    );
+    return {
+      left: Math.max(16, (window.innerWidth - width) / 2),
+      top: Math.max(16, (window.innerHeight - height) / 2),
+      width,
+      height,
+    };
+  }, [actions, requestedHeight, requestedWidth]);
+
   const openDialog = useCallback((event: React.MouseEvent<HTMLSpanElement>) => {
     const source = event.target instanceof HTMLElement
       ? event.target.closest("button, [role='button']") as HTMLElement | null
       : null;
     const sourceRect = (source ?? triggerRef.current)?.getBoundingClientRect();
+    const target = calculateTargetRect();
+
     if (sourceRect) {
-      const width = Math.min(requestedWidth ?? DIALOG_WIDTH, window.innerWidth - 32);
-      const height = Math.min(
-        requestedHeight ?? (actions === "close" ? CLOSE_ONLY_DIALOG_HEIGHT : DIALOG_HEIGHT),
-        window.innerHeight - 32,
-      );
       setMorph({
         from: { left: sourceRect.left, top: sourceRect.top, width: sourceRect.width, height: sourceRect.height },
-        to: {
-          left: Math.max(16, (window.innerWidth - width) / 2),
-          top: Math.max(16, (window.innerHeight - height) / 2),
-          width,
-          height,
-        },
+        to: target,
       });
+      setHasTriggerOrigin(true);
+    } else {
+      setMorph({ from: target, to: target });
+      setHasTriggerOrigin(false);
     }
     restoreFocusRef.current = source;
-    setHasTriggerOrigin(true);
     setTriggerHidden(true);
     setSurfaceVisible(true);
     setExpanded(true);
-  }, [actions, requestedHeight, requestedWidth, setExpanded]);
+  }, [calculateTargetRect, setExpanded]);
 
   useEffect(() => {
-    if (!expanded) return;
+    if (!expanded || surfaceVisible || !portalContainer) return;
+    const frame = requestAnimationFrame(() => {
+      const target = calculateTargetRect();
+      restoreFocusRef.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+      setMorph({ from: target, to: target });
+      setHasTriggerOrigin(false);
+      setSurfaceVisible(true);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [calculateTargetRect, expanded, portalContainer, surfaceVisible]);
+
+  useEffect(() => {
+    if (!expanded || !surfaceVisible) return;
     const frame = requestAnimationFrame(() => panelRef.current?.focus({ preventScroll: true }));
     return () => cancelAnimationFrame(frame);
-  }, [expanded]);
+  }, [expanded, surfaceVisible]);
 
   useEffect(() => {
     if (!expanded) return;
@@ -227,13 +248,15 @@ export function Dialog({
 
   return (
     <DialogContext.Provider value={context}>
-      <span
-        ref={triggerRef}
-        className={`inline-flex ${expanded || triggerHidden ? "pointer-events-none opacity-0" : "opacity-100"}`}
-        onClick={openDialog}
-      >
-        {trigger}
-      </span>
+      {trigger ? (
+        <span
+          ref={triggerRef}
+          className={`inline-flex ${expanded || triggerHidden ? "pointer-events-none opacity-0" : "opacity-100"}`}
+          onClick={openDialog}
+        >
+          {trigger}
+        </span>
+      ) : null}
       {portalContainer ? createPortal(
         <>
           {surfaceVisible ? (
@@ -263,9 +286,21 @@ export function Dialog({
                 ].filter(Boolean).join(" ")}
                 initial={reduceMotion
                   ? { opacity: 0 }
-                  : { opacity: hasTriggerOrigin ? 1 : 0, ...(hasTriggerOrigin ? morph.from : morph.to) }}
-                animate={expanded ? { opacity: 1, ...morph.to } : { opacity: 1, ...morph.from }}
-                transition={reduceMotion ? { duration: 0.1 } : motionTokens.spring.morph}
+                  : hasTriggerOrigin
+                    ? { opacity: 1, ...morph.from }
+                    : { opacity: 0, scale: 0.94, ...morph.to }}
+                animate={expanded
+                  ? (hasTriggerOrigin
+                      ? { opacity: 1, ...morph.to }
+                      : { opacity: 1, scale: 1, ...morph.to })
+                  : (hasTriggerOrigin
+                      ? { opacity: 1, ...morph.from }
+                      : { opacity: 0, scale: 0.94, ...morph.to })}
+                transition={reduceMotion
+                  ? { duration: 0.1 }
+                  : hasTriggerOrigin
+                    ? motionTokens.spring.morph
+                    : motionTokens.spring.smooth}
                 onAnimationComplete={() => {
                   if (expanded) return;
                   setSurfaceVisible(false);
@@ -273,20 +308,22 @@ export function Dialog({
                   restoreFocusRef.current?.focus({ preventScroll: true });
                 }}
               >
-                <motion.div
-                  aria-hidden="true"
-                  {...({ inert: true } as Record<string, unknown>)}
-                  className="pointer-events-none absolute inset-0 z-10 grid place-items-center whitespace-nowrap"
-                  initial={{ opacity: hasTriggerOrigin ? 1 : 0 }}
-                  animate={{ opacity: expanded ? 0 : 1 }}
-                  transition={reduceMotion
-                    ? { duration: 0.1 }
-                    : expanded
-                      ? { duration: motionTokens.duration.fast }
-                      : { delay: 0.1, duration: motionTokens.duration.standard }}
-                >
-                  {trigger}
-                </motion.div>
+                {trigger && hasTriggerOrigin ? (
+                  <motion.div
+                    aria-hidden="true"
+                    {...({ inert: true } as Record<string, unknown>)}
+                    className="pointer-events-none absolute inset-0 z-10 grid place-items-center whitespace-nowrap"
+                    initial={{ opacity: hasTriggerOrigin ? 1 : 0 }}
+                    animate={{ opacity: expanded ? 0 : 1 }}
+                    transition={reduceMotion
+                      ? { duration: 0.1 }
+                      : expanded
+                        ? { duration: motionTokens.duration.fast }
+                        : { delay: 0.1, duration: motionTokens.duration.standard }}
+                  >
+                    {trigger}
+                  </motion.div>
+                ) : null}
                 <motion.div
                   className="relative z-20"
                   initial={{ opacity: 0 }}

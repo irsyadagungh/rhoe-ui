@@ -155,7 +155,7 @@ export function Calendar({
   value,
   defaultValue,
   onValueChange,
-  locale,
+  locale = "en-US",
   weekStartsOn = 0,
   ariaLabel = "Calendar",
   className,

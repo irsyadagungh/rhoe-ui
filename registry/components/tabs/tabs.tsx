@@ -177,7 +177,7 @@ export function Tabs({
       <div
         ref={listRef}
         className={[
-          variant === "grouped" ? "relative flex w-fit max-w-full gap-0.5 overflow-x-auto rounded-[10px] border border-[var(--border)] bg-[var(--surface-muted)] p-[3px]" : "relative flex max-w-full gap-1 overflow-x-auto border-b border-[var(--border)]",
+          variant === "grouped" ? "relative flex w-fit max-w-full gap-0.5 overflow-x-auto rounded-[18px] border border-[var(--border)] bg-[var(--surface-muted)] p-[3px]" : "relative flex max-w-full gap-1 overflow-x-auto border-b border-[var(--border)]",
           listClassName,
         ]
           .filter(Boolean)
@@ -188,7 +188,7 @@ export function Tabs({
         <motion.span
           className={
             variant === "grouped"
-              ? "pointer-events-none absolute top-0 left-0 rounded-[7px] bg-[var(--surface)] shadow-[0_1px_2px_rgb(20_28_23_/_8%)]"
+              ? "pointer-events-none absolute top-0 left-0 rounded-[15px] bg-[var(--surface)] shadow-[0_1px_2px_rgb(20_28_23_/_8%)]"
               : "pointer-events-none absolute bottom-0 left-0 h-0.5 rounded-t-full bg-[var(--text)]"
           }
           style={{
@@ -209,7 +209,7 @@ export function Tabs({
                 if (element) tabRefs.current.set(item.value, element);
                 else tabRefs.current.delete(item.value);
               }}
-              className={["relative z-[1] inline-flex min-h-9 shrink-0 items-center justify-center gap-[7px] rounded-[7px] border-0 bg-transparent px-3 text-[13px] leading-none font-[560] whitespace-nowrap text-[var(--text-secondary)] transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-[var(--text)] focus-visible:outline-2 focus-visible:outline-[var(--focus)] focus-visible:outline-offset-2", active && "text-[var(--text)]"].filter(Boolean).join(" ")}
+              className={["relative z-[1] inline-flex shrink-0 items-center justify-center gap-[7px] rounded-[15px] border-0 bg-transparent px-3 text-[13px] leading-none font-[560] whitespace-nowrap text-[var(--text-secondary)] transition-colors duration-[var(--duration-fast)] ease-[var(--ease-standard)] hover:text-[var(--text)] focus-visible:outline-2 focus-visible:outline-[var(--focus)] focus-visible:outline-offset-2", variant === "grouped" ? "min-h-10" : "min-h-9", active && "text-[var(--text)]"].filter(Boolean).join(" ")}
               id={`${id}-tab-${index}`}
               role="tab"
               type="button"

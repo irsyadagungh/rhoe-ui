@@ -152,7 +152,7 @@ function RollingColumn({
 
 export function RollingNumber({
   value,
-  locale,
+  locale = "en-US",
   format,
   className,
   ...props
@@ -181,7 +181,7 @@ export function RollingNumber({
       aria-live="polite"
     >
       <span className="absolute size-px overflow-hidden [clip:rect(0,0,0,0)] [clip-path:inset(50%)] whitespace-nowrap">{formatted}</span>
-      <span className="inline-flex items-start whitespace-nowrap select-none" aria-hidden="true">
+      <span className="inline-flex items-baseline whitespace-nowrap select-none" aria-hidden="true">
         {parts.map((part) =>
           "digit" in part ? (
             <RollingColumn

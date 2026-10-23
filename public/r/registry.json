@@ -139,7 +139,8 @@
       "description": "Server-rendered syntax highlighting with filename and embedded variants.",
       "dependencies": [
         "lucide-react",
-        "shiki"
+        "shiki",
+        "motion"
       ],
       "files": [
         {
@@ -161,6 +162,21 @@
           "path": "registry/components/code-block/code-block-view.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/code-block/code-block-view.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
         }
       ]
     },
@@ -193,6 +209,16 @@
           "path": "registry/components/input/input.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/input/input.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
         }
       ]
     },
@@ -225,6 +251,16 @@
           "path": "registry/components/textarea/textarea.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/textarea/textarea.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
         }
       ]
     },
@@ -262,6 +298,16 @@
           "path": "registry/components/password-strength/password-strength.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/password-strength/password-strength.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
         }
       ]
     },
@@ -309,6 +355,11 @@
           "path": "registry/components/currency-input/currency-input.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/currency-input/currency-input.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
         }
       ]
     },
@@ -387,6 +438,58 @@
       ]
     },
     {
+      "name": "auth-form",
+      "type": "registry:block",
+      "title": "Authentication Form",
+      "description": "Sign-in and sign-up forms with a responsive OAuth grid composed from Rhoe UI controls.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/input/input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/input/input.tsx"
+        },
+        {
+          "path": "registry/components/checkbox/checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/checkbox/checkbox.tsx"
+        },
+        {
+          "path": "registry/blocks/auth-form/auth-form.tsx",
+          "type": "registry:block",
+          "target": "components/rhoe/blocks/auth-form.tsx"
+        }
+      ]
+    },
+    {
       "name": "select",
       "type": "registry:ui",
       "title": "Select",
@@ -425,6 +528,16 @@
           "path": "registry/components/select/select.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/select/select.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
         }
       ]
     },
@@ -467,6 +580,21 @@
           "path": "registry/components/number-input/number-input.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/number-input/number-input.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/text-reveal/text-reveal.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/text-reveal/text-reveal.tsx"
         }
       ]
     },
@@ -509,6 +637,16 @@
           "path": "registry/components/expanding-search/expanding-search.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/expanding-search/expanding-search.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
         }
       ]
     },
@@ -540,6 +678,16 @@
           "path": "registry/components/dropdown-menu/dropdown-menu.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/dropdown-menu/dropdown-menu.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
         }
       ]
     },
@@ -734,6 +882,16 @@
           "path": "registry/components/sidebar-navigation/sidebar-navigation.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/sidebar-navigation/sidebar-navigation.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
         }
       ]
     },
@@ -995,6 +1153,229 @@
           "path": "registry/components/rolling-number/rolling-number.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/rolling-number/rolling-number.tsx"
+        }
+      ]
+    },
+    {
+      "name": "line-chart",
+      "type": "registry:ui",
+      "title": "Line Chart",
+      "description": "A responsive smooth line chart with optional range tabs, an average reference, and pointer inspection.",
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/rolling-number/rolling-number.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/rolling-number/rolling-number.tsx"
+        },
+        {
+          "path": "registry/components/tabs/tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/tabs/tabs.tsx"
+        },
+        {
+          "path": "registry/components/line-chart/line-chart.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/line-chart/line-chart.tsx"
+        }
+      ],
+      "dependencies": [
+        "motion"
+      ]
+    },
+    {
+      "name": "realtime-line-chart",
+      "type": "registry:block",
+      "title": "Realtime Line Chart",
+      "description": "A continuously advancing line chart block with live status, value, average, and spike threshold.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/rolling-number/rolling-number.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/rolling-number/rolling-number.tsx"
+        },
+        {
+          "path": "registry/components/tabs/tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/tabs/tabs.tsx"
+        },
+        {
+          "path": "registry/components/line-chart/line-chart.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/line-chart/line-chart.tsx"
+        },
+        {
+          "path": "registry/blocks/realtime-line-chart/realtime-line-chart.tsx",
+          "type": "registry:block",
+          "target": "components/rhoe/blocks/realtime-line-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "bar-chart",
+      "type": "registry:ui",
+      "title": "Bar Chart",
+      "description": "A responsive animated vertical or horizontal bar chart with keyboard-accessible value inspection.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/rolling-number/rolling-number.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/rolling-number/rolling-number.tsx"
+        },
+        {
+          "path": "registry/components/tabs/tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/tabs/tabs.tsx"
+        },
+        {
+          "path": "registry/components/bar-chart/bar-chart.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/bar-chart/bar-chart.tsx"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A sortable data table with docked or floating headers, continuous row hover, and optional selection.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/checkbox/checkbox.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/checkbox/checkbox.tsx"
+        },
+        {
+          "path": "registry/components/table/table.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/table/table.tsx"
+        }
+      ]
+    },
+    {
+      "name": "modal",
+      "type": "registry:ui",
+      "title": "Modal",
+      "description": "Flexible container modal that morphs smoothly from trigger buttons or scales from center programmatically.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/modal/modal.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/modal/modal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "meter",
+      "type": "registry:ui",
+      "title": "Meter",
+      "description": "Visual capacity and usage meters with linear capsule and circular gauge variants.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/meter/meter.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/meter/meter.tsx"
+        },
+        {
+          "path": "registry/components/rolling-number/rolling-number.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/rolling-number/rolling-number.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
         }
       ]
     }

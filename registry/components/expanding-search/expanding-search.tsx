@@ -251,10 +251,9 @@ export function ExpandingSearch({
   }, [anchorStyle.position, openWidth]);
 
   const setExpanded = useCallback((nextOpen: boolean) => {
-    if (!nextOpen) updatePortalPosition(false);
     if (open === undefined) setInternalOpen(nextOpen);
     onOpenChange?.(nextOpen);
-  }, [onOpenChange, open, updatePortalPosition]);
+  }, [onOpenChange, open]);
 
   const openSearch = useCallback(() => {
     updatePortalPosition(true);
@@ -325,7 +324,7 @@ export function ExpandingSearch({
   useLayoutEffect(() => {
     if (!shouldPortalSurface) return;
 
-    const updateExpandedPosition = () => updatePortalPosition(true);
+    const updateExpandedPosition = () => updatePortalPosition(expanded);
     updateExpandedPosition();
     window.addEventListener("resize", updateExpandedPosition);
     window.addEventListener("scroll", updateExpandedPosition, true);
