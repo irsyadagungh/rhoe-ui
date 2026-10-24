@@ -1,0 +1,64 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+.previewContent {
+  display: grid;
+  width: min(100%, 360px);
+  justify-items: center;
+  gap: 24px;
+}
+
+.positionPicker {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.positionOption {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  transition: color var(--duration-fast) var(--ease-standard), background-color var(--duration-fast) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard);
+}
+
+.positionOption[data-selected] {
+  border-color: var(--focus);
+  background: color-mix(in srgb, var(--focus) 14%, var(--surface));
+  color: var(--text);
+}
+
+.positionOption:focus-within {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.positionMark {
+  display: grid;
+  width: 15px;
+  height: 15px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+}
+
+.positionMark svg { width: 11px; height: 11px; }
+
+@media (max-width: 560px) {
+  .controls { gap: 8px; }
+}

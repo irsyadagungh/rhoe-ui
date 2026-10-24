@@ -1,0 +1,4 @@
+.previewField {
+  width: min(100%, 480px);
+  min-height: 380px;
+}

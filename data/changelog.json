@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "releases": [
+    {
+      "date": "2026-10-23",
+      "title": "Charts, Data Display, and Modal Overlays",
+      "summary": "Added data visualization components, interactive tables, modal overlays, meters, authentication blocks, refined motion transitions, and Schema.org WebSite structured data.",
+      "changes": [
+        {
+          "type": "added",
+          "items": [
+            {
+              "text": "Published a new set of data visualization, table, and overlay components.",
+              "components": [
+                "Bar Chart",
+                "Line Chart",
+                "Meter",
+                "Modal",
+                "Table"
+              ],
+              "blocks": []
+            },
+            {
+              "text": "Published new composed dashboard and authentication blocks.",
+              "components": [],
+              "blocks": [
+                "Authentication Form",
+                "Realtime Line Chart"
+              ]
+            },
+            {
+              "text": "Added Schema.org WebSite JSON-LD structured data for Google Search Site Name branding.",
+              "components": [],
+              "blocks": []
+            }
+          ]
+        },
+        {
+          "type": "changed",
+          "items": [
+            {
+              "text": "Refined animations, keyboard interactions, and responsive behaviors across core components.",
+              "components": [
+                "Dialog",
+                "Expanding Search",
+                "Number Input",
+                "Rolling Number",
+                "Tabs"
+              ],
+              "blocks": []
+            },
+            {
+              "text": "Updated interactive scheduling flow and date handling in composed blocks.",
+              "components": [],
+              "blocks": [
+                "To-do Calendar"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-18",
+      "title": "Initial public preview",
+      "summary": "The first public foundation for Rhoe UI, its editable component registry, documentation, and reusable interface patterns.",
+      "changes": [
+        {
+          "type": "added",
+          "items": [
+            {
+              "text": "Published the initial set of editable Rhoe UI components.",
+              "components": [
+                "Button",
+                "Dropdown Menu",
+                "Popover",
+                "Dialog",
+                "Icon Morph",
+                "Badge",
+                "Toast",
+                "Tooltip",
+                "Sidebar Navigation",
+                "Table of Contents",
+                "Tabs",
+                "Calendar",
+                "Input",
+                "Textarea",
+                "Checkbox",
+                "Radio",
+                "Switch",
+                "Password Strength",
+                "Currency Input",
+                "Select",
+                "Number Input",
+                "Expanding Search",
+                "Expandable Card",
+                "Animated List",
+                "Curved Carousel",
+                "Code Block",
+                "Text Reveal",
+                "Morphing Text",
+                "Scramble Text",
+                "Rolling Number"
+              ],
+              "blocks": []
+            },
+            {
+              "text": "Published the first composed scheduling block.",
+              "components": [],
+              "blocks": [
+                "To-do Calendar"
+              ]
+            },
+            {
+              "text": "Added shared CSS and Motion React tokens for consistent transitions, springs, morphing, and reduced-motion behavior.",
+              "components": [],
+              "blocks": []
+            },
+            {
+              "text": "Published documentation with live previews, installation commands, usage examples, API references, theming, and motion guidance.",
+              "components": [],
+              "blocks": []
+            },
+            {
+              "text": "Added synchronized installation commands for pnpm, npm, yarn, and Bun.",
+              "components": [],
+              "blocks": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

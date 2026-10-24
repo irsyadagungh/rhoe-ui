@@ -1,0 +1,18 @@
+.previewStack {
+  display: grid;
+  width: min(100%, 524px);
+  gap: 22px;
+}
+
+.previewField {
+  width: 100%;
+}
+
+.previewControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}

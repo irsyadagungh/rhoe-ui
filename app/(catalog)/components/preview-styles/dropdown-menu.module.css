@@ -1,0 +1,7 @@
+.controls {
+  width: auto;
+}
+
+.controls :global([role="tabpanel"]) {
+  display: none;
+}

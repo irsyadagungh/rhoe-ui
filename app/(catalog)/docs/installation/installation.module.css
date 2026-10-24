@@ -1,0 +1,81 @@
+.steps {
+  display: grid;
+  gap: 0;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 14px;
+  padding-bottom: 34px;
+}
+
+.step:not(:last-child)::before {
+  position: absolute;
+  top: 38px;
+  bottom: 0;
+  left: 16px;
+  width: 1px;
+  background: var(--border);
+  content: "";
+}
+
+.marker {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+}
+
+.stepContent {
+  min-width: 0;
+  padding-bottom: 6px;
+}
+
+.stepContent h3 {
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+.stepContent p {
+  max-width: 620px;
+  margin-top: 6px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.stepContent > div {
+  margin-top: 16px;
+}
+
+@media (max-width: 760px) {
+  .step {
+    grid-template-columns: 30px minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .marker {
+    width: 30px;
+    height: 30px;
+  }
+
+  .step:not(:last-child)::before {
+    top: 34px;
+    left: 14px;
+  }
+}

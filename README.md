@@ -7,13 +7,13 @@
 <p align="center">
   <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-111111?style=flat-square"></a>
   <a href="https://rhoe.syadah.my.id/docs/installation"><img alt="shadcn registry: @rhoe" src="https://img.shields.io/badge/shadcn%20registry-%40rhoe-111111?style=flat-square"></a>
-  <img alt="30 components" src="https://img.shields.io/badge/components-30-7C3AED?style=flat-square">
-  <img alt="1 block" src="https://img.shields.io/badge/blocks-1-7C3AED?style=flat-square">
+  <img alt="35 components" src="https://img.shields.io/badge/components-35-7C3AED?style=flat-square">
+  <img alt="3 blocks" src="https://img.shields.io/badge/blocks-3-7C3AED?style=flat-square">
   <img alt="React 19" src="https://img.shields.io/badge/React-19-111111?style=flat-square">
 </p>
 
 <p align="center">
-  <a href="https://rhoe.syadah.my.id/docs/introduction"><b>Docs</b></a>
+  <a href="https://rhoe.syadah.my.id/docs"><b>Docs</b></a>
   &nbsp;·&nbsp;
   <a href="https://rhoe.syadah.my.id/components"><b>Components</b></a>
   &nbsp;·&nbsp;
@@ -26,18 +26,19 @@
 
 Rhoe UI is a library of React components with motion built in. Every item is plain source code you own — no runtime package to keep in sync. Install anything with the shadcn CLI or copy the files by hand. Works with Tailwind CSS v4 projects built with Next.js or Vite.
 
-This repository holds the **free, open source** part: **30 components and 1 block**, plus the design and motion tokens they share. Every component has a live preview at [rhoe.syadah.my.id](https://rhoe.syadah.my.id).
+This repository is the source of truth for the **free, open source** part: **35 components and 3 blocks**, plus the design and motion tokens they share. Every component has a live preview at [rhoe.syadah.my.id](https://rhoe.syadah.my.id).
 
 ---
 
 Rhoe UI adalah library komponen React dengan animasi bawaan. Setiap item adalah source code murni yang langsung kamu miliki — tidak ada runtime package yang perlu dijaga sinkronnya. Install apapun dengan shadcn CLI atau salin filenya secara manual. Mendukung project Tailwind CSS v4 yang menggunakan Next.js atau Vite.
 
-Repository ini berisi bagian yang **gratis dan open source**: **30 komponen dan 1 block**, beserta design token dan motion token yang digunakan bersama. Setiap komponen memiliki live preview di [rhoe.syadah.my.id](https://rhoe.syadah.my.id).
+Repository ini berisi bagian yang **gratis dan open source**: **35 komponen dan 3 blocks**, beserta design token dan motion token yang digunakan bersama. Setiap komponen memiliki live preview di [rhoe.syadah.my.id](https://rhoe.syadah.my.id).
 
 ---
 
 ## Contents
 
+- [Local preview / Preview lokal](#local-preview--preview-lokal)
 - [Install](#install)
   - [Requirements / Persyaratan](#requirements--persyaratan)
   - [With the shadcn CLI](#with-the-shadcn-cli)
@@ -49,6 +50,50 @@ Repository ini berisi bagian yang **gratis dan open source**: **30 komponen dan 
 - [Repository Layout](#repository-layout)
 - [Contributing / Kontribusi](#contributing--kontribusi)
 - [License](#license)
+
+---
+
+## Local preview / Preview lokal
+
+Use Node.js 24 LTS and the package manager pinned in `package.json`.
+
+```sh
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+Open the local URL printed in the terminal, then visit `/components` or `/blocks`.
+Next.js defaults to port 3000. To choose another port, use `pnpm dev --port 3002`
+or `PORT=3002 pnpm dev`; the repository does not pin a port. If you change the
+origin, set `NEXT_PUBLIC_SITE_URL` in `.env.local` to match it for metadata and
+registry links (see `.env.example`).
+The preview uses the same sidebar, themes, variant tabs, canvas, and examples as
+Rhoe's website. It imports `registry/` directly: edit a component and see the
+change immediately, without rebuilding registry JSON on every edit.
+
+Jalankan perintah di atas untuk mencoba perubahan di browser lokal. Kerjakan
+komponen dan block Free di repo ini; source Pro tidak ada di sini. Tidak perlu
+akses ke repo website private. Halaman utama lokal membuka katalog Components.
+
+Examples live in `app/(catalog)/components/previews/` and
+`app/(catalog)/blocks/previews/`; API documentation lives in the adjacent catalog
+JSON files. No analytics is included in the contributor preview.
+
+Before a pull request:
+
+```sh
+pnpm build
+pnpm registry:check
+pnpm typecheck
+pnpm lint
+```
+
+The build regenerates `public/r` and builds the preview website. Consumers using
+shadcn receive only the source files declared in each registry item, not the
+preview website. `pnpm registry:build` remains available for registry-only builds.
+
+Free updates reach the production website when the maintainer imports an approved
+commit and deploys. Merging here does not automatically deploy production.
 
 ---
 
@@ -163,7 +208,7 @@ Components read semantic tokens, never raw colors. Change a token in `foundation
 
 ## Components / Komponen
 
-30 free components. Click a name for the live preview.
+35 free components. Click a name for the live preview.
 
 ### Actions
 
@@ -173,6 +218,7 @@ Components read semantic tokens, never raw colors. Change a token in `foundation
 | [Dropdown Menu](https://rhoe.syadah.my.id/components/dropdown-menu) | Animated dropdown menu with keyboard navigation. | `npx shadcn@latest add @rhoe/dropdown-menu` |
 | [Popover](https://rhoe.syadah.my.id/components/popover) | Floating content anchored to a trigger. | `npx shadcn@latest add @rhoe/popover` |
 | [Dialog](https://rhoe.syadah.my.id/components/dialog) | Modal dialog that morphs from its trigger. | `npx shadcn@latest add @rhoe/dialog` |
+| [Modal](https://rhoe.syadah.my.id/components/modal) | Free-form modal content with optional trigger morphing. | `npx shadcn@latest add @rhoe/modal` |
 | [Expanding Search](https://rhoe.syadah.my.id/components/expanding-search) | Search input that expands on focus. | `npx shadcn@latest add @rhoe/expanding-search` |
 
 ### Inputs
@@ -204,6 +250,10 @@ Components read semantic tokens, never raw colors. Change a token in `foundation
 | [Curved Carousel](https://rhoe.syadah.my.id/components/curved-carousel) | Carousel with perspective depth and curved layout. | `npx shadcn@latest add @rhoe/curved-carousel` |
 | [Sidebar Navigation](https://rhoe.syadah.my.id/components/sidebar-navigation) | Collapsible sidebar with animated active indicator. | `npx shadcn@latest add @rhoe/sidebar-navigation` |
 | [Table of Contents](https://rhoe.syadah.my.id/components/table-of-contents) | Auto-generated TOC with active section tracking. | `npx shadcn@latest add @rhoe/table-of-contents` |
+| [Meter](https://rhoe.syadah.my.id/components/meter) | Linear and circular usage indicators. | `npx shadcn@latest add @rhoe/meter` |
+| [Table](https://rhoe.syadah.my.id/components/table) | Sortable rows, selection, and docked or floating headers. | `npx shadcn@latest add @rhoe/table` |
+| [Line Chart](https://rhoe.syadah.my.id/components/line-chart) | Curved lines, average reference, and animated hover values. | `npx shadcn@latest add @rhoe/line-chart` |
+| [Bar Chart](https://rhoe.syadah.my.id/components/bar-chart) | Vertical and horizontal bars with animated hover feedback. | `npx shadcn@latest add @rhoe/bar-chart` |
 
 ### Motion / Text
 
@@ -222,6 +272,8 @@ Components read semantic tokens, never raw colors. Change a token in `foundation
 | Block | Description | Install |
 | --- | --- | --- |
 | [Todo Calendar](https://rhoe.syadah.my.id/blocks/todo-calendar) | A full-featured to-do list with an animated calendar date picker. | `npx shadcn@latest add @rhoe/todo-calendar` |
+| [Authentication Form](https://rhoe.syadah.my.id/blocks/auth-form) | Sign-in and sign-up forms with optional OAuth actions. | `npx shadcn@latest add @rhoe/auth-form` |
+| [Realtime Line Chart](https://rhoe.syadah.my.id/blocks/realtime-line-chart) | A continuously scrolling line chart with configurable spike color. | `npx shadcn@latest add @rhoe/realtime-line-chart` |
 
 ---
 
@@ -229,6 +281,7 @@ Components read semantic tokens, never raw colors. Change a token in `foundation
 
 ```
 rhoe-ui/
+├── app/(catalog)/         # Contributor preview, examples, and Free docs
 ├── registry/
 │   ├── components/         # Free component source files
 │   │   ├── foundation.css  # Design tokens (color, radius, shadow)
@@ -255,7 +308,7 @@ rhoe-ui/
 └── CONTRIBUTING.md
 ```
 
-> **Note:** This repository contains only the free components. The documentation website source and Pro components are maintained separately.
+> **Note:** This repository contains Free source and a local catalog preview copied from the Rhoe website. The production landing page and Pro source remain in the private website repository. Components and examples here are the source of truth for Free.
 
 ---
 

@@ -1,0 +1,21 @@
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px;
+}
+
+.previewPosition {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+}
+
+.left { justify-content: flex-start; }
+.center { justify-content: center; }
+.right { justify-content: flex-end; }
+
+@media (max-width: 560px) {
+  .controls { gap: 8px; }
+}

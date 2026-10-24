@@ -1,0 +1,3682 @@
+{
+  "groups": [
+    {
+      "name": "Actions",
+      "description": "Stateful controls and visual transitions that keep feedback close to the action that caused it.",
+      "components": [
+        {
+          "name": "button",
+          "title": "Button",
+          "description": "Filled, bordered, text, and animated action buttons across semantic tones.",
+          "lede": "Triggers actions with clear visual hierarchy, semantic tone, optional icons, and animated multi-state feedback.",
+          "keywords": [
+            "action",
+            "icon button",
+            "loading",
+            "status"
+          ],
+          "sourcePath": "registry/components/button/button.tsx",
+          "installation": "Installs Button, Icon Morph, Morphing Text, and shared motion tokens.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { Check, LoaderCircle, Upload } from \"lucide-react\"\nimport { Button } from \"@/components/rhoe/button/button\"\n\nexport function ButtonExample() {\n  const [state, setState] = useState(0)\n\n  return (\n    <Button\n      label={[\"Publish\", \"Publishing\", \"Published\"]}\n      icon={[<Upload key=\"upload\" />, <LoaderCircle key=\"loading\" />, <Check key=\"done\" />]}\n      tone={[\"primary\", \"warning\", \"success\"]}\n      loading={[false, true, false]}\n      state={state}\n      onClick={() => setState((value) => (value + 1) % 3)}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Common variants",
+              "code": "<Button variant=\"filled\">Continue</Button>\n<Button variant=\"bordered\">Cancel</Button>\n<Button variant=\"text\">Learn more</Button>"
+            },
+            {
+              "title": "Action states",
+              "description": "The state index selects the matching label and loading state.",
+              "code": "<Button label={[\"Publish\", \"Publishing\", \"Published\"]} loading={[false, true, false]} state={status} />"
+            }
+          ],
+          "guidance": [
+            "Use filled for the primary action in a region.",
+            "Use bordered for supporting actions.",
+            "Use text for low-emphasis actions."
+          ],
+          "behavior": [
+            "Action labels morph when state changes.",
+            "Compatible icon paths can morph; all other icons scale and fade.",
+            "Reduced-motion preferences are respected."
+          ],
+          "accessibility": [
+            "Use a visible label or provide an accessible name.",
+            "Set disabled during actions that must not run twice.",
+            "Do not rely on tone alone to communicate status."
+          ],
+          "api": [
+            [
+              "variant",
+              "filled | bordered | text",
+              "filled",
+              "Visual emphasis."
+            ],
+            [
+              "tone",
+              "ButtonTone | readonly ButtonTone[]",
+              "primary",
+              "Hierarchy or semantic color."
+            ],
+            [
+              "size",
+              "small | medium | large",
+              "medium",
+              "Control height: 40px, 46px, or 52px."
+            ],
+            [
+              "icon",
+              "ReactNode | readonly ReactNode[]",
+              "\u2014",
+              "Optional icon."
+            ],
+            [
+              "disabled",
+              "boolean",
+              "false",
+              "Prevents interaction."
+            ],
+            [
+              "loading",
+              "boolean | boolean[]",
+              "false",
+              "Spins the active icon."
+            ],
+            [
+              "label",
+              "string | readonly string[]",
+              "\u2014",
+              "Visible label or animated state labels."
+            ],
+            [
+              "state",
+              "number",
+              "0",
+              "Selects values from array props."
+            ],
+            [
+              "aria-label (icon-only)",
+              "string",
+              "\u2014",
+              "Accessible name when no visible label or children are present.",
+              true
+            ]
+          ],
+          "customization": "Combine variant and tone independently. ButtonLink preserves native anchor behavior.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "dropdown-menu",
+            "icon-morph"
+          ]
+        },
+        {
+          "name": "dropdown-menu",
+          "title": "Dropdown Menu",
+          "description": "A button surface that morphs into an accessible action menu.",
+          "lede": "Morphs a compact button surface into a larger action menu while preserving its spatial origin.",
+          "keywords": [
+            "menu",
+            "context menu",
+            "actions",
+            "more"
+          ],
+          "sourcePath": "registry/components/dropdown-menu/dropdown-menu.tsx",
+          "usage": "import { Ellipsis } from \"lucide-react\"\nimport { DropdownMenu } from \"@/components/rhoe/dropdown-menu/dropdown-menu\"\n\nexport function DropdownMenuExample() {\n  const items = [\n    { value: \"edit\", label: \"Edit\", onSelect: () => console.log(\"Edit\") },\n    { value: \"delete\", label: \"Delete\", danger: true },\n  ]\n\n  return (\n    <DropdownMenu\n      label=\"Actions\"\n      icon={<Ellipsis />}\n      triggerContent=\"icon\"\n      items={items}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Surface variants",
+              "code": "<DropdownMenu variant=\"filled\" label=\"Actions\" items={items} />\n<DropdownMenu variant=\"bordered\" label=\"Actions\" items={items} />"
+            }
+          ],
+          "behavior": [
+            "The trigger surface changes width and height into the menu.",
+            "Trigger content exits before menu items appear.",
+            "Escape and outside press close the menu."
+          ],
+          "accessibility": [
+            "Uses menu and menuitem semantics.",
+            "Arrow keys, Home, End, and Escape are supported.",
+            "Focus moves to the first enabled item when opened."
+          ],
+          "api": [
+            [
+              "label",
+              "ReactNode",
+              "\u2014",
+              "Trigger label and menu name.",
+              true
+            ],
+            [
+              "triggerContent",
+              "text | icon-text | icon",
+              "icon-text",
+              "Visible trigger content."
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Surface treatment."
+            ],
+            [
+              "items",
+              "DropdownMenuItem[]",
+              "\u2014",
+              "Menu actions.",
+              true
+            ],
+            [
+              "align",
+              "start | center | end",
+              "center",
+              "Morph origin."
+            ],
+            [
+              "expandedWidth",
+              "number",
+              "240",
+              "Open menu width."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/dropdown-menu/dropdown-menu.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "button",
+            "expanding-search"
+          ]
+        },
+        {
+          "name": "popover",
+          "title": "Popover",
+          "description": "A free-form panel that morphs from its trigger and contains arbitrary interactive content.",
+          "lede": "Morphs a trigger into a panel whose width and height follow the content you place inside it.",
+          "keywords": [
+            "panel",
+            "floating content",
+            "filter",
+            "form",
+            "calendar"
+          ],
+          "sourcePath": "registry/components/popover/popover.tsx",
+          "installation": "Installs Popover with the shared motion tokens and foundation styles it needs.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { SlidersHorizontal } from \"lucide-react\"\nimport { Popover } from \"@/components/rhoe/popover/popover\"\n\nexport function FilterPopover() {\n  const [onlyActive, setOnlyActive] = useState(false)\n\n  return (\n    <Popover\n      label=\"Filters\"\n      icon={<SlidersHorizontal />}\n      trigger=\"button\"\n      ariaLabel=\"Project filters\"\n    >\n      <form className=\"w-72 p-4\">\n        <p className=\"text-sm font-semibold\">Project filters</p>\n        <label className=\"mt-4 flex items-center justify-between\">\n          Active projects only\n          <input\n            type=\"checkbox\"\n            checked={onlyActive}\n            onChange={(event) => setOnlyActive(event.target.checked)}\n          />\n        </label>\n      </form>\n    </Popover>\n  )\n}",
+          "examples": [
+            {
+              "title": "Bordered filter panel",
+              "code": "<Popover label=\"Filters\" variant=\"bordered\" ariaLabel=\"Filter projects\">{filterControls}</Popover>"
+            },
+            {
+              "title": "Aligned form",
+              "code": "<Popover label=\"Invite\" side=\"bottom\" align=\"end\" ariaLabel=\"Invite member\">{inviteForm}</Popover>"
+            }
+          ],
+          "guidance": [
+            "Use Popover for focused controls that belong near their trigger, such as filters, a short form, or a date picker.",
+            "Use Dropdown Menu when the content is only a list of actions or values.",
+            "Keep the panel focused on one small task; use Dialog when attention must move away from the current page."
+          ],
+          "behavior": [
+            "The trigger surface morphs into the measured width and height of its children, then returns to the same trigger when closed.",
+            "Children fade in once the panel has enough room, so they are not clipped during the morph.",
+            "The single trigger surface expands in place, closes on outside press or Escape, and uses opacity-only motion when reduced motion is enabled."
+          ],
+          "accessibility": [
+            "ariaLabel names the free-form dialog region because children can have any structure.",
+            "Opening moves focus to the first focusable child, preferring a child with data-autofocus.",
+            "Escape returns focus to the trigger. Focus is not trapped, so people can continue using nearby controls."
+          ],
+          "api": [
+            [
+              "label",
+              "ReactNode",
+              "\u2014",
+              "Visible label for both Button and Tooltip trigger modes."
+            ],
+            [
+              "children",
+              "ReactNode",
+              "\u2014",
+              "Any content rendered inside the measured panel.",
+              true
+            ],
+            [
+              "icon",
+              "ReactNode",
+              "\u2014",
+              "Optional trigger icon."
+            ],
+            [
+              "trigger",
+              "button | tooltip",
+              "button",
+              "Uses a regular Button surface or a compact Tooltip-style pill with an icon and label."
+            ],
+            [
+              "ariaLabel",
+              "string",
+              "\u2014",
+              "Accessible name for the free-form panel."
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Panel surface treatment."
+            ],
+            [
+              "side",
+              "top | right | bottom | left",
+              "bottom",
+              "Preferred side of the trigger."
+            ],
+            [
+              "align",
+              "start | center | end",
+              "center",
+              "Alignment on the trigger edge."
+            ],
+            [
+              "open / defaultOpen",
+              "boolean",
+              "false",
+              "Controlled or initial open state."
+            ],
+            [
+              "onOpenChange",
+              "(open: boolean) => void",
+              "\u2014",
+              "Called whenever the requested open state changes."
+            ],
+            [
+              "contentClassName",
+              "string",
+              "\u2014",
+              "Additional classes for the children wrapper."
+            ]
+          ],
+          "customization": "Place any React children inside the panel and give the content an intentional width such as w-72 when it contains a form. Use trigger=\"button\" for the normal Button surface or trigger=\"tooltip\" for the compact icon-and-label surface.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/popover/popover.tsx"
+          ],
+          "related": [
+            "dropdown-menu",
+            "dialog",
+            "tooltip"
+          ]
+        },
+        {
+          "name": "dialog",
+          "title": "Dialog",
+          "description": "A morphing modal dialog with semantic feedback, full-page backdrop, and contextual actions.",
+          "lede": "Expands a trigger into a focused dialog for confirmation, acknowledgement, or blocking information.",
+          "keywords": [
+            "modal",
+            "confirm",
+            "alert",
+            "overlay"
+          ],
+          "sourcePath": "registry/components/dialog/dialog.tsx",
+          "installation": "Installs Dialog with Button, portal support, and shared motion tokens.",
+          "usage": "\"use client\"\n\nimport { Button } from \"@/components/rhoe/button/button\"\nimport { Dialog } from \"@/components/rhoe/dialog/dialog\"\n\nexport function PublishDialog() {\n  return (\n    <Dialog\n      trigger={<Button>Publish changes</Button>}\n      title=\"Publish these changes?\"\n      description=\"The latest changes will become visible to everyone in this workspace.\"\n      tone=\"success\"\n      continueLabel=\"Publish\"\n      onContinue={() => console.log(\"Publish confirmed\")}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Confirmation dialog",
+              "code": "<Dialog trigger={<Button>Delete</Button>} title=\"Delete this project?\" tone=\"danger\" continueLabel=\"Delete\" />"
+            },
+            {
+              "title": "Blocking acknowledgement",
+              "code": "<Dialog trigger={<Button>Review details</Button>} title=\"Action required\" actions=\"close\" blocking />"
+            },
+            {
+              "title": "Custom form body",
+              "code": "<Dialog\n  trigger={<Button>Add task</Button>}\n  title=\"Add to-do\"\n  width={440}\n  height={340}\n  continueLabel=\"Add task\"\n>\n  <Input label=\"Task title\" value={title} onValueChange={setTitle} />\n</Dialog>"
+            }
+          ],
+          "guidance": [
+            "Use a dialog only when the user must review information or make a decision before continuing.",
+            "Use a clear verb for Continue and reserve danger for destructive actions.",
+            "Use the close-only mode for information that must be acknowledged before returning to the page."
+          ],
+          "behavior": [
+            "The panel animates its position, width, and height from the trigger and returns to the same trigger when closed.",
+            "A full-page dimmed and lightly blurred backdrop isolates the dialog.",
+            "The semantic icon sits above a centered title and supporting text.",
+            "Confirm mode shows a secondary Close action and a semantic Continue action; close mode shows one Close action.",
+            "Escape and backdrop press close non-blocking dialogs."
+          ],
+          "accessibility": [
+            "Uses dialog, aria-modal, and labelled heading semantics.",
+            "Focus moves into the dialog, stays within it while open, and returns to the trigger after closing.",
+            "Blocking dialogs ignore Escape and backdrop press but keep a visible Close action."
+          ],
+          "api": [
+            [
+              "trigger",
+              "ReactNode",
+              "\u2014",
+              "Optional interactive element that opens the dialog with spatial morphing."
+            ],
+            [
+              "title",
+              "ReactNode",
+              "\u2014",
+              "Visible dialog heading.",
+              true
+            ],
+            [
+              "description",
+              "ReactNode",
+              "\u2014",
+              "Optional supporting text below the title."
+            ],
+            [
+              "children",
+              "ReactNode",
+              "\u2014",
+              "Custom content rendered between the heading and actions."
+            ],
+            [
+              "tone",
+              "neutral | success | warning | danger",
+              "neutral",
+              "Colors the icon and Continue action."
+            ],
+            [
+              "actions",
+              "confirm | close",
+              "confirm",
+              "Shows two actions or one Close action."
+            ],
+            [
+              "onContinue",
+              "() => void",
+              "\u2014",
+              "Runs before a confirm dialog closes."
+            ],
+            [
+              "continueDisabled",
+              "boolean",
+              "false",
+              "Disables the primary action while custom content is incomplete."
+            ],
+            [
+              "width / height",
+              "number",
+              "520 / 260",
+              "Custom panel dimensions in pixels, clamped to the viewport."
+            ],
+            [
+              "blocking",
+              "boolean",
+              "false",
+              "Disables Escape and backdrop dismissal."
+            ],
+            [
+              "open",
+              "boolean",
+              "\u2014",
+              "Controlled open state."
+            ],
+            [
+              "onOpenChange",
+              "(open: boolean) => void",
+              "\u2014",
+              "Receives requested open-state changes."
+            ]
+          ],
+          "customization": "Pass a custom icon or children for additional dialog body content. Use the existing Button component as trigger so its shape and size stay aligned with the rest of the interface.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/dialog/dialog.tsx"
+          ],
+          "related": [
+            "button",
+            "toast",
+            "dropdown-menu"
+          ]
+        },
+        {
+          "name": "modal",
+          "title": "Modal",
+          "description": "A flexible overlay container supporting spatial trigger morphing and programmatic center springs.",
+          "lede": "Hosts free-form content with optional trigger-to-panel morphing, backdrop blur, focus management, and custom close control.",
+          "keywords": [
+            "modal",
+            "dialog",
+            "overlay",
+            "sheet",
+            "popup",
+            "form"
+          ],
+          "sourcePath": "registry/components/modal/modal.tsx",
+          "installation": "Installs Modal, portal support, and shared motion tokens.",
+          "usage": "\"use client\"\n\nimport { Button } from \"@/components/rhoe/button/button\"\nimport { Input } from \"@/components/rhoe/input/input\"\nimport { Modal } from \"@/components/rhoe/modal/modal\"\n\nexport function InviteModal() {\n  return (\n    <Modal\n      trigger={<Button>Invite member</Button>}\n      title=\"Invite member\"\n      description=\"Send an invitation link to collaborate in this workspace.\"\n      width={440}\n    >\n      {({ close }) => (\n        <form\n          className=\"space-y-4\"\n          onSubmit={(e) => {\n            e.preventDefault()\n            close()\n          }}\n        >\n          <Input label=\"Email address\" type=\"email\" placeholder=\"colleague@company.com\" />\n          <div className=\"mt-6 flex items-center justify-end gap-2.5\">\n            <Button variant=\"text\" tone=\"secondary\" onClick={close} type=\"button\">Cancel</Button>\n            <Button type=\"submit\">Send invitation</Button>\n          </div>\n        </form>\n      )}\n    </Modal>\n  )\n}",
+          "examples": [
+            {
+              "title": "Trigger with morph animation",
+              "description": "Morphs outward from the trigger element and retracts on dismiss.",
+              "code": "<Modal trigger={<Button>Open</Button>} title=\"Settings\">\n  {({ close }) => <CustomSettings onDone={close} />}\n</Modal>"
+            },
+            {
+              "title": "Programmatic center spring",
+              "description": "Control visibility via state without an inline trigger.",
+              "code": "<Modal open={isOpen} onOpenChange={setIsOpen} title=\"Quick search\">\n  <SearchPalette />\n</Modal>"
+            },
+            {
+              "title": "Initially open modal",
+              "description": "defaultOpen opens the modal centered after the client portal is ready. Dismissal uses internal state; no controlled open prop is required.",
+              "code": "\"use client\"\n\nimport { Modal } from \"@/components/rhoe/modal/modal\"\n\nexport function WelcomeModal() {\n  return (\n    <Modal defaultOpen title=\"Welcome\" width={440}>\n      <p>Your workspace is ready.</p>\n    </Modal>\n  )\n}"
+            }
+          ],
+          "guidance": [
+            "Use Modal for free-form content, complex forms, or custom layouts that do not fit the opinionated Dialog alert structure.",
+            "Provide a title or supply ariaLabel for screen reader accessibility.",
+            "Use the render-prop function ({ close }) => ... or useModal() hook to trigger modal dismissal from nested elements."
+          ],
+          "behavior": [
+            "When opened via trigger, the panel animates its bounding rect from the trigger and returns to it when closed.",
+            "When opened programmatically without a trigger, the panel springs from the center with scale and opacity transitions.",
+            "A dimmed and lightly blurred backdrop isolates the modal content.",
+            "Escape and backdrop press close non-blocking modals.",
+            "Tab key navigation is strictly trapped within the active modal panel.",
+            "Initially open and programmatically opened panels are measured before they appear, so they start centered instead of flashing at the top-left corner."
+          ],
+          "accessibility": [
+            "Uses dialog and aria-modal semantics.",
+            "Focus moves into the modal on open, stays trapped inside, and returns to the trigger after closing.",
+            "Escape closes the modal unless blocking is true."
+          ],
+          "api": [
+            [
+              "trigger",
+              "ReactNode",
+              "—",
+              "Optional interactive element that opens the modal with spatial morphing."
+            ],
+            [
+              "children",
+              "ReactNode | ((helpers: { close: () => void }) => ReactNode)",
+              "—",
+              "Free-form content or render function.",
+              true
+            ],
+            [
+              "title",
+              "ReactNode",
+              "—",
+              "Optional visible modal heading."
+            ],
+            [
+              "description",
+              "ReactNode",
+              "—",
+              "Optional supporting text below the title."
+            ],
+            [
+              "ariaLabel",
+              "string",
+              "—",
+              "Accessible name when no visible title is present."
+            ],
+            [
+              "open / defaultOpen",
+              "boolean",
+              "false",
+              "Controlled or initial uncontrolled open state. defaultOpen is read only on mount; initially open panels are measured and centered before becoming visible. Update open in onOpenChange when controlled."
+            ],
+            [
+              "onOpenChange",
+              "(open: boolean) => void",
+              "—",
+              "Receives requested open-state changes."
+            ],
+            [
+              "onClose",
+              "() => void",
+              "—",
+              "Called when Escape, backdrop, close button, useModal().close(), or the children close helper requests dismissal. Changing the controlled open prop externally does not call onClose."
+            ],
+            [
+              "showCloseButton",
+              "boolean",
+              "true",
+              "Shows the top-right X close button."
+            ],
+            [
+              "width / height",
+              "number",
+              "520 / 340",
+              "Custom panel dimensions in pixels, clamped to the viewport."
+            ],
+            [
+              "blocking",
+              "boolean",
+              "false",
+              "Disables Escape and backdrop dismissal."
+            ],
+            [
+              "className",
+              "string",
+              "—",
+              "Additional classes applied to the modal panel."
+            ]
+          ],
+          "customization": "Render any custom JSX inside children. Use the useModal() hook or children function helper to close the modal from any nested action.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/modal/modal.tsx"
+          ],
+          "related": [
+            "dialog",
+            "popover",
+            "button"
+          ]
+        },
+        {
+          "name": "icon-morph",
+          "title": "Icon Morph",
+          "description": "Path morphing for compatible SVGs with a universal scale and opacity fallback.",
+          "lede": "Changes icons with true SVG path interpolation when possible and a composed fallback when it is not.",
+          "keywords": [
+            "svg",
+            "icon transition",
+            "path",
+            "animate icon"
+          ],
+          "sourcePath": "registry/components/icon-morph/icon-morph.tsx",
+          "installation": "Installs Icon Morph and its motion foundation.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { Menu, X } from \"lucide-react\"\nimport { IconMorph, iconMorphPresets } from \"@/components/rhoe/icon-morph/icon-morph\"\n\nexport function IconMorphExample() {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <button type=\"button\" aria-label=\"Toggle menu\" onClick={() => setOpen((value) => !value)}>\n      <IconMorph\n        state={open}\n        from={<Menu />}\n        to={<X />}\n        paths={iconMorphPresets.menuClose}\n      />\n    </button>\n  )\n}",
+          "guidance": [
+            "Use path morphing only for icons designed as a compatible pair.",
+            "Use the fallback for unrelated Lucide or custom SVG icons."
+          ],
+          "behavior": [
+            "Compatible paths interpolate directly.",
+            "Fallback icons shrink and fade out while the next icon grows and fades in.",
+            "Reduced motion changes state without spatial movement."
+          ],
+          "accessibility": [
+            "Provide an accessible name when the icon is interactive.",
+            "Decorative icons should be hidden from assistive technology."
+          ],
+          "api": [
+            [
+              "paths",
+              "IconMorphPaths",
+              "\u2014",
+              "Compatible path data for a true morph."
+            ],
+            [
+              "state",
+              "boolean",
+              "\u2014",
+              "Chooses the from or to icon.",
+              true
+            ],
+            [
+              "from",
+              "ReactNode",
+              "\u2014",
+              "Icon shown when state is false.",
+              true
+            ],
+            [
+              "to",
+              "ReactNode",
+              "\u2014",
+              "Icon shown when state is true.",
+              true
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/icon-morph/icon-morph.tsx"
+          ],
+          "related": [
+            "button",
+            "morphing-text"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Feedback",
+      "description": "Compact semantic labels and feedback that clarify system status.",
+      "components": [
+        {
+          "name": "badge",
+          "title": "Badge",
+          "description": "Compact status labels with semantic tones, two surface treatments, and direct color overrides.",
+          "lede": "Labels concise state, category, or count information without competing with primary content.",
+          "keywords": [
+            "status",
+            "label",
+            "tag",
+            "count",
+            "chip"
+          ],
+          "sourcePath": "registry/components/badge/badge.tsx",
+          "installation": "Installs Badge with shared foundation styles.",
+          "usage": "import { Check } from \"lucide-react\"\nimport { Badge } from \"@/components/rhoe/badge/badge\"\n\nexport function BadgeExample() {\n  return (\n    <>\n      <Badge tone=\"success\" icon={<Check />}>Deployed</Badge>\n      <Badge variant=\"bordered\" tone=\"warning\">Review needed</Badge>\n      <Badge color=\"#14532d\" backgroundColor=\"#dcfce7\">Custom</Badge>\n    </>\n  )\n}",
+          "guidance": [
+            "Use a short visible label that explains the status or category.",
+            "Use tone to reinforce the label, never as its only meaning.",
+            "Use custom colors only when they retain readable contrast."
+          ],
+          "behavior": [
+            "Filled uses a semantic status surface.",
+            "Bordered uses a subtle surface and an outline matching its semantic tone.",
+            "Custom color props override the matching semantic color role."
+          ],
+          "accessibility": [
+            "Badge is a non-interactive text label by default.",
+            "Use plain visible language such as Deployed or Review needed.",
+            "Do not use a color-only badge to communicate a state."
+          ],
+          "api": [
+            [
+              "children",
+              "ReactNode",
+              "\u2014",
+              "Visible status or category label.",
+              true
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Surface treatment."
+            ],
+            [
+              "tone",
+              "neutral | success | warning | danger",
+              "neutral",
+              "Semantic status color."
+            ],
+            [
+              "icon",
+              "ReactNode",
+              "\u2014",
+              "Optional leading icon."
+            ],
+            [
+              "color",
+              "CSSProperties[\"color\"]",
+              "\u2014",
+              "Overrides the label color."
+            ],
+            [
+              "backgroundColor",
+              "CSSProperties[\"backgroundColor\"]",
+              "\u2014",
+              "Overrides the surface color."
+            ],
+            [
+              "borderColor",
+              "CSSProperties[\"borderColor\"]",
+              "\u2014",
+              "Overrides the bordered outline color."
+            ]
+          ],
+          "customization": "Pass color, backgroundColor, and borderColor independently to match a custom semantic palette.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/badge/badge.tsx"
+          ],
+          "related": [
+            "button",
+            "animated-list"
+          ]
+        },
+        {
+          "name": "toast",
+          "title": "Toast",
+          "description": "Viewport notifications with semantic tones, tinted or solid fills, outlined surfaces, and six positions.",
+          "lede": "Shows brief system feedback above the interface in a controlled three-item stack.",
+          "keywords": [
+            "notification",
+            "feedback",
+            "alert",
+            "status",
+            "snackbar"
+          ],
+          "sourcePath": "registry/components/toast/toast.tsx",
+          "installation": "Installs Toast with its portal, provider, and shared motion foundation.",
+          "usage": "\"use client\"\n\nimport { Check } from \"lucide-react\"\nimport { Button } from \"@/components/rhoe/button/button\"\nimport { ToastProvider, useToast } from \"@/components/rhoe/toast/toast\"\n\nfunction SaveButton() {\n  const { toast } = useToast()\n\n  return (\n    <Button\n      onClick={() => toast({\n        text: \"Changes saved\",\n        icon: <Check />,\n        tone: \"success\",\n        variant: \"filled\",\n        fill: \"tinted\",\n      })}\n    >\n      Save changes\n    </Button>\n  )\n}\n\nexport function ToastExample() {\n  return (\n    <ToastProvider position=\"bottom-right\" stackLimit={3}>\n      <SaveButton />\n    </ToastProvider>\n  )\n}",
+          "examples": [
+            {
+              "title": "Solid feedback",
+              "code": "toast({ text: \"Deployment completed\", tone: \"success\", variant: \"filled\", fill: \"solid\" })"
+            },
+            {
+              "title": "Bordered warning",
+              "code": "toast({ text: \"Storage is almost full\", tone: \"warning\", variant: \"bordered\" })"
+            },
+            {
+              "title": "Top-center stack",
+              "code": "<ToastProvider position=\"top-center\" stackLimit={3}>{children}</ToastProvider>"
+            }
+          ],
+          "guidance": [
+            "Use toast for short feedback that does not require an immediate decision.",
+            "Keep text concise and let the semantic tone reinforce its meaning.",
+            "Use a persistent duration of 0 only when another interaction dismisses the toast."
+          ],
+          "behavior": [
+            "New notifications enter from the selected viewport edge and existing items shift with the shared morph spring.",
+            "A collapsed stack keeps the newest toast in front while older toast cards tuck behind it with a visible edge; hover or focus the stack to fan out all items.",
+            "The visible stack is capped at three; a newer toast removes the oldest visible item.",
+            "Filled tinted uses the neutral surface with semantic text, while solid uses the matching semantic hover surface so text and icons retain their semantic color.",
+            "Reduced-motion preferences retain opacity feedback without spatial movement."
+          ],
+          "accessibility": [
+            "Neutral and success notifications use status semantics.",
+            "Warning and danger notifications use alert semantics.",
+            "Icons are decorative; the required visible text carries the message."
+          ],
+          "api": [
+            [
+              "text",
+              "ReactNode",
+              "\u2014",
+              "Visible notification message passed to toast().",
+              true
+            ],
+            [
+              "icon",
+              "ReactNode",
+              "\u2014",
+              "Optional leading icon."
+            ],
+            [
+              "tone",
+              "neutral | success | warning | danger",
+              "neutral",
+              "Semantic color and announcement priority."
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Notification surface treatment."
+            ],
+            [
+              "fill",
+              "tinted | solid",
+              "tinted",
+              "Color treatment used by the filled variant."
+            ],
+            [
+              "duration",
+              "number",
+              "4000",
+              "Dismissal delay in milliseconds; 0 keeps the toast visible."
+            ],
+            [
+              "id",
+              "string",
+              "generated",
+              "Replaces an existing toast that uses the same identifier."
+            ],
+            [
+              "children (ToastProvider)",
+              "ReactNode",
+              "\u2014",
+              "Application subtree allowed to call useToast().",
+              true
+            ],
+            [
+              "position (ToastProvider)",
+              "top-left | top-center | top-right | bottom-left | bottom-center | bottom-right",
+              "bottom-right",
+              "Viewport position for the stack."
+            ],
+            [
+              "stackLimit (ToastProvider)",
+              "1 | 2 | 3",
+              "3",
+              "Maximum visible notifications."
+            ]
+          ],
+          "customization": "Place one ToastProvider near the application root. Select the position on the provider and choose tone, variant, fill, icon, and duration for each toast call.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/toast/toast.tsx"
+          ],
+          "related": [
+            "badge",
+            "button"
+          ]
+        },
+        {
+          "name": "tooltip",
+          "title": "Tooltip",
+          "description": "Circular icon triggers that reveal concise contextual help on hover or keyboard focus.",
+          "lede": "Explains an icon-only action or unfamiliar control without adding persistent interface text.",
+          "keywords": [
+            "help",
+            "hint",
+            "icon button",
+            "context"
+          ],
+          "sourcePath": "registry/components/tooltip/tooltip.tsx",
+          "installation": "Installs Tooltip with shared motion tokens and foundation styles.",
+          "usage": "\"use client\"\n\nimport { Info } from \"lucide-react\"\nimport { Tooltip } from \"@/components/rhoe/tooltip/tooltip\"\n\nexport function MemberHelp() {\n  return (\n    <Tooltip\n      aria-label=\"Learn about member roles\"\n      content=\"Owners can manage workspace settings and billing.\"\n      icon={<Info />}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Filled icon trigger",
+              "code": "<Tooltip aria-label=\"More information\" content=\"Visible on hover or focus.\" icon={<Info />} />"
+            },
+            {
+              "title": "Bordered trigger",
+              "code": "<Tooltip variant=\"bordered\" size=\"small\" aria-label=\"Help\" content=\"Short contextual guidance.\" icon={<CircleHelp />} />"
+            }
+          ],
+          "guidance": [
+            "Use a tooltip to explain an icon whose meaning is not already obvious.",
+            "Keep content short enough to scan without moving attention away from the task.",
+            "Use visible text instead when the information is essential to completing the task."
+          ],
+          "behavior": [
+            "The panel opens on hover and keyboard focus, then closes on pointer leave, blur, or Escape.",
+            "The trigger is always a circular icon button with either a filled or bordered surface.",
+            "The panel fades and scales with the shared smooth motion token; reduced-motion preferences use opacity only."
+          ],
+          "accessibility": [
+            "aria-label is required because the trigger has no visible text label.",
+            "The visible panel uses the tooltip role and is linked to its trigger with aria-describedby.",
+            "Keyboard focus reveals the same help as hover, and Escape dismisses it."
+          ],
+          "api": [
+            [
+              "content",
+              "ReactNode",
+              "\u2014",
+              "Contextual help shown in the tooltip.",
+              true
+            ],
+            [
+              "icon",
+              "ReactNode",
+              "\u2014",
+              "Visible icon inside the circular trigger.",
+              true
+            ],
+            [
+              "aria-label",
+              "string",
+              "\u2014",
+              "Accessible trigger name.",
+              true
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Circular trigger surface."
+            ],
+            [
+              "size",
+              "small | medium | large",
+              "medium",
+              "Trigger diameter: 32px, 46px, or 52px."
+            ],
+            [
+              "side",
+              "top | right | bottom | left",
+              "top",
+              "Tooltip placement relative to its trigger."
+            ],
+            [
+              "open / defaultOpen",
+              "boolean",
+              "false",
+              "Controlled or initial visibility."
+            ],
+            [
+              "onOpenChange",
+              "(open: boolean) => void",
+              "\u2014",
+              "Called when hover, focus, or Escape changes visibility."
+            ]
+          ],
+          "customization": "Pass any icon and use side to place concise help where it has room. The trigger shape remains circular by design.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/tooltip/tooltip.tsx"
+          ],
+          "related": [
+            "button",
+            "badge"
+          ]
+        },
+        {
+          "name": "meter",
+          "title": "Meter",
+          "description": "Visual capacity and usage meters with linear capsule and circular gauge variants.",
+          "lede": "Visualizes consumed or remaining capacity like storage, quota, or budget across button-proportional thickness scales.",
+          "keywords": [
+            "meter",
+            "progress",
+            "storage",
+            "gauge",
+            "capacity",
+            "usage",
+            "quota"
+          ],
+          "sourcePath": "registry/components/meter/meter.tsx",
+          "installation": "Installs Meter with Rolling Number, Morphing Text, shared motion tokens, and foundation styles.",
+          "usage": "\"use client\"\n\nimport { Meter } from \"@/components/rhoe/meter/meter\"\n\nexport function StorageMeter() {\n  return (\n    <Meter\n      variant=\"linear\"\n      size=\"m\"\n      value={78}\n      tone=\"auto\"\n      label=\"Storage used\"\n      valueText=\"78 GB of 100 GB\"\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Linear Capsule Meter",
+              "code": "<Meter variant=\"linear\" size=\"m\" value={78} tone=\"auto\" label=\"Storage\" valueText=\"78 GB / 100 GB\" />"
+            },
+            {
+              "title": "Circular Gauge",
+              "code": "<Meter variant=\"circle\" size=\"m\" value={78} tone=\"auto\" />"
+            },
+            {
+              "title": "Custom content and accessible value",
+              "code": "\"use client\"\n\nimport { Meter } from \"@/components/rhoe/meter/meter\"\nimport { RollingNumber } from \"@/components/rhoe/rolling-number/rolling-number\"\n\nexport function StorageGauge() {\n  return (\n    <Meter variant=\"circle\" size=\"xl\" value={78} aria-label=\"Storage used\" aria-valuetext=\"78 GB of 100 GB\">\n      {({ value }) => <RollingNumber value={value} />}\n    </Meter>\n  )\n}"
+            }
+          ],
+          "guidance": [
+            "Use 2xs (6px) for compact hairline progress bars.",
+            "Use linear capsule sizes (s, m, lg) for inline cards with embedded labels.",
+            "Use circle for compact inline status or widget corners.",
+            "Use tone=\"auto\" to automatically warn users when usage exceeds 75% or 90%."
+          ],
+          "behavior": [
+            "Fill changes use an 800ms easing transition; reduced motion removes the duration.",
+            "Numeric values animate smoothly with RollingNumber.",
+            "Text labels animate with MorphingText diff transitions.",
+            "Clamps percentage safely between 0% and 100%."
+          ],
+          "accessibility": [
+            "Uses semantic role=\"meter\" with aria-valuenow, aria-valuemin, and aria-valuemax.",
+            "Provides aria-valuetext with formatted percentage or custom text.",
+            "Respects prefers-reduced-motion preferences."
+          ],
+          "api": [
+            [
+              "variant",
+              "\"linear\" | \"circle\"",
+              "\"linear\"",
+              "Display form factor: horizontal capsule bar or radial circular gauge."
+            ],
+            [
+              "value",
+              "number",
+              "—",
+              "Current measured value.",
+              true
+            ],
+            [
+              "min",
+              "number",
+              "0",
+              "Minimum value bounds."
+            ],
+            [
+              "max",
+              "number",
+              "100",
+              "Maximum value bounds."
+            ],
+            [
+              "size",
+              "\"2xs\" | \"xs\" | \"s\" | \"m\" | \"lg\" | \"xl\"",
+              "\"m\"",
+              "Thickness scale: 2xs (6px hairline progress bar); xs (32px); s (40px), m (46px), lg (52px) matching button heights; xl (60px)."
+            ],
+            [
+              "tone",
+              "\"auto\" | \"primary\" | \"secondary\" | \"success\" | \"warning\" | \"danger\"",
+              "\"primary\"",
+              "Color tone of the usage fill. If \"auto\", changes dynamically to warning (>=75%) or danger (>=90%)."
+            ],
+            [
+              "label",
+              "ReactNode",
+              "—",
+              "Optional descriptive label (animates with MorphingText if string)."
+            ],
+            [
+              "valueText",
+              "ReactNode",
+              "—",
+              "Custom visible value for the linear variant. Replaces its percentage display even when showValue is false. For custom circle content, use children."
+            ],
+            [
+              "labelPosition",
+              "\"top\" | \"inside\"",
+              "\"top\"",
+              "Placement of label and value for linear capsule variant (ignored on 2xs)."
+            ],
+            [
+              "showValue",
+              "boolean",
+              "true",
+              "Whether to show percentage text (rolls with RollingNumber)."
+            ],
+            [
+              "children",
+              "ReactNode | ((props: { value: number; percentage: number }) => ReactNode)",
+              "—",
+              "Custom content inside the capsule or circle. Receives the raw value and a percentage clamped to 0–100. Ignored for size=\"2xs\". Takes precedence over the default inner content."
+            ],
+            [
+              "railClassName",
+              "string",
+              "\"\"",
+              "Classes on the linear rail or circular background stroke."
+            ],
+            [
+              "usageClassName",
+              "string",
+              "\"\"",
+              "Classes on the linear fill or circular value stroke."
+            ],
+            [
+              "className",
+              "string",
+              "\"\"",
+              "Classes on the root div; standard div attributes are also forwarded."
+            ],
+            [
+              "aria-label",
+              "string",
+              "string label, if provided",
+              "Accessible name. Supply it when label is absent or is a React element."
+            ],
+            [
+              "aria-valuetext",
+              "string",
+              "rounded percentage + \"%\"",
+              "Screen-reader description of the value, independent of the visible valueText."
+            ],
+            [
+              "ref",
+              "Ref<HTMLDivElement>",
+              "—",
+              "Forwarded reference to the root meter element."
+            ]
+          ],
+          "customization": "Customize railClassName and usageClassName to apply custom borders, shadows, or gradients.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/meter/meter.tsx",
+            "components/rhoe/rolling-number/rolling-number.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "rolling-number",
+            "morphing-text",
+            "badge",
+            "button"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Navigation",
+      "description": "Page and section navigation with clear hierarchy, active states, and accessible controls.",
+      "components": [
+        {
+          "name": "sidebar-navigation",
+          "title": "Sidebar Navigation",
+          "description": "Grouped sidebar navigation with collapsible sections and an animated parent guide.",
+          "lede": "Organizes related destinations in collapsible groups while keeping the active route obvious.",
+          "keywords": [
+            "sidebar",
+            "nav",
+            "menu",
+            "collapse"
+          ],
+          "sourcePath": "registry/components/sidebar-navigation/sidebar-navigation.tsx",
+          "installation": "Installs Sidebar Navigation with shared motion tokens and foundation styles.",
+          "usage": "import { SidebarNavigation } from \"@/components/rhoe/sidebar-navigation/sidebar-navigation\"\n\nconst groups = [\n  {\n    label: \"Docs\",\n    items: [\n      { href: \"/docs/introduction\", label: \"Introduction\" },\n      { href: \"/docs/installation\", label: \"Installation\" },\n    ],\n  },\n]\n\nexport function SidebarNavigationExample() {\n  return (\n    <SidebarNavigation\n      groups={groups}\n      activeHref=\"/docs/introduction\"\n    />\n  )\n}",
+          "guidance": [
+            "Use groups for destinations that share a task or content area.",
+            "Show counts only when they help people choose a destination."
+          ],
+          "behavior": [
+            "The active rail and group guide move between destinations.",
+            "Groups retain their local expanded state.",
+            "The sidebar becomes horizontally scrollable on narrow screens."
+          ],
+          "accessibility": [
+            "Links remain native anchors.",
+            "Group controls expose their expanded state.",
+            "The active route is announced with aria-current."
+          ],
+          "api": [
+            [
+              "groups",
+              "SidebarNavigationGroup[]",
+              "\u2014",
+              "Grouped navigation data.",
+              true
+            ],
+            [
+              "activeHref",
+              "string",
+              "\u2014",
+              "Current route or hash."
+            ],
+            [
+              "renderLink",
+              "ComponentType",
+              "a",
+              "Custom link renderer."
+            ],
+            [
+              "onActiveHrefChange",
+              "(href) => void",
+              "\u2014",
+              "Selection callback."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/sidebar-navigation/sidebar-navigation.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "table-of-contents",
+            "tabs"
+          ]
+        },
+        {
+          "name": "table-of-contents",
+          "title": "Table of Contents",
+          "description": "A scroll-aware page outline with an animated active-section rail.",
+          "lede": "Keeps long documentation pages navigable with a concise, scroll-aware outline.",
+          "keywords": [
+            "toc",
+            "outline",
+            "scrollspy",
+            "page navigation"
+          ],
+          "sourcePath": "registry/components/table-of-contents/table-of-contents.tsx",
+          "installation": "Installs Table of Contents and its shared motion tokens.",
+          "usage": "import { TableOfContents } from \"@/components/rhoe/table-of-contents/table-of-contents\"\n\nconst items = [\n  { id: \"overview\", label: \"Overview\" },\n  { id: \"usage\", label: \"Usage\" },\n]\n\nexport function TableOfContentsExample() {\n  return <TableOfContents items={items} />\n}",
+          "guidance": [
+            "Use it on long documents with meaningful headings.",
+            "Keep labels short and match visible section headings."
+          ],
+          "behavior": [
+            "The active rail follows the visible section.",
+            "Clicking an item scrolls to the matching id."
+          ],
+          "accessibility": [
+            "Uses a semantic navigation landmark.",
+            "The current section is exposed with aria-current."
+          ],
+          "api": [
+            [
+              "items",
+              "TableOfContentsItem[]",
+              "\u2014",
+              "Section ids and labels.",
+              true
+            ],
+            [
+              "offset",
+              "number",
+              "96",
+              "Scroll activation offset."
+            ],
+            [
+              "ariaLabel",
+              "string",
+              "On this page",
+              "Accessible navigation label."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/table-of-contents/table-of-contents.tsx"
+          ],
+          "related": [
+            "sidebar-navigation",
+            "tabs"
+          ]
+        },
+        {
+          "name": "tabs",
+          "title": "Tabs",
+          "description": "Accessible flat and grouped tabs with optional icons and a moving active indicator.",
+          "lede": "Switches closely related panels without leaving the current page.",
+          "keywords": [
+            "tab",
+            "tabpanel",
+            "segmented control"
+          ],
+          "sourcePath": "registry/components/tabs/tabs.tsx",
+          "installation": "Installs Tabs and shared motion tokens.",
+          "usage": "import { Tabs } from \"@/components/rhoe/tabs/tabs\"\n\nconst items = [\n  { value: \"overview\", label: \"Overview\", content: <p>Project overview</p> },\n  { value: \"activity\", label: \"Activity\", content: <p>Recent activity</p> },\n]\n\nexport function TabsExample() {\n  return <Tabs items={items} defaultValue=\"overview\" />\n}",
+          "guidance": [
+            "Use tabs for a small stable set of related views.",
+            "Use navigation when each destination needs its own URL."
+          ],
+          "behavior": [
+            "The selected indicator morphs between tab positions and widths.",
+            "Arrow keys, Home, and End move focus and selection."
+          ],
+          "accessibility": [
+            "Uses tablist, tab, and tabpanel roles.",
+            "Only the selected tab panel is visible."
+          ],
+          "api": [
+            [
+              "items",
+              "TabsItem[]",
+              "\u2014",
+              "Values, labels, icons, and panel content.",
+              true
+            ],
+            [
+              "value",
+              "string",
+              "\u2014",
+              "Controlled selected value."
+            ],
+            [
+              "defaultValue",
+              "string",
+              "first item",
+              "Initial uncontrolled value."
+            ],
+            [
+              "variant",
+              "flat | grouped",
+              "flat",
+              "Visual treatment."
+            ],
+            [
+              "animatePanelHeight",
+              "boolean",
+              "false",
+              "Morph panel height on changes."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/tabs/tabs.tsx"
+          ],
+          "related": [
+            "sidebar-navigation",
+            "table-of-contents"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Forms",
+      "description": "Accessible controls for collecting, validating, and correcting user input.",
+      "components": [
+        {
+          "name": "calendar",
+          "title": "Calendar",
+          "description": "Compact and full calendars with zoomable day, month, and year views.",
+          "lede": "Selects a date while keeping nearby days, months, and years easy to explore.",
+          "keywords": [
+            "date picker",
+            "month",
+            "year",
+            "schedule"
+          ],
+          "sourcePath": "registry/components/calendar/calendar.tsx",
+          "installation": "Installs Calendar, Morphing Text, and the shared motion foundation.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { Calendar } from \"@/components/rhoe/calendar/calendar\"\n\nexport function CalendarExample() {\n  const [date, setDate] = useState(() => new Date(2020, 1, 8))\n\n  return (\n    <Calendar\n      variant=\"compact\"\n      value={date}\n      onValueChange={setDate}\n      locale=\"en-US\"\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Compact calendar",
+              "code": "<Calendar variant=\"compact\" defaultValue={new Date(2020, 1, 8)} />"
+            },
+            {
+              "title": "Full year overview",
+              "code": "<Calendar variant=\"full\" value={date} onValueChange={setDate} />"
+            }
+          ],
+          "guidance": [
+            "Use compact inside a popover or narrow form layout.",
+            "Use full when people need to compare dates across the whole year.",
+            "Use a task block instead when dates also contain deadlines, events, or to-do items."
+          ],
+          "behavior": [
+            "The initial view shows one complete month with adjacent dates.",
+            "Selecting the month header reveals month choices; the chosen mini calendar morphs into the full daily calendar and shrinks back to the same position when returning.",
+            "Selecting the year header opens twelve-year pages, while Today returns to and selects the current date.",
+            "Hover and selected-date highlights glide continuously between day cells; hovering the selected day does not change its color.",
+            "The selected-date heading morphs between date strings without replacing the whole line abruptly."
+          ],
+          "accessibility": [
+            "Day, month, and year choices use labeled grid cells and expose the selected state.",
+            "Arrow keys move by day or week; Home and End move within the week; Page Up and Page Down move by month.",
+            "All controls have visible keyboard focus and reduced-motion support."
+          ],
+          "api": [
+            [
+              "variant",
+              "compact | full",
+              "compact",
+              "Uses a simple month grid or a full paper-calendar year overview."
+            ],
+            [
+              "value",
+              "Date",
+              "\u2014",
+              "Controlled selected date."
+            ],
+            [
+              "defaultValue",
+              "Date",
+              "today",
+              "Initial date for uncontrolled use."
+            ],
+            [
+              "onValueChange",
+              "(date: Date) => void",
+              "\u2014",
+              "Called after a date is selected."
+            ],
+            [
+              "locale",
+              "string",
+              "en-US",
+              "Locale used for dates, months, and weekdays."
+            ],
+            [
+              "weekStartsOn",
+              "0 | 1",
+              "0",
+              "Starts weeks on Sunday or Monday."
+            ],
+            [
+              "ariaLabel",
+              "string",
+              "Calendar",
+              "Accessible name for the calendar region."
+            ],
+            [
+              "className",
+              "string",
+              "\u2014",
+              "Additional classes for the calendar surface."
+            ]
+          ],
+          "customization": "Use compact for popovers and full for dedicated scheduling surfaces. Colors, radii, and motion continue to use the shared Rhoe UI tokens.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/calendar/calendar.tsx"
+          ],
+          "related": [
+            "popover",
+            "input",
+            "morphing-text"
+          ]
+        },
+        {
+          "name": "input",
+          "title": "Input",
+          "description": "Accessible filled and bordered inputs with icons, validation, clear actions, and incremental character reveals.",
+          "lede": "Collects short text with clear labeling, optional icons, validation feedback, and animated typed characters.",
+          "keywords": [
+            "text field",
+            "email",
+            "password",
+            "form"
+          ],
+          "sourcePath": "registry/components/input/input.tsx",
+          "installation": "Installs Input, Button, and their shared motion foundation.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { Mail } from \"lucide-react\"\nimport { Input } from \"@/components/rhoe/input/input\"\n\nexport function InputExample() {\n  const [email, setEmail] = useState(\"\")\n\n  return (\n    <Input\n      type=\"email\"\n      label=\"Email address\"\n      placeholder=\"you@example.com\"\n      prefixIcon={<Mail />}\n      value={email}\n      onValueChange={setEmail}\n    />\n  )\n}",
+          "guidance": [
+            "Use the native type that matches the value.",
+            "Always provide a visible label for information people must understand later.",
+            "Reserve error text for a problem and its recovery."
+          ],
+          "behavior": [
+            "Only newly inserted characters reveal.",
+            "After the motion finishes, characters merge into one text run so the native caret stays accurate.",
+            "Password values are masked in the visual layer.",
+            "A clear action appears after a suffix icon when a value exists."
+          ],
+          "accessibility": [
+            "Label, hint, and error text connect to the native input.",
+            "Error state exposes aria-invalid.",
+            "The clear action returns focus to the input."
+          ],
+          "api": [
+            [
+              "type",
+              "text | email | password | search | tel | url",
+              "text",
+              "Native input type."
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Surface treatment."
+            ],
+            [
+              "size",
+              "small | medium | large",
+              "medium",
+              "Control height: 40px, 46px, or 52px."
+            ],
+            [
+              "dense",
+              "boolean",
+              "false",
+              "Shortcut for size=\"small\"."
+            ],
+            [
+              "label",
+              "string",
+              "\u2014",
+              "Visible field label."
+            ],
+            [
+              "error",
+              "ReactNode",
+              "\u2014",
+              "Validation feedback."
+            ],
+            [
+              "prefixIcon / suffixIcon",
+              "ReactNode",
+              "\u2014",
+              "Decorative icons."
+            ],
+            [
+              "clearable",
+              "boolean",
+              "true",
+              "Shows a clear action when the field has value."
+            ],
+            [
+              "onValueChange",
+              "(value: string) => void",
+              "\u2014",
+              "Receives value changes."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/input/input.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "password-strength",
+            "number-input",
+            "currency-input"
+          ]
+        },
+        {
+          "name": "textarea",
+          "title": "Textarea",
+          "description": "A multiline field that shares Input styling, validation, icons, and clear behavior.",
+          "lede": "Collects longer text with a height you can control manually or grow automatically as people write.",
+          "keywords": [
+            "multiline",
+            "description",
+            "comment",
+            "form"
+          ],
+          "sourcePath": "registry/components/textarea/textarea.tsx",
+          "installation": "Installs Textarea, Button, and the shared motion foundation.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { AlignLeft } from \"lucide-react\"\nimport { Textarea } from \"@/components/rhoe/textarea/textarea\"\n\nexport function ProjectBrief() {\n  const [brief, setBrief] = useState(\"\")\n\n  return (\n    <Textarea\n      label=\"Project brief\"\n      placeholder=\"Describe the project\"\n      prefixIcon={<AlignLeft />}\n      value={brief}\n      maxLength={280}\n      autoResize\n      onValueChange={setBrief}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Automatic height",
+              "code": "<Textarea label=\"Notes\" autoResize maxLength={280} />"
+            },
+            {
+              "title": "Manual height",
+              "code": "<Textarea label=\"Notes\" rows={6} resize=\"vertical\" />"
+            }
+          ],
+          "guidance": [
+            "Use a Textarea only when people are expected to write more than a short phrase.",
+            "Use autoResize for conversational or note-taking flows.",
+            "Set maxLength only when a real product constraint exists; the counter appears automatically."
+          ],
+          "behavior": [
+            "The field uses the same filled and bordered surfaces as Input.",
+            "Inserted characters use the same staggered reveal as Input while the native textarea keeps focus and caret behavior.",
+            "autoResize grows the native textarea to its content and disables manual resizing.",
+            "Without autoResize, rows and resize control the initial and manual height.",
+            "A character counter appears only when maxLength is provided.",
+            "The clear action sits outside the field and follows the caret's visual line."
+          ],
+          "accessibility": [
+            "Uses a native textarea, preserving multiline keyboard and form behavior.",
+            "Label, hint, and error text connect to the textarea through native ARIA relationships.",
+            "The visible counter communicates the configured length limit."
+          ],
+          "api": [
+            [
+              "value / defaultValue",
+              "string",
+              "empty",
+              "Controlled or initial text."
+            ],
+            [
+              "onValueChange",
+              "(value: string) => void",
+              "\u2014",
+              "Receives text changes."
+            ],
+            [
+              "animationDuration",
+              "number",
+              "600",
+              "Typed-character reveal duration in milliseconds."
+            ],
+            [
+              "autoResize",
+              "boolean",
+              "false",
+              "Grows the field to its content."
+            ],
+            [
+              "rows",
+              "number",
+              "4",
+              "Initial height for manual mode."
+            ],
+            [
+              "resize",
+              "none | vertical | both",
+              "vertical",
+              "Native resize behavior when autoResize is false."
+            ],
+            [
+              "maxLength",
+              "number",
+              "\u2014",
+              "Native character limit; enables the visible counter."
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Matches Input surface appearance."
+            ],
+            [
+              "label / hint / error",
+              "ReactNode",
+              "\u2014",
+              "Inherited field labeling and feedback."
+            ]
+          ],
+          "customization": "Textarea accepts prefixIcon, suffixIcon, suffixControl, clearable, disabled, required, and native textarea props where they apply.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/textarea/textarea.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "input",
+            "text-reveal",
+            "expanding-search"
+          ]
+        },
+        {
+          "name": "checkbox",
+          "title": "Checkbox",
+          "description": "Standalone checkboxes and semantic checkbox lists with optional labels and supporting descriptions.",
+          "lede": "Selects one or more independent values with native checkbox behavior and clear visual feedback.",
+          "keywords": [
+            "check",
+            "multi-select",
+            "form",
+            "option"
+          ],
+          "sourcePath": "registry/components/checkbox/checkbox.tsx",
+          "installation": "Installs Checkbox, Checkbox List, the Lucide check icon, and shared motion tokens.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { CheckboxList } from \"@/components/rhoe/checkbox/checkbox\"\n\nconst notificationOptions = [\n  { value: \"mentions\", label: \"Mentions\" },\n  { value: \"replies\", label: \"Replies\" },\n]\n\nexport function NotificationPreferences() {\n  const [selected, setSelected] = useState([\"mentions\"])\n\n  return (\n    <CheckboxList\n      ariaLabel=\"Notifications\"\n      items={notificationOptions}\n      value={selected}\n      onValueChange={setSelected}\n      variant=\"selected\"\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Checkbox only",
+              "code": "<Checkbox aria-label=\"Accept terms\" defaultChecked />"
+            },
+            {
+              "title": "With label",
+              "code": "<Checkbox label=\"Accept terms and conditions\" />"
+            },
+            {
+              "title": "Checkbox list",
+              "code": "<CheckboxList items={items} />\n<CheckboxList items={items} variant=\"filled-leading\" />\n<CheckboxList items={items} variant=\"filled-trailing\" />\n<CheckboxList items={items} variant=\"selected\" />"
+            }
+          ],
+          "guidance": [
+            "Use Checkbox for independent selections; use Radio Group when exactly one choice is allowed.",
+            "Use a Switch only when a setting takes effect immediately.",
+            "Keep labels specific enough to explain what becomes selected."
+          ],
+          "behavior": [
+            "The check mark enters and exits with the shared snappy spring.",
+            "Checkbox List renders an unwrapped semantic list; filled rows can place the check on either side or use a semantic border and matching text when selected.",
+            "Reduced-motion preferences preserve state changes without the scale transition."
+          ],
+          "accessibility": [
+            "Uses native checkbox inputs, so Space toggles them and form submission works normally.",
+            "Provide label or aria-label for every standalone checkbox.",
+            "Use a semantic list when several independent Checkbox controls form one visible list."
+          ],
+          "api": [
+            [
+              "checked",
+              "boolean",
+              "\u2014",
+              "Controlled state."
+            ],
+            [
+              "defaultChecked",
+              "boolean",
+              "false",
+              "Initial uncontrolled state."
+            ],
+            [
+              "onCheckedChange",
+              "(checked: boolean) => void",
+              "\u2014",
+              "Receives the next checked state."
+            ],
+            [
+              "label",
+              "ReactNode",
+              "\u2014",
+              "Visible checkbox label."
+            ],
+            [
+              "description",
+              "ReactNode",
+              "\u2014",
+              "Optional text below an individual checkbox label."
+            ],
+            [
+              "variant",
+              "default | filled",
+              "default",
+              "Compact Checkbox treatment or filled row."
+            ],
+            [
+              "indicatorPosition",
+              "leading | trailing | none",
+              "leading",
+              "Places the check before or after the label, or hides it for a selected row."
+            ],
+            [
+              "items",
+              "CheckboxListItem[]",
+              "\u2014",
+              "Options rendered by CheckboxList.",
+              true
+            ],
+            [
+              "variant (CheckboxList)",
+              "default | filled-leading | filled-trailing | selected",
+              "default",
+              "Visual treatment for every list row."
+            ],
+            [
+              "value / defaultValue",
+              "string[]",
+              "[]",
+              "Controlled or initial values for CheckboxList."
+            ],
+            [
+              "onValueChange",
+              "(value: string[]) => void",
+              "\u2014",
+              "Receives selected values from CheckboxList."
+            ]
+          ],
+          "customization": "Native input props such as name, value, and required remain available on Checkbox. CheckboxList renders only a semantic list, with no surrounding group container.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/checkbox/checkbox.tsx"
+          ],
+          "related": [
+            "switch",
+            "input",
+            "tabs"
+          ]
+        },
+        {
+          "name": "radio",
+          "title": "Radio",
+          "description": "Standalone radios and semantic radio lists with optional labels and supporting descriptions.",
+          "lede": "Selects exactly one value from related choices with native radio behavior and clear visual feedback.",
+          "keywords": [
+            "single select",
+            "option",
+            "choice",
+            "form"
+          ],
+          "sourcePath": "registry/components/radio/radio.tsx",
+          "installation": "Installs Radio, Radio List, and shared motion tokens.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { RadioList } from \"@/components/rhoe/radio/radio\"\n\nconst plans = [\n  { value: \"starter\", label: \"Starter\" },\n  { value: \"team\", label: \"Team\" },\n]\n\nexport function PlanPicker() {\n  const [plan, setPlan] = useState(\"team\")\n\n  return (\n    <RadioList\n      ariaLabel=\"Plan\"\n      items={plans}\n      value={plan}\n      onValueChange={setPlan}\n      variant=\"selected\"\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Radio only",
+              "code": "<Radio name=\"plan\" value=\"starter\" aria-label=\"Starter plan\" />"
+            },
+            {
+              "title": "With label",
+              "code": "<Radio name=\"plan\" value=\"starter\" label=\"Starter\" />"
+            },
+            {
+              "title": "Radio list",
+              "code": "<RadioList items={plans} />\n<RadioList items={plans} variant=\"filled-leading\" />\n<RadioList items={plans} variant=\"filled-trailing\" />\n<RadioList items={plans} variant=\"selected\" />"
+            }
+          ],
+          "guidance": [
+            "Use Radio when exactly one option is allowed; use Checkbox for independent selections.",
+            "Keep labels mutually exclusive and concise.",
+            "Use a selected list when the choice needs a larger touch target and stronger visual hierarchy."
+          ],
+          "behavior": [
+            "The selected dot enters and exits with the shared snappy spring.",
+            "Radio List renders an unwrapped semantic list; filled rows can place the radio on either side or use a semantic border and matching text when selected.",
+            "Reduced-motion preferences preserve state changes without the scale transition."
+          ],
+          "accessibility": [
+            "Uses native radio inputs, so Arrow keys move through choices in the same named set.",
+            "Provide label or aria-label for every standalone radio.",
+            "Radio List exposes radiogroup semantics and keeps one native input name across its items."
+          ],
+          "api": [
+            [
+              "checked",
+              "boolean",
+              "\u2014",
+              "Controlled selected state."
+            ],
+            [
+              "defaultChecked",
+              "boolean",
+              "false",
+              "Initial uncontrolled selected state."
+            ],
+            [
+              "onCheckedChange",
+              "(checked: boolean) => void",
+              "\u2014",
+              "Receives the next selected state."
+            ],
+            [
+              "label",
+              "ReactNode",
+              "\u2014",
+              "Visible radio label."
+            ],
+            [
+              "description",
+              "ReactNode",
+              "\u2014",
+              "Optional text below an individual radio label."
+            ],
+            [
+              "variant",
+              "default | filled",
+              "default",
+              "Compact Radio treatment or filled row."
+            ],
+            [
+              "indicatorPosition",
+              "leading | trailing | none",
+              "leading",
+              "Places the radio before or after the label, or hides it for a selected row."
+            ],
+            [
+              "items",
+              "RadioListItem[]",
+              "\u2014",
+              "Options rendered by RadioList.",
+              true
+            ],
+            [
+              "variant (RadioList)",
+              "default | filled-leading | filled-trailing | selected",
+              "default",
+              "Visual treatment for every list row."
+            ],
+            [
+              "value / defaultValue",
+              "string",
+              "\u2014",
+              "Controlled or initial value for RadioList."
+            ],
+            [
+              "onValueChange",
+              "(value: string) => void",
+              "\u2014",
+              "Receives the selected value from RadioList."
+            ]
+          ],
+          "customization": "Native input props such as name, value, and required remain available on Radio. RadioList renders only a semantic list, with no surrounding group container.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/radio/radio.tsx"
+          ],
+          "related": [
+            "checkbox",
+            "switch",
+            "input"
+          ]
+        },
+        {
+          "name": "switch",
+          "title": "Switch",
+          "description": "A binary control with a label placed to its left, right, or below.",
+          "lede": "Changes a single setting with a clear on or off state, while retaining native checkbox behavior.",
+          "keywords": [
+            "toggle",
+            "checkbox",
+            "setting",
+            "boolean"
+          ],
+          "sourcePath": "registry/components/switch/switch.tsx",
+          "installation": "Installs Switch and the shared motion foundation.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { Switch } from \"@/components/rhoe/switch/switch\"\n\nexport function NotificationSwitch() {\n  const [enabled, setEnabled] = useState(true)\n\n  return (\n    <Switch\n      checked={enabled}\n      onCheckedChange={setEnabled}\n      label=\"Enable notifications\"\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Standalone switch",
+              "code": "<Switch aria-label=\"Enable notifications\" defaultChecked />"
+            },
+            {
+              "title": "Label placement",
+              "code": "<Switch label=\"Dark mode\" labelPosition=\"left\" />\n<Switch label=\"Dark mode\" labelPosition=\"right\" />\n<Switch label=\"Dark mode\" labelPosition=\"bottom\" />"
+            }
+          ],
+          "guidance": [
+            "Use Switch only for a setting that takes effect immediately.",
+            "Use a checkbox when a value is saved later with a form submit.",
+            "Write a label that describes the setting, rather than the current state."
+          ],
+          "behavior": [
+            "The thumb uses the shared snappy spring when state changes.",
+            "Reduced-motion preferences keep the state change without the spatial transition."
+          ],
+          "accessibility": [
+            "Uses a native checkbox with switch semantics, so Space toggles it and form submission works normally.",
+            "Provide label or aria-label so every switch has an accessible name.",
+            "Disabled state prevents changes and communicates unavailable interaction."
+          ],
+          "api": [
+            [
+              "checked",
+              "boolean",
+              "\u2014",
+              "Controlled state."
+            ],
+            [
+              "defaultChecked",
+              "boolean",
+              "false",
+              "Initial uncontrolled state."
+            ],
+            [
+              "onCheckedChange",
+              "(checked: boolean) => void",
+              "\u2014",
+              "Receives the next checked state."
+            ],
+            [
+              "label",
+              "ReactNode",
+              "\u2014",
+              "Visible label associated with the switch."
+            ],
+            [
+              "labelPosition",
+              "left | right | bottom",
+              "right",
+              "Placement for the visible label."
+            ],
+            [
+              "disabled",
+              "boolean",
+              "false",
+              "Prevents interaction."
+            ]
+          ],
+          "customization": "Native input props such as name, value, and required remain available for forms.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/switch/switch.tsx"
+          ],
+          "related": [
+            "input",
+            "button",
+            "tabs"
+          ]
+        },
+        {
+          "name": "password-strength",
+          "title": "Password Strength",
+          "description": "A password input with four live requirements, named strength levels, and an accessible percentage bar.",
+          "lede": "Adds understandable password feedback without replacing the native password input.",
+          "keywords": [
+            "password",
+            "security",
+            "validation",
+            "strength meter"
+          ],
+          "sourcePath": "registry/components/password-strength/password-strength.tsx",
+          "installation": "Installs Password Strength with Input, Button, and shared motion foundations.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { PasswordStrength } from \"@/components/rhoe/password-strength/password-strength\"\n\nexport function PasswordStrengthExample() {\n  const [password, setPassword] = useState(\"\")\n\n  return (\n    <PasswordStrength\n      label=\"Password\"\n      value={password}\n      onValueChange={setPassword}\n    />\n  )\n}",
+          "guidance": [
+            "Use it when people create or change a password.",
+            "Keep requirements visible before and while typing."
+          ],
+          "behavior": [
+            "Each satisfied requirement updates the score and progress bar.",
+            "The password visibility control stays available through Input.",
+            "Reduced motion preserves all state changes."
+          ],
+          "accessibility": [
+            "Requirements are exposed as a semantic list.",
+            "The percentage bar has an accessible value.",
+            "Password visibility action has an explicit label."
+          ],
+          "api": [
+            [
+              "value",
+              "string",
+              "\u2014",
+              "Controlled password value."
+            ],
+            [
+              "defaultValue",
+              "string",
+              "empty string",
+              "Initial uncontrolled value."
+            ],
+            [
+              "onValueChange",
+              "(value: string) => void",
+              "\u2014",
+              "Receives password changes."
+            ],
+            [
+              "requirements",
+              "PasswordRequirement[]",
+              "built-in four",
+              "Custom requirement checks."
+            ],
+            [
+              "label",
+              "string",
+              "Password",
+              "Visible label."
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Input surface style."
+            ],
+            [
+              "size",
+              "small | medium | large",
+              "medium",
+              "Inherited Input control height."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/input/input.tsx",
+            "components/rhoe/password-strength/password-strength.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "input",
+            "number-input"
+          ]
+        },
+        {
+          "name": "currency-input",
+          "title": "Currency Input",
+          "description": "A localized numeric input with a morphing symbol and expanding searchable currency selector.",
+          "lede": "Collects a numeric amount while keeping its symbol visible and its ISO currency easy to change.",
+          "keywords": [
+            "money",
+            "amount",
+            "price",
+            "currency"
+          ],
+          "sourcePath": "registry/components/currency-input/currency-input.tsx",
+          "installation": "Installs Currency Input and its Input, Button, Morphing Text, and motion foundations.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { CurrencyInput } from \"@/components/rhoe/currency-input/currency-input\"\n\nexport function CurrencyInputExample() {\n  const [amount, setAmount] = useState<number | null>(20000)\n  const [currency, setCurrency] = useState(\"IDR\")\n\n  return (\n    <CurrencyInput\n      label=\"Amount\"\n      locale=\"id-ID\"\n      currency={currency}\n      value={amount}\n      onCurrencyChange={setCurrency}\n      onValueChange={setAmount}\n    />\n  )\n}",
+          "guidance": [
+            "Keep the symbol on the left and the ISO code on the right.",
+            "Store the numeric value and currency code separately.",
+            "Provide a locale explicitly when it is known."
+          ],
+          "behavior": [
+            "Only the Input surface grows downward for the currency selector.",
+            "Symbol and ISO code use Morphing Text when currency changes.",
+            "Grouping and decimal separators come from Intl.NumberFormat.",
+            "The limit preserves the last valid amount and shows error feedback for three seconds."
+          ],
+          "accessibility": [
+            "The currency trigger exposes expanded state.",
+            "Currency choices are native buttons in a semantic list.",
+            "Reduced motion removes spatial morphing."
+          ],
+          "api": [
+            [
+              "value",
+              "number | null",
+              "\u2014",
+              "Controlled numeric amount."
+            ],
+            [
+              "limit",
+              "number",
+              "Number.MAX_SAFE_INTEGER",
+              "Largest accepted absolute amount."
+            ],
+            [
+              "currency",
+              "string",
+              "\u2014",
+              "Controlled ISO currency code."
+            ],
+            [
+              "currencies",
+              "string[]",
+              "Intl list",
+              "Limits selector choices."
+            ],
+            [
+              "locale",
+              "string",
+              "en-US",
+              "Formatting locale."
+            ],
+            [
+              "size",
+              "small | medium | large",
+              "medium",
+              "Inherited Input control height."
+            ],
+            [
+              "formatDelay",
+              "number",
+              "700",
+              "Idle time before focused formatting."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/input/input.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/text-reveal/text-reveal.tsx",
+            "components/rhoe/currency-input/currency-input.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx"
+          ],
+          "related": [
+            "input",
+            "number-input",
+            "morphing-text"
+          ]
+        },
+        {
+          "name": "select",
+          "title": "Select",
+          "description": "A single or multiple select that expands only its Input surface, with optional search and leading content for every option.",
+          "lede": "Selects one or more values from a list without moving the field that opened it.",
+          "keywords": [
+            "combobox",
+            "dropdown",
+            "multiple select",
+            "search"
+          ],
+          "sourcePath": "registry/components/select/select.tsx",
+          "installation": "Installs Select with Input, Button, Text Reveal, and the shared motion foundation.",
+          "usage": "\"use client\"\n\nimport { Layers, Sparkles } from \"lucide-react\"\nimport { useState } from \"react\"\nimport { Select } from \"@/components/rhoe/select/select\"\n\nconst teams = [\n  { value: \"design\", label: \"Design\", leading: <Sparkles /> },\n  { value: \"engineering\", label: \"Engineering\", leading: <Layers /> },\n]\n\nexport function TeamSelect() {\n  const [teamsSelected, setTeamsSelected] = useState<string[]>([\"design\"])\n\n  return (\n    <Select\n      label=\"Teams\"\n      items={teams}\n      multiple\n      searchable\n      value={teamsSelected}\n      onValueChange={(nextValue) => setTeamsSelected(nextValue as string[])}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Single select",
+              "code": "<Select items={teams} placeholder=\"Choose a team\" />"
+            },
+            {
+              "title": "Multiple with search",
+              "code": "<Select items={teams} multiple searchable value={selected} onValueChange={setSelected} />"
+            },
+            {
+              "title": "Leading content",
+              "code": "const teams = [\n  { value: \"design\", label: \"Design\", leading: <Sparkles /> },\n  { value: \"engineering\", label: \"Engineering\", leading: <Avatar src={avatar} /> },\n]\n\n<Select items={teams} />"
+            }
+          ],
+          "guidance": [
+            "Use Select when the available choices are known and a native text field would create invalid values.",
+            "Turn on search when scanning the full option list becomes slow.",
+            "Use leading content only when it helps distinguish options, such as an avatar or recognizable icon."
+          ],
+          "behavior": [
+            "Only the Input surface expands downward; the field stays fixed in place.",
+            "Single selection closes the list. Multiple selection stays open and renders removable chips inside the input.",
+            "A newly selected single value uses the shared Text Reveal entrance inside the input.",
+            "Search filters matching labels and values within the existing option list.",
+            "The panel height uses the shared Input expansion curve and respects reduced-motion preferences."
+          ],
+          "accessibility": [
+            "The trigger exposes combobox, expanded, and listbox relationships.",
+            "Each result uses option semantics and reports whether it is selected.",
+            "The optional search field has its own accessible name and Escape closes the panel."
+          ],
+          "api": [
+            [
+              "label",
+              "ReactNode",
+              "\u2014",
+              "Visible label associated with the Select input."
+            ],
+            [
+              "items",
+              "SelectItem[]",
+              "\u2014",
+              "Available values, labels, descriptions, leading content, and disabled state.",
+              true
+            ],
+            [
+              "multiple",
+              "boolean",
+              "false",
+              "Allows selecting more than one item."
+            ],
+            [
+              "value / defaultValue",
+              "string | string[]",
+              "empty",
+              "Controlled or initial selected value or values."
+            ],
+            [
+              "onValueChange",
+              "(value: string | string[]) => void",
+              "\u2014",
+              "Receives the next selected value or values."
+            ],
+            [
+              "searchable",
+              "boolean",
+              "false",
+              "Shows a search field above the results."
+            ],
+            [
+              "searchPlaceholder",
+              "string",
+              "Search options",
+              "Placeholder for the search field."
+            ],
+            [
+              "emptyState",
+              "ReactNode",
+              "No options found.",
+              "Content shown when search returns no results."
+            ],
+            [
+              "variant / size",
+              "filled | bordered / small | medium | large",
+              "filled / medium",
+              "Inherited Input appearance and control height."
+            ]
+          ],
+          "customization": "Each SelectItem accepts leading for any icon, avatar, or custom React content. Select inherits Input props, including label, hint, error, required, disabled, variant, and size.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/input/input.tsx",
+            "components/rhoe/text-reveal/text-reveal.tsx",
+            "components/rhoe/select/select.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "input",
+            "currency-input",
+            "dropdown-menu",
+            "animated-list",
+            "text-reveal"
+          ]
+        },
+        {
+          "name": "number-input",
+          "title": "Number Input",
+          "description": "A numeric input with step controls and rolling digit transitions.",
+          "lede": "Collects constrained numerical values with direct typing, keyboard stepping, and optional hoverable controls.",
+          "keywords": [
+            "counter",
+            "stepper",
+            "quantity",
+            "numeric"
+          ],
+          "sourcePath": "registry/components/number-input/number-input.tsx",
+          "installation": "Installs Number Input, Input, Button, Rolling Number, and shared motion foundations.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { NumberInput } from \"@/components/rhoe/number-input/number-input\"\n\nexport function NumberInputExample() {\n  const [quantity, setQuantity] = useState(25)\n\n  return (\n    <NumberInput\n      label=\"Quantity\"\n      value={quantity}\n      min={0}\n      max={100}\n      step={5}\n      onValueChange={setQuantity}\n    />\n  )\n}",
+          "guidance": [
+            "Use an explicit step for quantities and increments people can predict.",
+            "Use min and max only when the constraint is meaningful."
+          ],
+          "behavior": [
+            "Arrow Up and Arrow Down use the configured step.",
+            "Values beyond max are rejected immediately with temporary error feedback.",
+            "Min validation waits for a short typing pause so replacing a multi-digit value remains possible.",
+            "Buttons can stay inside the field or appear while hovering."
+          ],
+          "accessibility": [
+            "The native numeric input keeps keyboard and form semantics.",
+            "Buttons have explicit increment and decrement labels.",
+            "Constraint feedback is announced through the error state."
+          ],
+          "api": [
+            [
+              "value",
+              "number | null",
+              "\u2014",
+              "Controlled value."
+            ],
+            [
+              "min / max",
+              "number",
+              "\u2014",
+              "Allowed range."
+            ],
+            [
+              "step",
+              "number",
+              "1",
+              "Increment used by controls and arrows."
+            ],
+            [
+              "size",
+              "small | medium | large",
+              "medium",
+              "Matches the input and step controls."
+            ],
+            [
+              "hoverable",
+              "boolean",
+              "false",
+              "Moves controls outside the field on hover."
+            ],
+            [
+              "debounceDelay",
+              "number",
+              "1000",
+              "Delay before minimum validation."
+            ],
+            [
+              "onValueChange",
+              "(value: number | null) => void",
+              "\u2014",
+              "Receives value changes."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/input/input.tsx",
+            "components/rhoe/rolling-number/rolling-number.tsx",
+            "components/rhoe/number-input/number-input.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/text-reveal/text-reveal.tsx"
+          ],
+          "related": [
+            "input",
+            "currency-input",
+            "rolling-number"
+          ]
+        },
+        {
+          "name": "expanding-search",
+          "title": "Expanding Search",
+          "description": "A compact search trigger that expands from a fixed anchor into an input and result panel.",
+          "lede": "Expands a compact search trigger into an input and result panel without losing its spatial anchor.",
+          "keywords": [
+            "search",
+            "command",
+            "filter",
+            "search bar"
+          ],
+          "sourcePath": "registry/components/expanding-search/expanding-search.tsx",
+          "installation": "Installs Expanding Search with Input, Button, Animated List, and shared foundation styles.",
+          "usage": "\"use client\"\n\nimport { ExpandingSearch } from \"@/components/rhoe/expanding-search/expanding-search\"\n\nconst items = [\n  { value: \"button\", label: \"Button\", description: \"Actions\", group: \"Components\" },\n  { value: \"input\", label: \"Input\", description: \"Forms\", group: \"Components\" },\n]\n\nexport function ExpandingSearchExample() {\n  return (\n    <ExpandingSearch\n      defaultItems={items}\n      animatedListProps={{ replay: \"never\", stagger: 0 }}\n      itemProps={{ descriptionPlacement: \"inline\" }}\n      onItemSelect={(item) => console.log(item.value)}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Surface variants",
+              "code": "<ExpandingSearch variant=\"filled\" defaultItems={items} />\n<ExpandingSearch variant=\"bordered\" defaultItems={items} />"
+            },
+            {
+              "title": "Trigger variants",
+              "code": "<ExpandingSearch trigger=\"icon\" defaultItems={items} />\n<ExpandingSearch trigger=\"icon-text\" defaultItems={items} />\n<ExpandingSearch trigger=\"field\" defaultItems={items} />"
+            },
+            {
+              "title": "Custom results",
+              "description": "Custom panel content may use the current query and close callback.",
+              "code": "const recentSearches = [\"Button\", \"Input\", \"Tabs\"]\n\n<ExpandingSearch>\n  {({ query, close }) =>\n    recentSearches\n      .filter((item) => item.toLowerCase().includes(query.toLowerCase()))\n      .map((item) => (\n        <AnimatedListItem key={item} title={item} onClick={close} />\n      ))\n  }\n</ExpandingSearch>"
+            }
+          ],
+          "guidance": [
+            "Use it when search starts compact but needs a result panel.",
+            "Choose start, center, end, or a percentage anchor based on nearby controls."
+          ],
+          "behavior": [
+            "Only width morphs between trigger and input.",
+            "The result panel opens after the input surface has room.",
+            "The result panel uses the same filled or bordered surface as the search input.",
+            "Filtered results reveal immediately without replaying scroll-entry motion.",
+            "animatedListProps controls Animated List reveal behavior; itemProps controls each generated result row.",
+            "Escape and outside press close and return focus to the trigger."
+          ],
+          "accessibility": [
+            "The trigger exposes expanded state and controlled results.",
+            "The search field uses native search semantics.",
+            "Results remain buttons or links through Animated List items."
+          ],
+          "api": [
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Search input surface treatment."
+            ],
+            [
+              "trigger",
+              "icon | icon-text | field",
+              "icon",
+              "Collapsed trigger shape."
+            ],
+            [
+              "size",
+              "small | medium | large",
+              "medium",
+              "Inherited Input and trigger height."
+            ],
+            [
+              "panelSize",
+              "small | medium | large | xl",
+              "medium",
+              "Preset result-panel width: 360px, 480px, 600px, or 720px."
+            ],
+            [
+              "backdrop",
+              "boolean",
+              "false",
+              "Dims and lightly blurs the page behind an open search surface."
+            ],
+            [
+              "dense",
+              "boolean",
+              "false",
+              "Shortcut for size=\"small\"."
+            ],
+            [
+              "anchor",
+              "start | center | end | number",
+              "center",
+              "Expansion origin."
+            ],
+            [
+              "expandedWidth",
+              "number",
+              "480",
+              "Open surface width."
+            ],
+            [
+              "items / defaultItems",
+              "ExpandingSearchItem[]",
+              "[]",
+              "Searchable source data for generated rows."
+            ],
+            [
+              "item.group",
+              "string",
+              "\u2014",
+              "Optional generated-result section label; matching labels are grouped together."
+            ],
+            [
+              "animatedList",
+              "boolean",
+              "true",
+              "Wraps generated results with Animated List reveal behavior."
+            ],
+            [
+              "animatedListProps",
+              "AnimatedListProps",
+              "\u2014",
+              "Forwards list behavior such as replay, amount, and stagger while animatedList is enabled."
+            ],
+            [
+              "itemProps",
+              "AnimatedListItemProps | resolver",
+              "\u2014",
+              "Forwards generated-row options, including variant, descriptionPlacement, trailing, href, and swipeActions."
+            ],
+            [
+              "itemVariant",
+              "filled | bordered | transparent",
+              "transparent",
+              "Default generated-row variant; itemProps.variant overrides it."
+            ],
+            [
+              "listDense",
+              "boolean",
+              "true",
+              "Uses compact result row padding and gaps."
+            ],
+            [
+              "children",
+              "ReactNode | (context) => ReactNode",
+              "\u2014",
+              "Fully custom panel content; takes precedence over items."
+            ],
+            [
+              "onItemSelect",
+              "(item) => void",
+              "\u2014",
+              "Called after selection."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/input/input.tsx",
+            "components/rhoe/animated-list/animated-list.tsx",
+            "components/rhoe/expanding-search/expanding-search.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "dropdown-menu",
+            "animated-list",
+            "input"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Layout",
+      "description": "Ordered content and disclosure surfaces that reveal supporting detail without losing context.",
+      "components": [
+        {
+          "name": "expandable-card",
+          "title": "Expandable Card",
+          "description": "An interruptible card that grows at its real width and height without stretching its content.",
+          "lede": "Reveals supporting detail in place while keeping the card's original spatial anchor.",
+          "keywords": [
+            "card",
+            "expand",
+            "disclosure",
+            "details"
+          ],
+          "sourcePath": "registry/components/expandable-card/expandable-card.tsx",
+          "installation": "Installs Expandable Card and shared motion tokens.",
+          "usage": "import { ExpandableCard } from \"@/components/rhoe/expandable-card/expandable-card\"\n\nexport function ExpandableCardExample() {\n  return (\n    <ExpandableCard\n      title=\"Deployment\"\n      description=\"Ready to ship\"\n      width={320}\n      expandedWidth={520}\n    >\n      <p>The production deployment includes the latest changes.</p>\n    </ExpandableCard>\n  )\n}",
+          "guidance": [
+            "Use it for progressive disclosure that belongs to the same object.",
+            "Keep collapsed summaries useful on their own."
+          ],
+          "behavior": [
+            "The card measures real content and animates width and height without scaling children.",
+            "It remains interruptible while opening or closing.",
+            "Reduced motion preserves the disclosure state."
+          ],
+          "accessibility": [
+            "The trigger exposes aria-expanded and controls the detail region.",
+            "Focus stays in a predictable place after toggling."
+          ],
+          "api": [
+            [
+              "title",
+              "ReactNode",
+              "\u2014",
+              "Card heading.",
+              true
+            ],
+            [
+              "description",
+              "ReactNode",
+              "\u2014",
+              "Collapsed supporting content."
+            ],
+            [
+              "children",
+              "ReactNode",
+              "\u2014",
+              "Content revealed when open.",
+              true
+            ],
+            [
+              "defaultExpanded",
+              "boolean",
+              "false",
+              "Initial uncontrolled state."
+            ],
+            [
+              "width / expandedWidth",
+              "number",
+              "\u2014",
+              "Collapsed and expanded width caps."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/expandable-card/expandable-card.tsx"
+          ],
+          "related": [
+            "animated-list",
+            "dropdown-menu"
+          ]
+        },
+        {
+          "name": "animated-list",
+          "title": "Animated List",
+          "description": "An accessible list that reveals data or custom content once or again in a chosen scroll direction.",
+          "lede": "Reveals ordered content as it enters view while keeping list semantics and custom content intact.",
+          "keywords": [
+            "list",
+            "swipe",
+            "feed",
+            "scroll animation"
+          ],
+          "sourcePath": "registry/components/animated-list/animated-list.tsx",
+          "installation": "Installs Animated List with Motion and shared foundation styles.",
+          "usage": "import { AnimatedList, AnimatedListItem } from \"@/components/rhoe/animated-list/animated-list\"\n\nconst activity = [\n  { id: 1, title: \"Deployment completed\", description: \"Production\" },\n  { id: 2, title: \"Database backed up\", description: \"Two minutes ago\" },\n]\n\nexport function AnimatedListExample() {\n  return (\n    <AnimatedList\n      items={activity}\n      getItemKey={(item) => item.id}\n      dense\n      renderItem={(item) => (\n        <AnimatedListItem title={item.title} description={item.description} />\n      )}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Density variants",
+              "code": "<AnimatedList items={items} renderItem={renderItem} />\n<AnimatedList items={items} renderItem={renderItem} dense />"
+            },
+            {
+              "title": "Custom content",
+              "description": "Direct children are wrapped in semantic list items.",
+              "code": "<AnimatedList replay=\"both\">\n  <article>Any valid item content can go here.</article>\n</AnimatedList>"
+            }
+          ],
+          "guidance": [
+            "Use it for a short ordered collection whose appearance benefits from sequence.",
+            "Use dense for compact result panels and utility lists.",
+            "Swipe actions must not be the only route to an important task."
+          ],
+          "behavior": [
+            "Entries reveal once by default or replay on a chosen scroll direction.",
+            "Insertions and removals keep a short layout transition.",
+            "Dragging settles with a spring and never executes an action automatically."
+          ],
+          "accessibility": [
+            "The outer element is a semantic ul and entries are semantic li elements.",
+            "Items use native links or buttons when interactive.",
+            "Hidden swipe actions leave the tab order until revealed."
+          ],
+          "api": [
+            [
+              "items",
+              "readonly Item[]",
+              "\u2014",
+              "Data rendered through renderItem."
+            ],
+            [
+              "renderItem",
+              "(item, index) => ReactNode",
+              "\u2014",
+              "Renders each data item."
+            ],
+            [
+              "replay",
+              "never | both | up | down",
+              "never",
+              "Replay direction."
+            ],
+            [
+              "dense",
+              "boolean",
+              "false",
+              "Reduces gaps and item padding."
+            ],
+            [
+              "swipeActions",
+              "{ left?, right? }",
+              "\u2014",
+              "One optional action per direction."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/animated-list/animated-list.tsx"
+          ],
+          "related": [
+            "expanding-search",
+            "expandable-card"
+          ]
+        },
+        {
+          "name": "curved-carousel",
+          "title": "Curved Carousel",
+          "description": "A three-image landing carousel that curves supporting images away from its focused 16:9 slide.",
+          "lede": "Keeps one landscape image in focus while its neighboring images taper along a curved visual track with mirrored reflections.",
+          "keywords": [
+            "carousel",
+            "gallery",
+            "landing page",
+            "images",
+            "perspective"
+          ],
+          "sourcePath": "registry/components/curved-carousel/curved-carousel.tsx",
+          "installation": "Installs Curved Carousel with Motion, shared foundation styles, and motion tokens.",
+          "usage": "\"use client\"\n\nimport { CurvedCarousel, type CurvedCarouselItem } from \"@/components/rhoe/curved-carousel/curved-carousel\"\n\nconst gallery: CurvedCarouselItem[] = [\n  { src: \"/images/forest.jpg\", alt: \"Forest in morning fog\" },\n  { src: \"/images/lake.jpg\", alt: \"Lake beneath a mountain\" },\n  { src: \"/images/road.jpg\", alt: \"Road through a valley\" },\n]\n\nexport function LandingGallery() {\n  return <CurvedCarousel items={gallery} initialIndex={1} />\n}",
+          "examples": [
+            {
+              "title": "Use the bundled sample images",
+              "code": "<CurvedCarousel />"
+            },
+            {
+              "title": "Supply a gallery",
+              "code": "<CurvedCarousel\n  items={[\n    { src: \"/images/one.jpg\", alt: \"Description of image one\" },\n    { src: \"/images/two.jpg\", alt: \"Description of image two\" },\n    { src: \"/images/three.jpg\", alt: \"Description of image three\" },\n  ]}\n/>"
+            }
+          ],
+          "guidance": [
+            "Use three to seven landscape images with a consistent visual treatment.",
+            "Provide descriptive alt text because each slide is reachable by keyboard.",
+            "Keep this composition for editorial or landing-page moments rather than dense product content."
+          ],
+          "behavior": [
+            "The active image stays flat at a 16:9 ratio while its neighboring images taper away from the center.",
+            "Changing slides animates position, 3D rotation, opacity, and the reflection together.",
+            "Drag, horizontal trackpad scrolling, side-image clicks, dots, and Left or Right Arrow keys change the active image in an infinite loop.",
+            "Reduced-motion preferences disable the transition."
+          ],
+          "accessibility": [
+            "Uses a labelled carousel region and announces the active image label.",
+            "Every image has a supplied text alternative.",
+            "Side-image and dot controls have accessible names."
+          ],
+          "api": [
+            [
+              "items",
+              "CurvedCarouselItem[]",
+              "sample gallery",
+              "At least three images. Each item has src, alt, and optional title or description."
+            ],
+            [
+              "initialIndex",
+              "number",
+              "0",
+              "Initial focused image."
+            ],
+            [
+              "className",
+              "string",
+              "\u2014",
+              "Additional classes on the carousel region."
+            ]
+          ],
+          "customization": "The silhouette and reflection are intentionally part of this landing composition. Customize the image array and outer layout before changing the geometry.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/curved-carousel/curved-carousel.tsx"
+          ],
+          "related": [
+            "animated-list",
+            "expanding-search"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Data Display",
+      "description": "Structured records and values designed for scanning, sorting, and selection.",
+      "components": [
+        {
+          "name": "table",
+          "title": "Table",
+          "description": "A sortable data table with docked or floating headers and optional row selection.",
+          "lede": "Organizes structured records with continuous row feedback, animated sorting, and selection that adapts to the leading column.",
+          "keywords": [
+            "table",
+            "data",
+            "sort",
+            "selection",
+            "checkbox",
+            "floating header"
+          ],
+          "sourcePath": "registry/components/table/table.tsx",
+          "installation": "Installs Table, Checkbox, and the shared Rhoe UI motion foundations.",
+          "usage": "\"use client\"\n\nimport { Table, type TableColumn } from \"@/components/rhoe/table/table\"\n\ntype Member = { id: string; name: string; projects: number }\n\nconst members: Member[] = [\n  { id: \"ava\", name: \"Ava Morgan\", projects: 12 },\n  { id: \"noah\", name: \"Noah Williams\", projects: 18 },\n  { id: \"mia\", name: \"Mia Chen\", projects: 7 },\n]\n\nconst columns: TableColumn<Member>[] = [\n  {\n    key: \"name\",\n    header: \"Member\",\n    cell: (member) => member.name,\n    sortValue: (member) => member.name,\n  },\n  {\n    key: \"projects\",\n    header: \"Projects\",\n    cell: (member) => member.projects,\n    sortValue: (member) => member.projects,\n    align: \"end\",\n  },\n]\n\nexport function MembersTable() {\n  return (\n    <Table\n      data={members}\n      columns={columns}\n      getRowId={(member) => member.id}\n      selectable\n      className=\"max-h-[420px]\"\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Floating header with row numbers",
+              "description": "Floating header variant combined with sequential row numbers.",
+              "code": "<Table {...props} headerVariant=\"floating\" showRowNumbers />"
+            },
+            {
+              "title": "Floating header with checkbox selection",
+              "description": "Floating header variant combined with dedicated checkbox column.",
+              "code": "<Table {...props} headerVariant=\"floating\" selectable showRowNumbers={false} editMode={editMode} />"
+            },
+            {
+              "title": "Selection with row numbers",
+              "description": "The row number becomes a checkbox while its row is hovered or focused.",
+              "code": "<Table {...props} showRowNumbers selectable />"
+            },
+            {
+              "title": "Dedicated checkbox column",
+              "description": "Use the members and columns from Usage. This example also installs Button separately with @rhoe/button. The checkbox column appears only in edit mode; selected IDs are preserved when leaving it.",
+              "code": "\"use client\"\n\nimport { useState } from \"react\"\nimport { Button } from \"@/components/rhoe/button/button\"\nimport { Table, type TableColumn } from \"@/components/rhoe/table/table\"\n\nexport function EditableMembersTable() {\n  const [editMode, setEditMode] = useState(false)\n\n  return (\n    <>\n      <Button\n        label={[\"Edit\", \"Done\"]}\n        state={editMode ? 1 : 0}\n        aria-pressed={editMode}\n        onClick={() => setEditMode((current) => !current)}\n      />\n      <Table\n        data={members}\n        columns={columns}\n        getRowId={(member) => member.id}\n        showRowNumbers={false}\n        selectable\n        editMode={editMode}\n        className=\"max-h-[420px]\"\n      />\n    </>\n  )\n}"
+            },
+            {
+              "title": "Controlled selection",
+              "code": "const [selectedRows, setSelectedRows] = useState<string[]>([])\n\n<Table\n  data={members}\n  columns={columns}\n  getRowId={(member) => member.id}\n  selectable\n  selectedRows={selectedRows}\n  onSelectionChange={setSelectedRows}\n/>",
+              "description": "Import useState from React. Inside a client component, keep selection in state. Use the members and columns from Usage. IDs follow records after sorting, independently of visible row numbers."
+            },
+            {
+              "title": "Controlled sorting",
+              "description": "Import useState from React and TableSort from the Table module. Place this state inside a client component and reuse the members and columns from Usage. The table sorts the supplied data locally; update sort in onSortChange to apply a controlled change.",
+              "code": "const [sort, setSort] = useState<TableSort>({\n  key: \"projects\",\n  direction: \"descending\",\n})\n\n<Table\n  data={members}\n  columns={columns}\n  getRowId={(member) => member.id}\n  sort={sort}\n  onSortChange={setSort}\n/>"
+            },
+            {
+              "title": "Control row animation",
+              "description": "Use the data and columns from Usage. Disable layout motion for immediate updates, or explicitly enable it when appropriate for a larger dataset.",
+              "code": "<Table {...props} animateLayout={false} />"
+            }
+          ],
+          "guidance": [
+            "Use the docked header for dense application screens and the floating header when the header should read as a separate control surface. Combine headerVariant independently with row numbering and selection options.",
+            "Give every row a stable identifier so selection and layout animation remain correct after sorting.",
+            "Add sortValue only to columns that users can meaningfully order.",
+            "Keep row numbers enabled when users refer to records by position; otherwise use the dedicated checkbox column for selection.",
+            "Render function-based column definitions in a client component. To use controlled selection or sorting, pass the current value and update it from the matching callback."
+          ],
+          "behavior": [
+            "Both header variants remain sticky during internal vertical scrolling. Docked fills the top edge; floating keeps its offset. Supply a height or max-height through className to constrain the scroll area.",
+            "One shared hover surface follows the nearest row continuously instead of restarting on every row.",
+            "Sorting preserves row identity. Layout motion is enabled by default for up to 100 rows and can be overridden with animateLayout; reduced motion disables it.",
+            "With row numbers, the number and checkbox crossfade with a short vertical transition on hover or focus. Selected checkboxes remain visible.",
+            "Without row numbers, editMode animates the leading checkbox column open and closed over 240ms. The column collapses to zero width outside edit mode, its controls become inert, and selection is preserved. Reduced motion skips the movement.",
+            "Controlled and uncontrolled selection and sorting are both supported.",
+            "Sorting is local to the supplied data and does not mutate it. Row numbers reflect the current visible order, while selection follows stable row IDs. Select all affects the supplied rows, including rows outside the scroll viewport; existing selected IDs outside the supplied data are preserved."
+          ],
+          "accessibility": [
+            "The component renders a semantic table with scoped column headers.",
+            "Sortable headers expose aria-sort and use native buttons.",
+            "Every row checkbox has a descriptive accessible label.",
+            "Keyboard focus reveals the same row feedback and checkbox state as pointer hover."
+          ],
+          "api": [
+            [
+              "data",
+              "readonly Row[]",
+              "—",
+              "Records rendered in the table.",
+              true
+            ],
+            [
+              "columns",
+              "readonly TableColumn<Row>[]",
+              "—",
+              "Column headings, cell renderers, alignment, width, and optional sort values.",
+              true
+            ],
+            [
+              "getRowId",
+              "(row: Row) => string",
+              "—",
+              "Returns a unique, stable row ID for React keys, selection, and sorting motion. Do not derive it from the visible row number.",
+              true
+            ],
+            [
+              "headerVariant",
+              "docked | floating",
+              "docked",
+              "Both headers stay sticky within the scrollable root: docked fills the width at top: 0; floating sits at top: 0.5rem with rounded ends. Set a height or max-height on the root to enable vertical scrolling."
+            ],
+            [
+              "showRowNumbers",
+              "boolean",
+              "true",
+              "Shows sequential row positions in the current display order, including after sorting."
+            ],
+            [
+              "selectable",
+              "boolean",
+              "false",
+              "Enables row selection and adaptive leading checkboxes."
+            ],
+            [
+              "editMode",
+              "boolean",
+              "false",
+              "Shows the dedicated checkbox column when selectable is true and showRowNumbers is false. Does not change hover selection on numbered rows."
+            ],
+            [
+              "selectedRows",
+              "readonly string[]",
+              "—",
+              "Controlled selected row IDs. Update this prop in onSelectionChange; selection is retained when edit mode closes."
+            ],
+            [
+              "defaultSelectedRows",
+              "readonly string[]",
+              "[]",
+              "Initial selection for uncontrolled usage. Only read on mount."
+            ],
+            [
+              "onSelectionChange",
+              "(rowIds: string[]) => void",
+              "—",
+              "Called with the next selected row identifiers."
+            ],
+            [
+              "sort",
+              "TableSort",
+              "—",
+              "Controlled local sorting. Update this prop in onSortChange. Without sort or defaultSort, input order is used."
+            ],
+            [
+              "defaultSort",
+              "TableSort",
+              "—",
+              "Initial uncontrolled sort state. Only read on mount."
+            ],
+            [
+              "onSortChange",
+              "(sort: TableSort) => void",
+              "—",
+              "Receives the next column key and direction. Clicking a new column sorts ascending; clicking again toggles descending. Columns need sortValue to enable sorting."
+            ],
+            [
+              "animateLayout",
+              "boolean",
+              "data.length <= 100",
+              "Animates row reordering. Enabled by default for at most 100 rows. Set false for immediate sorting or true to opt in on larger datasets. Reduced motion always disables layout animation."
+            ],
+            [
+              "ariaLabel",
+              "string",
+              "Data table",
+              "Accessible table name."
+            ],
+            [
+              "emptyState",
+              "ReactNode",
+              "No data available.",
+              "Content shown when no rows are supplied."
+            ],
+            [
+              "className",
+              "string",
+              "—",
+              "Classes on the scrollable root. For example, max-h-[420px] creates a vertically scrollable body; there is no default height limit."
+            ],
+            [
+              "columns[].key",
+              "string",
+              "—",
+              "TableColumn<Row>: unique column identifier used by sorting and React keys.",
+              true
+            ],
+            [
+              "columns[].header",
+              "ReactNode",
+              "—",
+              "TableColumn<Row>: visible column heading.",
+              true
+            ],
+            [
+              "columns[].cell",
+              "(row: Row) => ReactNode",
+              "—",
+              "TableColumn<Row>: renders a cell from its row data.",
+              true
+            ],
+            [
+              "columns[].sortValue",
+              "(row: Row) => string | number",
+              "—",
+              "TableColumn<Row>: enables sorting. Numbers compare numerically; strings use numeric-aware, case-insensitive locale comparison. Ties retain input order."
+            ],
+            [
+              "columns[].align",
+              "\"start\" | \"center\" | \"end\"",
+              "start",
+              "TableColumn<Row>: shared header and cell alignment."
+            ],
+            [
+              "columns[].width",
+              "CSSProperties[\"width\"]",
+              "automatic",
+              "TableColumn<Row>: CSS width applied to the column header. Native table layout may expand it to fit content."
+            ],
+            [
+              "sort.key / defaultSort.key",
+              "string",
+              "—",
+              "TableSort: must match a column key with sortValue. Unknown or non-sortable keys leave the data in input order.",
+              true
+            ],
+            [
+              "sort.direction / defaultSort.direction",
+              "\"ascending\" | \"descending\"",
+              "—",
+              "TableSort: direction of the local sort. Required when supplying sort or defaultSort.",
+              true
+            ]
+          ],
+          "customization": "The 18px table surfaces match the Button radius. Colors, focus rings, row hover, and motion inherit Rhoe UI foundation tokens.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/checkbox/checkbox.tsx",
+            "components/rhoe/table/table.tsx"
+          ],
+          "related": [
+            "checkbox",
+            "animated-list",
+            "bar-chart"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Data Visualization",
+      "description": "Readable visual summaries for trends, comparisons, and changing values.",
+      "components": [
+        {
+          "name": "line-chart",
+          "title": "Line Chart",
+          "description": "A responsive smooth line chart with an optional average reference and pointer inspection.",
+          "lede": "Plots numeric values as a continuous curved line while keeping the average visible as a quiet reference.",
+          "keywords": [
+            "chart",
+            "line",
+            "graph",
+            "average",
+            "data visualization"
+          ],
+          "sourcePath": "registry/components/line-chart/line-chart.tsx",
+          "installation": "Installs Line Chart, Grouped Tabs, and the shared Rhoe UI foundation styles.",
+          "usage": "import { LineChart } from \"@/components/rhoe/line-chart/line-chart\"\n\nconst data = [\n  { label: \"Mon\", value: 42 },\n  { label: \"Tue\", value: 58 },\n  { label: \"Wed\", value: 51 },\n  { label: \"Thu\", value: 76 },\n]\n\nexport function RevenueChart() {\n  return (\n    <LineChart\n      data={data}\n      title=\"Weekly revenue\"\n      showAverage\n      format={{ style: \"currency\", currency: \"USD\", notation: \"compact\" }}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Without average",
+              "code": "<LineChart data={data} showAverage={false} />"
+            },
+            {
+              "title": "Currency values",
+              "code": "<LineChart data={data} locale=\"en-US\" format={{ style: \"currency\", currency: \"USD\", notation: \"compact\" }} />"
+            },
+            {
+              "title": "Optional range tabs",
+              "code": "<LineChart\n  data={data}\n  ranges={[{ value: \"7d\", label: \"7D\" }, { value: \"30d\", label: \"30D\" }]}\n  range={range}\n  onRangeChange={setRange}\n/>"
+            }
+          ],
+          "guidance": [
+            "Use a line chart for ordered values that change over time or another continuous sequence.",
+            "Keep the data in chronological order and use format for units, currency, or percentages.",
+            "Use onRangeChange to supply the data that belongs to the selected range.",
+            "Use the average reference when viewers need a stable baseline for comparison."
+          ],
+          "behavior": [
+            "Only the portion of the curve above spikeThreshold changes to spikeColor; no point marker or badge is added.",
+            "The vertical scale shows readable values before pointer interaction.",
+            "When the pointer stops, the guide, point, and card remain fixed while the moving timeline updates the value passing beneath them.",
+            "Changing chart labels use Morphing Text; changing axis, average, and tooltip values use Rolling Number.",
+            "The average is calculated from the supplied values and rendered as a dashed reference line.",
+            "Empty data renders a neutral empty state."
+          ],
+          "accessibility": [
+            "The SVG has an accessible chart label derived from the title.",
+            "Every label and value is repeated in visually hidden text for assistive technology.",
+            "Color is not the only distinction between the data line and average reference."
+          ],
+          "api": [
+            [
+              "data",
+              "readonly LineChartDatum[]",
+              "\u2014",
+              "Ordered label and numeric value pairs.",
+              true
+            ],
+            [
+              "title / description",
+              "string",
+              "\u2014",
+              "Optional chart heading and supporting copy."
+            ],
+            [
+              "height",
+              "number",
+              "320",
+              "Chart height in pixels, clamped to a minimum of 220."
+            ],
+            [
+              "showAverage",
+              "boolean",
+              "true",
+              "Shows the calculated average reference line."
+            ],
+            [
+              "averageLabel",
+              "string",
+              "Average",
+              "Label displayed beside the average value."
+            ],
+            [
+              "ranges",
+              "readonly LineChartRange[]",
+              "\u2014",
+              "Optional grouped range tabs shown at the top right of the chart."
+            ],
+            [
+              "range / defaultRange",
+              "string",
+              "first range",
+              "Controlled or initial active range."
+            ],
+            [
+              "onRangeChange",
+              "(range: string) => void",
+              "\u2014",
+              "Called when a range tab is selected."
+            ],
+            [
+              "locale",
+              "Intl.LocalesArgument",
+              "en-US",
+              "Locale used to format axis, average, tooltip, and accessible values."
+            ],
+            [
+              "format",
+              "Intl.NumberFormatOptions",
+              "\u2014",
+              "Number, currency, percentage, or compact formatting shared by every chart value."
+            ],
+            [
+              "domain",
+              "readonly [number, number]",
+              "automatic",
+              "Keeps the vertical scale stable for realtime data."
+            ],
+            [
+              "spikeThreshold",
+              "number",
+              "\u2014",
+              "Value above which the line receives the spike color."
+            ],
+            [
+              "spikeColor",
+              "string",
+              "var(--danger)",
+              "CSS color used for the portion of the line above the threshold."
+            ],
+            [
+              "className",
+              "string",
+              "\u2014",
+              "Additional classes applied to the figure root."
+            ]
+          ],
+          "customization": "Use Rhoe UI color tokens for the line, surface, grid, tooltip, and reference line. Control height and number formatting through props.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/rolling-number/rolling-number.tsx",
+            "components/rhoe/tabs/tabs.tsx",
+            "components/rhoe/line-chart/line-chart.tsx"
+          ],
+          "related": [
+            "rolling-number",
+            "animated-list"
+          ]
+        },
+        {
+          "name": "bar-chart",
+          "title": "Bar Chart",
+          "description": "A responsive animated bar chart for comparing values across categories.",
+          "lede": "Compares categorical values with vertical or horizontal bars, readable axes, and a continuous hover reader.",
+          "keywords": [
+            "chart",
+            "bar",
+            "column",
+            "comparison",
+            "data visualization"
+          ],
+          "sourcePath": "registry/components/bar-chart/bar-chart.tsx",
+          "installation": "Installs Bar Chart, Grouped Tabs, Rolling Number, Morphing Text, and the shared Rhoe UI motion foundations.",
+          "usage": "import { BarChart } from \"@/components/rhoe/bar-chart/bar-chart\"\n\nconst data = [\n  { label: \"Starter\", value: 48 },\n  { label: \"Growth\", value: 76 },\n  { label: \"Scale\", value: 91 },\n]\n\nexport function PlansChart() {\n  return <BarChart data={data} title=\"Plan usage\" />\n}",
+          "examples": [
+            {
+              "title": "Horizontal",
+              "code": "<BarChart data={data} orientation=\"horizontal\" />"
+            },
+            {
+              "title": "Custom color",
+              "code": "<BarChart data={data} barColor=\"var(--success)\" />"
+            },
+            {
+              "title": "Currency values",
+              "code": "<BarChart data={data} format={{ style: \"currency\", currency: \"USD\", notation: \"compact\" }} />"
+            },
+            {
+              "title": "Optional range tabs",
+              "code": "<BarChart\n  data={data}\n  ranges={[{ value: \"7d\", label: \"7D\" }, { value: \"30d\", label: \"30D\" }]}\n  range={range}\n  onRangeChange={setRange}\n/>"
+            }
+          ],
+          "guidance": [
+            "Use vertical bars for a short ordered comparison and horizontal bars when labels need more room.",
+            "Start the scale at zero so differences between categories remain honest.",
+            "Keep the dataset concise enough that every label remains readable.",
+            "Use onRangeChange to provide the data for the selected range."
+          ],
+          "behavior": [
+            "Bars animate from zero when first rendered and transition smoothly when values change.",
+            "Pointer and keyboard focus reveal the same moving value card.",
+            "Labels use Morphing Text and numeric values use Rolling Number.",
+            "Empty data renders a neutral empty state."
+          ],
+          "accessibility": [
+            "Every bar is keyboard focusable and has a formatted label and value.",
+            "All data is repeated in visually hidden text for assistive technology.",
+            "Values remain understandable without relying on color."
+          ],
+          "api": [
+            [
+              "data",
+              "readonly BarChartDatum[]",
+              "\u2014",
+              "Category labels and numeric values.",
+              true
+            ],
+            [
+              "title / description",
+              "string",
+              "\u2014",
+              "Optional chart heading and supporting copy."
+            ],
+            [
+              "ranges",
+              "readonly BarChartRange[]",
+              "\u2014",
+              "Optional grouped range tabs shown at the top right."
+            ],
+            [
+              "range / defaultRange",
+              "string",
+              "first range",
+              "Controlled or initial active range."
+            ],
+            [
+              "onRangeChange",
+              "(range: string) => void",
+              "\u2014",
+              "Called when a range tab is selected."
+            ],
+            [
+              "orientation",
+              "vertical | horizontal",
+              "vertical",
+              "Direction used to lay out the bars."
+            ],
+            [
+              "height",
+              "number",
+              "320",
+              "Minimum chart height in pixels, clamped to 220."
+            ],
+            [
+              "barColor",
+              "string",
+              "var(--focus)",
+              "CSS color used for the bars."
+            ],
+            [
+              "locale",
+              "Intl.LocalesArgument",
+              "en-US",
+              "Locale used to format visible and accessible values."
+            ],
+            [
+              "format",
+              "Intl.NumberFormatOptions",
+              "\u2014",
+              "Number, currency, percentage, or compact formatting."
+            ],
+            [
+              "className",
+              "string",
+              "\u2014",
+              "Additional classes applied to the figure root."
+            ]
+          ],
+          "customization": "Use barColor for semantic emphasis and format for units. Layout, motion, surfaces, and focus states inherit Rhoe UI foundations.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/rolling-number/rolling-number.tsx",
+            "components/rhoe/tabs/tabs.tsx",
+            "components/rhoe/bar-chart/bar-chart.tsx"
+          ],
+          "related": [
+            "line-chart",
+            "rolling-number"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Code",
+      "description": "Server-rendered source presentation with syntax highlighting, line numbers, copying, and progressive disclosure.",
+      "components": [
+        {
+          "name": "code-block",
+          "title": "Code Block",
+          "description": "Server-rendered syntax highlighting with filename and embedded variants.",
+          "lede": "Presents source code with server-rendered syntax highlighting, compact line numbers, copying, and an expandable long-file preview.",
+          "keywords": [
+            "code",
+            "syntax highlight",
+            "copy",
+            "shiki"
+          ],
+          "sourcePath": "registry/components/code-block/code-block.tsx",
+          "installation": "Installs the server highlighter, interactive view, Button, and shared foundation styles.",
+          "usage": "import { CodeBlock } from \"@/components/rhoe/code-block/code-block\"\n\nconst source = `export function Status() {\n  return <span>Ready</span>\n}`\n\nexport function CodeBlockExample() {\n  return (\n    <CodeBlock\n      code={source}\n      filename=\"status.tsx\"\n      language=\"tsx\"\n      previewLines={8}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Surface variants",
+              "code": "<CodeBlock code={source} language=\"tsx\" />\n<CodeBlock code={source} language=\"tsx\" variant=\"embedded\" />"
+            },
+            {
+              "title": "Custom preview length",
+              "code": "<CodeBlock code={htmlSource} filename=\"deployment-card.html\" language=\"html\" previewLines={10} />"
+            }
+          ],
+          "guidance": [
+            "Use it for installation commands, examples, and registry source.",
+            "Use prose for short identifiers rather than a code block."
+          ],
+          "behavior": [
+            "Shiki highlights source on the server.",
+            "Long source starts at previewLines and animates to its measured height in normal page flow.",
+            "Copy feedback changes without moving nearby content."
+          ],
+          "accessibility": [
+            "Line numbers are hidden from assistive technology.",
+            "Long horizontal lines remain keyboard-scrollable.",
+            "Copy and disclosure controls expose their state."
+          ],
+          "api": [
+            [
+              "code",
+              "string",
+              "\u2014",
+              "Source text to highlight and copy.",
+              true
+            ],
+            [
+              "language",
+              "string",
+              "tsx",
+              "Syntax grammar."
+            ],
+            [
+              "filename",
+              "string",
+              "Code",
+              "Header label."
+            ],
+            [
+              "variant",
+              "standalone | embedded",
+              "standalone",
+              "Surface treatment."
+            ],
+            [
+              "previewLines",
+              "number",
+              "18",
+              "Visible lines before disclosure."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/code-block/code-block.tsx",
+            "components/rhoe/code-block/code-block-view.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "tabs",
+            "sidebar-navigation"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Text Animation",
+      "description": "Reveal, morph, scramble, and rolling-number primitives built with Motion.",
+      "components": [
+        {
+          "name": "text-reveal",
+          "title": "Text Reveal",
+          "description": "Accessible character, word, and line reveals triggered in view.",
+          "lede": "Reveals text by character, word, or line once it enters view.",
+          "keywords": [
+            "text",
+            "character",
+            "word",
+            "line",
+            "reveal"
+          ],
+          "sourcePath": "registry/components/text-reveal/text-reveal.tsx",
+          "installation": "Installs Text Reveal and shared motion tokens.",
+          "usage": "import { TextReveal } from \"@/components/rhoe/text-reveal/text-reveal\"\n\nexport function TextRevealExample() {\n  return (\n    <TextReveal by=\"word\">\n      Motion should clarify change.\n    </TextReveal>\n  )\n}",
+          "guidance": [
+            "Use it for short editorial emphasis.",
+            "Do not use it for dense or continuously changing content."
+          ],
+          "behavior": [
+            "Characters, words, and lines use the shared motion curve.",
+            "Content remains readable when reduced motion is enabled."
+          ],
+          "accessibility": [
+            "Screen readers receive one complete text value.",
+            "Decorative split spans are hidden from assistive technology."
+          ],
+          "api": [
+            [
+              "children",
+              "string",
+              "\u2014",
+              "Text content.",
+              true
+            ],
+            [
+              "by",
+              "character | word | line",
+              "word",
+              "Split strategy."
+            ],
+            [
+              "delay",
+              "number",
+              "0",
+              "Start delay."
+            ],
+            [
+              "stagger",
+              "number",
+              "0.025",
+              "Delay between parts."
+            ],
+            [
+              "once",
+              "boolean",
+              "true",
+              "Whether to replay in view."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/text-reveal/text-reveal.tsx"
+          ],
+          "related": [
+            "morphing-text",
+            "scramble-text"
+          ]
+        },
+        {
+          "name": "morphing-text",
+          "title": "Morphing Text",
+          "description": "Measured text transitions that keep shared characters still.",
+          "lede": "Changes interface labels by keeping shared text in place and scrolling only the changed suffix or characters.",
+          "keywords": [
+            "text",
+            "morph",
+            "status",
+            "word transition"
+          ],
+          "sourcePath": "registry/components/morphing-text/morphing-text.tsx",
+          "installation": "Installs Morphing Text and shared motion tokens.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { MorphingText } from \"@/components/rhoe/morphing-text/morphing-text\"\n\nexport function MorphingTextExample() {\n  const [status, setStatus] = useState(\"Deploy\")\n\n  return (\n    <button\n      type=\"button\"\n      onClick={() => setStatus((value) => value === \"Deploy\" ? \"Deployed\" : \"Deploy\")}\n    >\n      <MorphingText value={status} />\n    </button>\n  )\n}",
+          "guidance": [
+            "Use it for a small set of related status labels.",
+            "Keep state labels concise so the changed portion remains legible."
+          ],
+          "behavior": [
+            "Shared prefixes remain still.",
+            "Outgoing characters scroll up and incoming characters scroll from below."
+          ],
+          "accessibility": [
+            "The complete active text is exposed as a single accessible value.",
+            "Reduced motion swaps the text without scrolling."
+          ],
+          "api": [
+            [
+              "value",
+              "string",
+              "\u2014",
+              "Active text value.",
+              true
+            ],
+            [
+              "duration",
+              "number",
+              "260",
+              "Transition duration."
+            ],
+            [
+              "className",
+              "string",
+              "\u2014",
+              "Root class name."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/morphing-text/morphing-text.tsx"
+          ],
+          "related": [
+            "text-reveal",
+            "button"
+          ]
+        },
+        {
+          "name": "scramble-text",
+          "title": "Scramble Text",
+          "description": "Accessible random-character text resolution animation for React.",
+          "lede": "Resolves a temporary character scramble into a final text value.",
+          "keywords": [
+            "text",
+            "scramble",
+            "decode",
+            "random characters"
+          ],
+          "sourcePath": "registry/components/scramble-text/scramble-text.tsx",
+          "installation": "Installs Scramble Text and shared motion tokens.",
+          "usage": "import { ScrambleText } from \"@/components/rhoe/scramble-text/scramble-text\"\n\nexport function ScrambleTextExample() {\n  return <ScrambleText value=\"DEPLOYMENT READY\" />\n}",
+          "guidance": [
+            "Use it sparingly for a short status or decorative moment.",
+            "Do not use it where people need to read a value immediately."
+          ],
+          "behavior": [
+            "Characters resolve in a deterministic sequence.",
+            "The shared curve and reduced-motion behavior keep it readable."
+          ],
+          "accessibility": [
+            "Assistive technology receives the final text rather than random characters."
+          ],
+          "api": [
+            [
+              "value",
+              "string",
+              "\u2014",
+              "Final text.",
+              true
+            ],
+            [
+              "characters",
+              "string",
+              "alphanumeric",
+              "Character pool."
+            ],
+            [
+              "duration",
+              "number",
+              "700",
+              "Resolution duration."
+            ],
+            [
+              "delay",
+              "number",
+              "0",
+              "Start delay."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/scramble-text/scramble-text.tsx"
+          ],
+          "related": [
+            "text-reveal",
+            "morphing-text"
+          ]
+        },
+        {
+          "name": "rolling-number",
+          "title": "Rolling Number",
+          "description": "Accessible rolling digit transitions for changing numeric values.",
+          "lede": "Transitions changing numbers digit by digit with an odometer-like scroll.",
+          "keywords": [
+            "number",
+            "counter",
+            "metric",
+            "odometer"
+          ],
+          "sourcePath": "registry/components/rolling-number/rolling-number.tsx",
+          "installation": "Installs Rolling Number and shared motion tokens.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { RollingNumber } from \"@/components/rhoe/rolling-number/rolling-number\"\n\nexport function RollingNumberExample() {\n  const [metric, setMetric] = useState(1280)\n\n  return (\n    <button type=\"button\" onClick={() => setMetric((value) => value + 1)}>\n      <RollingNumber value={metric} />\n    </button>\n  )\n}",
+          "guidance": [
+            "Use it for a value that changes meaningfully over time.",
+            "Avoid it for editable text fields; use Number Input instead."
+          ],
+          "behavior": [
+            "Digits step through intermediate values instead of jumping to the target.",
+            "A small blur during scroll keeps fast changes readable.",
+            "The final step eases into the target."
+          ],
+          "accessibility": [
+            "The current complete number is exposed as text.",
+            "Reduced motion updates the number without rolling."
+          ],
+          "api": [
+            [
+              "value",
+              "number",
+              "\u2014",
+              "Number to display.",
+              true
+            ],
+            [
+              "format",
+              "Intl.NumberFormatOptions",
+              "\u2014",
+              "Display formatting options."
+            ],
+            [
+              "locale",
+              "string",
+              "\u2014",
+              "Formatting locale."
+            ],
+            [
+              "duration",
+              "number",
+              "260",
+              "Digit transition duration."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/rolling-number/rolling-number.tsx"
+          ],
+          "related": [
+            "number-input",
+            "text-reveal"
+          ]
+        }
+      ]
+    }
+  ]
+}

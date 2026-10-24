@@ -1,0 +1,88 @@
+.releases {
+  display: grid;
+  gap: 56px;
+  margin-top: 24px;
+}
+
+.release {
+  display: grid;
+  gap: 18px;
+}
+
+.dateHeading {
+  width: 100%;
+  color: var(--text);
+  font-size: clamp(28px, 4vw, 36px);
+  font-weight: 720;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+}
+
+.releaseContent {
+  min-width: 0;
+}
+
+.releaseContent h4 {
+  font-size: 20px;
+  font-weight: 660;
+  letter-spacing: -0.025em;
+}
+
+.summary {
+  max-width: 620px;
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.changeGroup {
+  margin-top: 24px;
+}
+
+.changeGroup h4 {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 680;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.changeGroup ul {
+  display: grid;
+  gap: 9px;
+  margin-top: 10px;
+  padding-left: 20px;
+  list-style: disc outside;
+  color: var(--text-secondary);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.changeGroup li::marker {
+  color: var(--text-secondary);
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.pill {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  border-radius: 999px;
+  padding: 4px 9px;
+  background: var(--surface-muted);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 620;
+  line-height: 1;
+}
+
+.pill[data-kind="block"] {
+  color: var(--text);
+}

@@ -16,6 +16,9 @@
     "node": ">=20"
   },
   "scripts": {
+    "dev": "next dev",
+    "build": "pnpm registry:build && next build",
+    "start": "next start",
     "registry:build": "shadcn build && node scripts/prepare-registry.mjs",
     "registry:check": "node scripts/check-registry.mjs",
     "typecheck": "tsc --noEmit",

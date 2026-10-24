@@ -1,0 +1,15 @@
+.reveal { max-width: 20ch; font-size: clamp(24px, 4vw, 34px); font-weight: 650; line-height: 1.2; letter-spacing: -0.035em; }
+.revealByLine { max-width: none; }
+.morphSandbox { display: flex; width: 100%; flex-direction: column; align-items: center; gap: 26px; }
+.morphHint { margin: 0; color: var(--text-secondary); font-size: 12px; line-height: 1.5; text-align: center; }
+.morphPreview { display: flex; min-height: 1.2em; align-items: center; justify-content: center; font-size: clamp(32px, 6vw, 52px); font-weight: 650; line-height: 1.2; letter-spacing: -0.045em; }
+.morphEditor { display: flex; width: 100%; min-width: 0; align-items: center; }
+.morphArrayField { display: flex; min-width: 0; flex: 1; align-items: center; gap: 4px; color: var(--text-secondary); font-family: var(--font-geist-mono), monospace; font-size: 12px; }
+.morphArrayField input { min-width: 0; flex: 1; border: 0; outline: 0; padding: 7px 3px; background: transparent; color: var(--text); font: inherit; }
+.morphArrayField:focus-within { color: var(--text); }
+.srOnly { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.stack { display: flex; flex-direction: column; align-items: center; gap: 26px; }
+.scramble { font-family: var(--font-geist-mono), monospace; font-size: clamp(20px, 5vw, 34px); font-weight: 650; letter-spacing: 0.08em; }
+.numberRow { display: flex; align-items: center; gap: 20px; }
+.numberControlButton { width: 36px; padding: 0; }
+.number { font-size: clamp(52px, 9vw, 76px); font-weight: 640; line-height: 1; letter-spacing: -0.06em; }

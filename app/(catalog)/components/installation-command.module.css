@@ -1,0 +1,67 @@
+.root {
+  margin-top: 18px;
+}
+
+.panel {
+  padding-top: 28px;
+}
+
+.commandBlock {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--surface-muted);
+}
+
+.commandHeader {
+  display: flex;
+  min-height: 48px;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  padding-left: 16px;
+  background: var(--surface);
+}
+
+.commandLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--text-secondary);
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 12px;
+}
+
+.copyButton {
+  gap: 7px;
+  margin-right: 8px;
+}
+
+.commandSource {
+  display: grid;
+  grid-template-columns: 32px max-content;
+  min-height: 70px;
+  align-items: center;
+  overflow-x: auto;
+  gap: 16px;
+  padding: 14px 18px;
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 13px;
+  line-height: 1.75;
+  white-space: nowrap;
+}
+
+.commandSource code {
+  color: var(--text);
+  font: inherit;
+}
+
+.lineNumber {
+  color: var(--text-secondary);
+  text-align: right;
+  user-select: none;
+}
+
+.commandPrefix {
+  color: color-mix(in srgb, var(--focus) 78%, var(--text));
+}

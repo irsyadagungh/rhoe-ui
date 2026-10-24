@@ -34,13 +34,27 @@ Open an issue with the label `component-request` and describe:
 
 1. Fork this repository
 2. Create a branch: `git checkout -b feat/component-name`
-3. Make your changes
-4. Open a pull request with a clear description
+3. Run `pnpm install --frozen-lockfile`, then `pnpm dev`
+4. Open the local URL printed in the terminal, visit `/components` or `/blocks`, and edit the source in `registry/`
+5. Update the matching example in `app/(catalog)/components/previews/` or `app/(catalog)/blocks/previews/`, and the API catalog JSON when behavior or props change
+6. Check light/dark themes, mobile widths, keyboard interaction, and reduced motion
+7. Run `pnpm build`, `pnpm registry:check`, `pnpm typecheck`, and `pnpm lint`
+8. Include regenerated `public/r` files and open a pull request with a clear description and screenshots/video for visual changes
+
+Use Node.js 24 LTS and the pinned pnpm version. This public repository is the
+source of truth for Free components and examples. Preview pages import registry
+source directly, so no private repository or production credentials are needed.
+Do not add Pro source or secrets. The maintainer separately imports an approved
+commit into the production website before deployment.
+
+The server port is configurable: use `pnpm dev --port 3002` if you need a second
+local server. Follow the URL printed in the terminal. For a custom origin, set
+`NEXT_PUBLIC_SITE_URL` in `.env.local` as described in `.env.example`.
 
 ## Code Style
 
 - TypeScript strict mode
-- No external dependencies beyond `motion` and `lucide-react`
+- Prefer existing dependencies; discuss new ones first and declare every runtime dependency in the affected registry items
 - CSS variables for all design tokens — no hardcoded colors
 - Accessible: keyboard navigation, ARIA attributes where needed
 

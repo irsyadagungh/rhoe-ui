@@ -1,0 +1,371 @@
+{
+  "groups": [
+    {
+      "name": "Calendar",
+      "description": "Composed scheduling and agenda patterns.",
+      "blocks": [
+        {
+          "name": "todo-calendar",
+          "title": "To-do Calendar",
+          "description": "A weekly to-do card whose active week expands into a compact month calendar.",
+          "lede": "Keeps the selected date, its agenda, and nearby days together while a seven-day strip morphs into a complete month.",
+          "keywords": [
+            "agenda",
+            "schedule",
+            "task list",
+            "week calendar"
+          ],
+          "sourcePath": "registry/blocks/todo-calendar/todo-calendar.tsx",
+          "installation": "Installs the To-do Calendar block with Button, Icon Morph, Morphing Text, and shared motion foundations.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { TodoCalendar, type TodoCalendarItem } from \"@/components/rhoe/blocks/todo-calendar\"\n\nconst initialItems: TodoCalendarItem[] = [\n  {\n    id: \"review\",\n    title: \"Review the dashboard flow\",\n    description: \"Check motion and empty states.\",\n    date: new Date(2026, 9, 15),\n  },\n  {\n    id: \"publish\",\n    title: \"Publish component documentation\",\n    date: new Date(2026, 9, 18),\n  },\n]\n\nexport function TodoCalendarExample() {\n  const [date, setDate] = useState(() => new Date(2026, 9, 15))\n  const [items, setItems] = useState(initialItems)\n\n  return (\n    <TodoCalendar\n      items={items}\n      value={date}\n      onValueChange={setDate}\n      onItemToggle={(selectedItem) => {\n        setItems((current) => current.map((item) =>\n          item.id === selectedItem.id\n            ? { ...item, completed: !item.completed }\n            : item\n        ))\n      }}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Initially expanded",
+              "code": "<TodoCalendar items={items} defaultCalendarOpen />"
+            },
+            {
+              "title": "Read-only agenda",
+              "code": "<TodoCalendar items={items} defaultValue={new Date(2026, 9, 15)} />"
+            }
+          ],
+          "guidance": [
+            "Use this block when a date picker also needs to expose tasks or deadlines for the selected day.",
+            "Keep item titles short enough to scan and use descriptions only for useful context.",
+            "Use the Calendar primitive when the interface only needs date selection."
+          ],
+          "behavior": [
+            "The collapsed state shows the selected week and task markers for all seven days.",
+            "Opening the calendar keeps the active week alive while surrounding weeks expand around it; a second-week strip therefore moves into the second calendar row.",
+            "Agenda items appear between the selected-date header and the week or month surface.",
+            "Date, hover, and selection indicators use the shared motion tokens and respect reduced-motion preferences."
+          ],
+          "accessibility": [
+            "The block exposes a labelled region, calendar grid, selected dates, and descriptive date labels.",
+            "The calendar toggle exposes its expanded state and changes its accessible name with the view.",
+            "Interactive agenda items use pressed state to communicate completion."
+          ],
+          "api": [
+            [
+              "items",
+              "readonly TodoCalendarItem[]",
+              "—",
+              "Agenda items containing id, title, date, optional description, and completion state.",
+              true
+            ],
+            [
+              "value / defaultValue",
+              "Date",
+              "today",
+              "Controlled or initial selected date."
+            ],
+            [
+              "onValueChange",
+              "(date: Date) => void",
+              "—",
+              "Called when a day is selected."
+            ],
+            [
+              "onItemToggle",
+              "(item: TodoCalendarItem) => void",
+              "—",
+              "Makes agenda rows interactive and reports the item being toggled."
+            ],
+            [
+              "addTodoAction",
+              "ReactNode",
+              "—",
+              "Optional action rendered beside the calendar toggle, such as a Dialog with an add button trigger."
+            ],
+            [
+              "defaultCalendarOpen",
+              "boolean",
+              "false",
+              "Shows the complete month on first render."
+            ],
+            [
+              "locale",
+              "string",
+              "browser locale",
+              "Locale used for date, month, and weekday labels."
+            ],
+            [
+              "weekStartsOn",
+              "0 | 1",
+              "0",
+              "Starts each week on Sunday or Monday."
+            ],
+            [
+              "ariaLabel",
+              "string",
+              "To-do calendar",
+              "Accessible name for the block."
+            ],
+            [
+              "className",
+              "string",
+              "—",
+              "Additional classes on the outer card."
+            ]
+          ],
+          "customization": "Supply application-owned items and state handlers. The card, agenda rows, date indicators, radii, and motion inherit the shared Rhoe UI theme tokens.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/blocks/todo-calendar.tsx"
+          ],
+          "related": [
+            "calendar",
+            "animated-list",
+            "checkbox"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Forms",
+      "description": "Complete form flows composed from Rhoe UI controls.",
+      "blocks": [
+        {
+          "name": "auth-form",
+          "title": "Authentication Form",
+          "description": "Sign-in and sign-up forms with a responsive OAuth button grid and Rhoe UI form controls.",
+          "lede": "Combines social authentication, email credentials, consent, recovery, and account switching into a complete responsive authentication flow.",
+          "keywords": [
+            "authentication",
+            "sign in",
+            "sign up",
+            "oauth",
+            "login",
+            "registration"
+          ],
+          "sourcePath": "registry/blocks/auth-form/auth-form.tsx",
+          "installation": "Installs the Authentication Form block with Button, Input, Checkbox, and shared Rhoe UI foundations.",
+          "usage": "\"use client\"\n\nimport { AuthForm, type AuthFormValues } from \"@/components/rhoe/blocks/auth-form\"\n\nconst providers = [\n  {\n    label: \"GitHub\",\n    onClick: () => window.location.assign(\"/auth/github\"),\n  },\n]\n\nexport function SignInForm() {\n  const handleSubmit = async (values: AuthFormValues) => {\n    await fetch(\"/api/auth/sign-in\", {\n      method: \"POST\",\n      headers: { \"Content-Type\": \"application/json\" },\n      body: JSON.stringify(values),\n    })\n  }\n\n  return (\n    <AuthForm\n      mode=\"sign-in\"\n      oauthProviders={providers}\n      forgotPasswordAction={<a href=\"/forgot-password\">Forgot password?</a>}\n      alternateAction={<a href=\"/sign-up\">Sign up</a>}\n      onSubmit={handleSubmit}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Submit form data",
+              "code": "import type { AuthFormValues } from \"@/components/rhoe/blocks/auth-form\"\n\nasync function handleSignIn(values: AuthFormValues) {\n  const response = await fetch(\"/api/auth/sign-in\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(values),\n  })\n\n  if (!response.ok) {\n    throw new Error(\"Unable to sign in\")\n  }\n}\n\n<AuthForm mode=\"sign-in\" onSubmit={handleSignIn} />"
+            },
+            {
+              "title": "Sign up",
+              "code": "async function handleSignUp(values: AuthFormValues) {\n  await fetch(\"/api/auth/sign-up\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(values),\n  })\n}\n\n<AuthForm\n  mode=\"sign-up\"\n  oauthProviders={providers}\n  termsAction={<a href=\"/terms\">Terms of Service</a>}\n  privacyAction={<a href=\"/privacy\">Privacy Policy</a>}\n  alternateAction={<a href=\"/sign-in\">Sign in</a>}\n  onSubmit={handleSignUp}\n/>"
+            },
+            {
+              "title": "Four OAuth providers",
+              "code": "<AuthForm\n  mode=\"sign-in\"\n  oauthProviders={[github, google, microsoft, apple]}\n  onSubmit={handleSignIn}\n/>"
+            }
+          ],
+          "guidance": [
+            "Use one to four OAuth providers. The block automatically arranges them as 1, 2, 2 + 1, or 2 x 2.",
+            "Connect OAuth buttons and form submission to application-owned authentication routes.",
+            "Keep recovery, terms, privacy, and account-switching destinations explicit."
+          ],
+          "behavior": [
+            "Every OAuth and submit button overrides the Button default width with w-full inside the block.",
+            "A single OAuth button spans one row; two share a row; the third spans the next row; four form two equal rows.",
+            "Sign-in includes email, password, recovery, and remember-device controls. Sign-up adds name, password confirmation, and required consent.",
+            "Only the first four OAuth providers are rendered."
+          ],
+          "accessibility": [
+            "The block uses a semantic form with native email, password, required, autocomplete, and submit behavior.",
+            "Password visibility, checkboxes, focus rings, labels, and disabled OAuth states inherit accessible Rhoe UI primitives.",
+            "Actions supplied as links retain their native navigation semantics."
+          ],
+          "api": [
+            [
+              "mode",
+              "sign-in | sign-up",
+              "sign-in",
+              "Selects the fields, copy, consent, and submit label."
+            ],
+            [
+              "oauthProviders",
+              "readonly AuthProvider[]",
+              "[]",
+              "Up to four provider buttons containing label, optional icon, disabled state, and click handler."
+            ],
+            [
+              "title / description",
+              "string",
+              "mode copy",
+              "Overrides the heading or supporting copy."
+            ],
+            [
+              "forgotPasswordAction",
+              "ReactNode",
+              "—",
+              "Recovery action shown beside the sign-in password label."
+            ],
+            [
+              "termsAction / privacyAction",
+              "ReactNode",
+              "text labels",
+              "Destinations shown in required sign-up consent."
+            ],
+            [
+              "alternateAction",
+              "ReactNode",
+              "—",
+              "Sign-up or sign-in action displayed below the form."
+            ],
+            [
+              "onSubmit",
+              "(values: AuthFormValues) => void | Promise<void>",
+              "—",
+              "Receives email, password, remember, and termsAccepted; sign-up also receives fullName and confirmPassword. Use it to send the values to your API, Server Action, or authentication service."
+            ],
+            [
+              "className",
+              "string",
+              "—",
+              "Additional classes applied to the form root."
+            ]
+          ],
+          "customization": "Override title and description, provide application-owned actions, and pass one to four OAuth providers. Static layout and colors inherit the Rhoe UI Tailwind and token foundation.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/input/input.tsx",
+            "components/rhoe/checkbox/checkbox.tsx",
+            "components/rhoe/blocks/auth-form.tsx"
+          ],
+          "related": [
+            "input",
+            "checkbox",
+            "button",
+            "password-strength"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Data Visualization",
+      "description": "Composed data displays for live monitoring and operational views.",
+      "blocks": [
+        {
+          "name": "realtime-line-chart",
+          "title": "Realtime Line Chart",
+          "description": "A continuously advancing line chart block with a live value, status, average, and configurable spike threshold.",
+          "lede": "Keeps a fixed time window moving beneath a stationary hover reader while new measurements enter from the right.",
+          "keywords": [
+            "realtime",
+            "line chart",
+            "monitoring",
+            "metrics",
+            "spike"
+          ],
+          "sourcePath": "registry/blocks/realtime-line-chart/realtime-line-chart.tsx",
+          "installation": "Installs Realtime Line Chart with Line Chart, Rolling Number, Morphing Text, and shared motion foundations.",
+          "usage": "\"use client\"\n\nimport { RealtimeLineChart } from \"@/components/rhoe/blocks/realtime-line-chart\"\n\n<RealtimeLineChart\n  data={metrics}\n  title=\"API latency\"\n  windowSize={31}\n  updateInterval={1000}\n  domain={[0, 500]}\n  spikeThreshold={300}\n  spikeColor=\"var(--danger)\"\n  format={{ style: \"unit\", unit: \"millisecond\" }}\n/>",
+          "examples": [
+            {
+              "title": "Custom spike color",
+              "code": "<RealtimeLineChart data={metrics} title=\"Requests\" spikeThreshold={800} spikeColor=\"#f97316\" />"
+            }
+          ],
+          "guidance": [
+            "Append new measurements to data instead of replacing the visible window.",
+            "Match updateInterval to the real feed cadence so motion remains continuous.",
+            "Use a stable domain to prevent the vertical scale from jumping during live updates."
+          ],
+          "behavior": [
+            "New samples enter from the right while the existing timeline advances left at a constant speed.",
+            "The latest value uses Rolling Number and status changes use Morphing Text.",
+            "Hover remains fixed under a stationary pointer while the timeline passes beneath it.",
+            "Only the curve above spikeThreshold changes to spikeColor."
+          ],
+          "accessibility": [
+            "The latest value remains readable outside the SVG.",
+            "The underlying Line Chart exposes every visible label and value to assistive technology.",
+            "Status includes text and does not rely on the colored indicator alone."
+          ],
+          "api": [
+            [
+              "data",
+              "readonly LineChartDatum[]",
+              "—",
+              "Growing measurement history.",
+              true
+            ],
+            [
+              "title",
+              "string",
+              "—",
+              "Metric title.",
+              true
+            ],
+            [
+              "description",
+              "string",
+              "—",
+              "Supporting context."
+            ],
+            [
+              "status",
+              "string",
+              "Live",
+              "Current connection or feed state."
+            ],
+            [
+              "windowSize",
+              "number",
+              "31",
+              "Number of recent samples visible."
+            ],
+            [
+              "updateInterval",
+              "number",
+              "1000",
+              "Feed interval in milliseconds and continuous movement duration."
+            ],
+            [
+              "domain",
+              "readonly [number, number]",
+              "automatic",
+              "Stable vertical scale."
+            ],
+            [
+              "spikeThreshold / spikeColor",
+              "number / string",
+              "— / var(--danger)",
+              "Threshold and curve color for spikes."
+            ],
+            [
+              "locale / format",
+              "Intl options",
+              "browser locale",
+              "Formatting for the latest value and chart values."
+            ],
+            [
+              "className",
+              "string",
+              "—",
+              "Additional classes for the block root."
+            ]
+          ],
+          "customization": "Configure the visible window, feed interval, stable domain, spike threshold, number format, and status content.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/rolling-number/rolling-number.tsx",
+            "components/rhoe/tabs/tabs.tsx",
+            "components/rhoe/line-chart/line-chart.tsx",
+            "components/rhoe/blocks/realtime-line-chart.tsx"
+          ],
+          "related": [
+            "line-chart",
+            "rolling-number",
+            "morphing-text"
+          ]
+        }
+      ]
+    }
+  ]
+}

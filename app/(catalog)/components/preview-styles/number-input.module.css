@@ -1,0 +1,13 @@
+.previewField {
+  width: min(100%, 480px);
+}
+
+.previewControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 14px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}

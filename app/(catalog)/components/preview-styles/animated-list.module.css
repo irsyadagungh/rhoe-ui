@@ -1,0 +1,26 @@
+.preview {
+  width: min(100%, 480px);
+}
+
+.previewList {
+  width: 100%;
+  max-height: 360px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 6px;
+}
+
+.previewControls {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.previewControl {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
