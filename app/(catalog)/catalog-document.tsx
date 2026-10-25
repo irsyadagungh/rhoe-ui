@@ -44,9 +44,7 @@ export function CatalogDocument({ component }: { component: CatalogItem }) {
           {component.section} / {component.group}
         </p>
         <h1>
-          {component.section === "Components" ? (
-            <TextReveal key={component.name} by="word">{component.title}</TextReveal>
-          ) : component.title}
+          <TextReveal key={component.name} by="word">{component.title}</TextReveal>
         </h1>
         <p className={styles.lede}>{component.lede}</p>
       </header>
