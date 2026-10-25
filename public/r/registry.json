@@ -1201,7 +1201,7 @@
       "name": "realtime-line-chart",
       "type": "registry:block",
       "title": "Realtime Line Chart",
-      "description": "A continuously advancing line chart block with live status, value, average, and spike threshold.",
+      "description": "A continuously advancing line chart block with a live value, optional range tabs, average, and spike threshold.",
       "dependencies": [
         "motion"
       ],

@@ -3,6 +3,7 @@ import { ArrowUpRight } from "lucide-react";
 import { githubUrl, threadsUrl } from "@/lib/site-url";
 import { Badge } from "@/registry/components/badge/badge";
 import { CodeBlock } from "@/registry/components/code-block/code-block";
+import { TextReveal } from "@/registry/components/text-reveal/text-reveal";
 import { ComponentPreview } from "./components/component-preview";
 import { MarkdownDownload } from "./components/copy-for-ai";
 import { getCatalogItem, type CatalogItem } from "./catalog-data";
@@ -42,7 +43,11 @@ export function CatalogDocument({ component }: { component: CatalogItem }) {
         <p className={styles.eyebrow}>
           {component.section} / {component.group}
         </p>
-        <h1>{component.title}</h1>
+        <h1>
+          {component.section === "Components" ? (
+            <TextReveal key={component.name} by="word">{component.title}</TextReveal>
+          ) : component.title}
+        </h1>
         <p className={styles.lede}>{component.lede}</p>
       </header>
 

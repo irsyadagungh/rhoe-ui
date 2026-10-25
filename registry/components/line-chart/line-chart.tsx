@@ -134,7 +134,7 @@ export function LineChart({
     const bounds = event.currentTarget.getBoundingClientRect();
     const cursorX = event.clientX - bounds.left;
     const cursorY = event.clientY - bounds.top;
-    const position = (cursorX / bounds.width) * WIDTH;
+    const position = PADDING.left + (cursorX / bounds.width) * chart.innerWidth;
     const nextGuideX = Math.max(PADDING.left, Math.min(WIDTH - PADDING.right, position));
     setGuideX(nextGuideX);
     const ratio = (position - PADDING.left) / chart.innerWidth;
@@ -142,7 +142,7 @@ export function LineChart({
     const nextIndex = chart.visibleStart + localIndex;
     setActiveIndex(nextIndex);
     setTooltipPosition({
-      x: (nextGuideX / WIDTH) * bounds.width,
+      x: PADDING.left + ((nextGuideX - PADDING.left) / chart.innerWidth) * bounds.width,
       y: Math.max(64, Math.min(bounds.height, cursorY)),
     });
   };
@@ -184,9 +184,10 @@ export function LineChart({
       {chart ? (
         <div className="relative w-full">
           <svg
-            className="block w-full touch-none overflow-visible"
-            style={{ height: chartHeight }}
-            viewBox={`0 0 ${WIDTH} ${chartHeight}`}
+            className="block touch-none overflow-visible"
+            style={{ height: chartHeight, marginLeft: PADDING.left, width: `calc(100% - ${PADDING.left + PADDING.right}px)` }}
+            viewBox={`${PADDING.left} 0 ${chart.innerWidth} ${chartHeight}`}
+            preserveAspectRatio="none"
             role="img"
             aria-label={title ? `${title} line chart` : "Line chart"}
             onPointerMove={selectNearest}
@@ -212,17 +213,10 @@ export function LineChart({
               </clipPath>
             </defs>
 
-            {[0, 0.5, 1].map((ratio, index) => {
+            {[0, 0.5, 1].map((ratio) => {
               const y = PADDING.top + chart.innerHeight * ratio;
               return (
-                <g key={ratio}>
-                  <line x1={PADDING.left} x2={WIDTH - PADDING.right} y1={y} y2={y} stroke="var(--border)" strokeOpacity="0.72" />
-                  <foreignObject x="0" y={y - 10} width={PADDING.left - 10} height="20">
-                    <div className="flex h-full items-center justify-end text-xs text-[var(--text-secondary)]">
-                      <RollingNumber value={chart.ticks[index]} locale={locale} format={format} />
-                    </div>
-                  </foreignObject>
-                </g>
+                <line key={ratio} x1={PADDING.left} x2={WIDTH - PADDING.right} y1={y} y2={y} stroke="var(--border)" strokeOpacity="0.72" />
               );
             })}
 
@@ -238,25 +232,12 @@ export function LineChart({
                   strokeDasharray="5 7"
                   strokeOpacity="0.72"
                 />
-                <motion.foreignObject
-                  x={WIDTH - PADDING.right - 190}
-                  width="190"
-                  height="24"
-                  initial={false}
-                  animate={{ y: chart.averageY - 25 }}
-                  transition={reduceMotion ? { duration: 0 } : motionTokens.spring.smooth}
-                >
-                  <div className="flex h-full items-center justify-end whitespace-nowrap text-xs text-[var(--text-secondary)]">
-                    <MorphingText value={averageLabel} />
-                    <span className="mx-1">·</span>
-                    <RollingNumber value={chart.average} locale={locale} format={format} />
-                  </div>
-                </motion.foreignObject>
               </g>
             )}
 
             <g clipPath={`url(#${plotClipId})`}>
               <motion.g
+                key={windowSize ?? "static"}
                 initial={false}
                 animate={{ transform: `translate3d(${-chart.offset}px, 0px, 0px)` }}
                 transition={reduceMotion ? { duration: 0 } : { duration: advanceDuration, ease: "linear" }}
@@ -320,32 +301,63 @@ export function LineChart({
               </g>
             )}
 
-            {data.map((datum, index) => {
-              if (index < chart.visibleStart) return null;
-              const localIndex = index - chart.visibleStart;
-              const labelStep = Math.max(1, Math.round((chart.visibleCount - 1) / 6));
-              const showLabel = chart.visibleCount <= 7 || localIndex % labelStep === 0 || index === data.length - 1;
-              return showLabel ? (
-                <motion.foreignObject
-                  key={index}
-                  x={chart.points[index][0] - 44}
-                  y={chartHeight - 28}
-                  width="88"
-                  height="20"
-                  initial={false}
-                  animate={{ transform: `translate3d(${-chart.offset}px, 0px, 0px)` }}
-                  transition={reduceMotion ? { duration: 0 } : { duration: advanceDuration, ease: "linear" }}
-                >
-                  <div className={[
-                    "flex h-full items-center text-xs text-[var(--text-secondary)]",
-                    localIndex === 0 ? "justify-start" : index === data.length - 1 ? "justify-end" : "justify-center",
-                  ].join(" ")}>
-                    <MorphingText value={datum.label} />
-                  </div>
-                </motion.foreignObject>
-              ) : null;
-            })}
           </svg>
+
+          {/* Keep animated HTML outside SVG: foreignObject can misplace transformed
+              descendants in WebKit. Both layers use the same plot coordinates. */}
+          <div className="pointer-events-none absolute inset-0 text-xs text-[var(--text-secondary)]">
+            {chart.ticks.map((tick, index) => (
+              <div
+                key={index}
+                className="absolute left-0 flex h-5 items-center justify-end"
+                style={{
+                  top: PADDING.top + chart.innerHeight * index / 2 - 10,
+                  width: PADDING.left - 10,
+                }}
+              >
+                <RollingNumber value={tick} locale={locale} format={format} />
+              </div>
+            ))}
+
+            {showAverage && (
+              <motion.div
+                className="absolute top-0 flex h-6 items-center justify-end gap-1 whitespace-nowrap"
+                style={{ right: PADDING.right }}
+                initial={false}
+                animate={{ transform: `translateY(${chart.averageY - 25}px)` }}
+                transition={reduceMotion ? { duration: 0 } : motionTokens.spring.smooth}
+              >
+                <MorphingText value={averageLabel} />
+                <span>·</span>
+                <RollingNumber value={chart.average} locale={locale} format={format} />
+              </motion.div>
+            )}
+
+            <div className="absolute inset-y-0" style={{ left: PADDING.left, right: PADDING.right }}>
+              {data.map((datum, index) => {
+                if (index < chart.visibleStart) return null;
+                const localIndex = index - chart.visibleStart;
+                const labelStep = Math.max(1, Math.round((chart.visibleCount - 1) / 6));
+                const showLabel = chart.visibleCount <= 7 || localIndex % labelStep === 0 || index === data.length - 1;
+                return showLabel ? (
+                  <div
+                    key={localIndex}
+                    className={[
+                      "absolute flex h-5 w-[88px] items-center",
+                      localIndex === 0 ? "justify-start" : index === data.length - 1 ? "justify-end" : "justify-center",
+                    ].join(" ")}
+                    style={{
+                      left: `${((chart.points[localIndex][0] - PADDING.left) / chart.innerWidth) * 100}%`,
+                      top: chartHeight - 28,
+                      transform: localIndex === 0 ? "none" : index === data.length - 1 ? "translateX(-100%)" : "translateX(-50%)",
+                    }}
+                  >
+                    <MorphingText value={datum.label} className="max-w-full overflow-hidden" />
+                  </div>
+                ) : null;
+              })}
+            </div>
+          </div>
 
           {activePoint && activeIndex !== null && data[resolvedIndex] && (
             <motion.div

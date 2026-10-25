@@ -65,6 +65,10 @@
 .resourceGroup { margin-top: 18px; }
 .resourceGroup h3, .resourceNote h3 { font-size: 15px; font-weight: 650; letter-spacing: -0.015em; }
 .resourceNote { margin-top: 18px; }
+.componentList { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px 36px; margin: 18px 0 0; padding: 0; list-style: none; }
+.componentLink { display: flex; min-width: 0; align-items: center; justify-content: space-between; gap: 8px; width: 100%; padding: 7px 0; color: var(--text-secondary); font-size: 14px; line-height: 1.5; text-decoration: none; transition: color var(--duration-fast) var(--ease-standard); }
+.componentLink svg { flex: 0 0 auto; }
+.componentLink:focus-visible { border-radius: 6px; outline: 2px solid var(--focus); outline-offset: 4px; }
 .relatedLinks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
 .relatedLink { display: flex; min-width: 0; align-items: flex-start; justify-content: space-between; gap: 16px; border-radius: 16px; padding: 16px; background: var(--surface-muted); color: var(--text); text-decoration: none; transition: background-color var(--duration-fast) var(--ease-standard); }
 .relatedLink span { display: grid; min-width: 0; gap: 5px; }
@@ -95,6 +99,7 @@
 .table th { background: var(--surface-muted); color: var(--text-secondary); font-size: 11px; font-weight: 650; letter-spacing: 0.04em; text-transform: uppercase; }
 .table td:first-child, .table td:nth-child(2), .table td:nth-child(3) { font-family: var(--font-geist-mono), monospace; font-size: 12px; }
 @media (hover: hover) and (pointer: fine) {
+  .componentLink:hover { color: var(--text); }
   .toplink:hover { color: var(--text); }
   .pageNavigationLink:hover { background: var(--surface-muted); }
   .relatedLink:hover { background: color-mix(in srgb, var(--surface-muted) 82%, var(--text)); }
@@ -137,7 +142,8 @@
   .previewCanvas[data-expandable][data-expanded] { min-height: 420px; }
   .guidanceGrid { grid-template-columns: 1fr; }
   .experienceList { grid-template-columns: 1fr; }
-  .relatedLinks { grid-template-columns: 1fr; }
+  .componentList, .relatedLinks { grid-template-columns: 1fr; }
+  .componentLink { min-height: 44px; }
   .tableWrap { width: calc(100vw - 32px); max-width: 100%; border-radius: 16px; }
   .aiNote { align-items: flex-start; flex-direction: column; }
   .aiNoteActions { width: 100%; justify-content: flex-start; }

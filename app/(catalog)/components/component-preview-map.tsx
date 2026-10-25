@@ -132,7 +132,11 @@ export function getComponentPreview(name: string): PreviewDefinition {
       { value: "grouped-text", label: "Grouped · Text", preview: <NavigationExample type="tabs" tabsVariant="grouped-text" /> },
       { value: "grouped-icon", label: "Grouped · Icon", preview: <NavigationExample type="tabs" tabsVariant="grouped-icon" /> },
     ] };
-    case "text-reveal": return { preview: <TextAnimationExample type="reveal" /> };
+    case "text-reveal": return { variants: [
+      { value: "word", label: "Word", preview: <TextAnimationExample type="reveal" /> },
+      { value: "character", label: "Character", preview: <TextAnimationExample type="reveal" revealBy="character" /> },
+      { value: "line", label: "Line", preview: <TextAnimationExample type="reveal" revealBy="line" /> },
+    ] };
     case "morphing-text": return { preview: <TextAnimationExample type="morph" />, showReplay: false };
     case "scramble-text": return { preview: <TextAnimationExample type="scramble" />, showReplay: false };
     case "rolling-number": return { preview: <TextAnimationExample type="number" />, showReplay: false };

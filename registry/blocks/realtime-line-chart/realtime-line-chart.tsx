@@ -1,15 +1,18 @@
 "use client";
 
-import { LineChart, type LineChartDatum } from "../../components/line-chart/line-chart";
-import { MorphingText } from "../../components/morphing-text/morphing-text";
+import { LineChart, type LineChartDatum, type LineChartRange } from "../../components/line-chart/line-chart";
 import { RollingNumber } from "../../components/rolling-number/rolling-number";
+import { Tabs } from "../../components/tabs/tabs";
 import "../../components/foundation.css";
 
 export interface RealtimeLineChartProps {
   data: readonly LineChartDatum[];
   title: string;
   description?: string;
-  status?: string;
+  ranges?: readonly LineChartRange[];
+  range?: string;
+  defaultRange?: string;
+  onRangeChange?: (range: string) => void;
   windowSize?: number;
   updateInterval?: number;
   domain?: readonly [number, number];
@@ -24,7 +27,10 @@ export function RealtimeLineChart({
   data,
   title,
   description,
-  status = "Live",
+  ranges,
+  range,
+  defaultRange,
+  onRangeChange,
   windowSize = 31,
   updateInterval = 1000,
   domain,
@@ -38,7 +44,7 @@ export function RealtimeLineChart({
 
   return (
     <section className={["w-full text-[var(--text)]", className].filter(Boolean).join(" ")}>
-      <header className="mb-6 flex items-start justify-between gap-5">
+      <header className="mb-6 flex flex-wrap items-start justify-between gap-5">
         <div className="min-w-0">
           <h3 className="text-lg font-[650] tracking-[-0.02em]">{title}</h3>
           {description && <p className="mt-1 text-sm text-[var(--text-secondary)]">{description}</p>}
@@ -46,10 +52,18 @@ export function RealtimeLineChart({
             <RollingNumber value={latest} locale={locale} format={format} />
           </div>
         </div>
-        <div className="flex shrink-0 items-center gap-2 rounded-full bg-[var(--surface-muted)] px-3 py-1.5 text-xs font-[620] text-[var(--text-secondary)]">
-          <span className="size-1.5 rounded-full bg-[var(--success)]" aria-hidden="true" />
-          <MorphingText value={status} />
-        </div>
+        {ranges?.length ? (
+          <Tabs
+            items={ranges.map((item) => ({ ...item, content: null }))}
+            value={range}
+            defaultValue={defaultRange}
+            onValueChange={onRangeChange}
+            variant="grouped"
+            ariaLabel="Realtime chart range"
+            className="ml-auto max-w-full"
+            panelClassName="hidden"
+          />
+        ) : null}
       </header>
 
       <LineChart

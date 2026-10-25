@@ -17,6 +17,7 @@ export interface TextRevealProps extends SpanProps {
   by?: "word" | "character" | "line";
   lines?: string[];
   once?: boolean;
+  blur?: boolean;
 }
 
 interface RevealPart {
@@ -64,6 +65,7 @@ export function TextReveal({
   by = "word",
   lines,
   once = true,
+  blur = true,
   className,
   ...props
 }: TextRevealProps) {
@@ -98,6 +100,7 @@ export function TextReveal({
                     ? false
                     : {
                         opacity: 0,
+                        filter: blur && !reduceMotion ? "blur(6px)" : "none",
                         transform: part.line
                           ? "translateY(112%)"
                           : "translateY(100%)",
@@ -105,9 +108,10 @@ export function TextReveal({
                 }
                 animate={
                   visible
-                    ? { opacity: 1, transform: "translateY(0%)" }
+                    ? { opacity: 1, transform: "translateY(0%)", filter: blur && !reduceMotion ? "blur(0px)" : "none" }
                     : {
                         opacity: 0,
+                        filter: blur && !reduceMotion ? "blur(6px)" : "none",
                         transform: reduceMotion
                           ? "none"
                           : part.line
@@ -121,6 +125,11 @@ export function TextReveal({
                     : part.line
                       ? {
                           transform: {
+                            duration: motionTokens.duration.lineReveal,
+                            ease: motionTokens.ease.enter,
+                            delay: part.staggerIndex * stagger,
+                          },
+                          filter: {
                             duration: motionTokens.duration.lineReveal,
                             ease: motionTokens.ease.enter,
                             delay: part.staggerIndex * stagger,

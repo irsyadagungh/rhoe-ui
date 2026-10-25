@@ -141,7 +141,7 @@ function RollingColumn({
   }, [digit, direction, position, reduceMotion]);
 
   return (
-    <span className="relative inline-block -my-[calc(var(--digit-feather)*-1)] overflow-hidden py-[var(--digit-feather)] [--digit-feather:0.16em] [mask-image:linear-gradient(to_bottom,transparent,#000_calc(var(--digit-feather)*1.5),#000_calc(100%-var(--digit-feather)*1.5),transparent)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,#000_calc(var(--digit-feather)*1.5),#000_calc(100%-var(--digit-feather)*1.5),transparent)]">
+    <span className="relative inline-block my-[calc(var(--digit-feather)*-1)] overflow-hidden py-[var(--digit-feather)] [--digit-feather:0.16em] [mask-image:linear-gradient(to_bottom,transparent,#000_calc(var(--digit-feather)*1.5),#000_calc(100%-var(--digit-feather)*1.5),transparent)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,#000_calc(var(--digit-feather)*1.5),#000_calc(100%-var(--digit-feather)*1.5),transparent)]">
       <span className="invisible">0</span>
       {rollingDigits.map((item) => (
         <RollingGlyph key={item} position={position} digit={item} />
@@ -181,7 +181,7 @@ export function RollingNumber({
       aria-live="polite"
     >
       <span className="absolute size-px overflow-hidden [clip:rect(0,0,0,0)] [clip-path:inset(50%)] whitespace-nowrap">{formatted}</span>
-      <span className="inline-flex items-baseline whitespace-nowrap select-none" aria-hidden="true">
+      <span className="inline-flex items-center whitespace-nowrap select-none" aria-hidden="true">
         {parts.map((part) =>
           "digit" in part ? (
             <RollingColumn
@@ -191,7 +191,7 @@ export function RollingNumber({
               reduceMotion={reduceMotion}
             />
           ) : (
-            <span key={part.key} className="inline-block overflow-x-clip">
+            <span key={part.key} className="inline-block whitespace-pre">
               {part.text}
             </span>
           ),

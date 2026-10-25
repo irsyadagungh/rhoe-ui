@@ -3444,7 +3444,8 @@
           ],
           "behavior": [
             "Characters, words, and lines use the shared motion curve.",
-            "Content remains readable when reduced motion is enabled."
+            "Content remains readable when reduced motion is enabled.",
+            "Blur is enabled by default and follows the reveal timing and stagger; reduced motion disables blur and translation."
           ],
           "accessibility": [
             "Screen readers receive one complete text value.",
@@ -3465,22 +3466,22 @@
               "Split strategy."
             ],
             [
-              "delay",
-              "number",
-              "0",
-              "Start delay."
+              "blur",
+              "boolean",
+              "true",
+              "Starts each part at 6px blur and sharpens it during the reveal. Set false to disable. Disabled with reduced motion."
             ],
             [
-              "stagger",
-              "number",
-              "0.025",
-              "Delay between parts."
+              "lines",
+              "string[]",
+              "\u2014",
+              "Explicit lines when by=\"line\"; otherwise newline characters define the lines."
             ],
             [
               "once",
               "boolean",
               "true",
-              "Whether to replay in view."
+              "Reveal once when true; replay on re-entry when false."
             ]
           ],
           "files": [
@@ -3491,6 +3492,12 @@
           "related": [
             "morphing-text",
             "scramble-text"
+          ],
+          "examples": [
+            {
+              "title": "Reveal without blur",
+              "code": "import { TextReveal } from \"@/components/rhoe/text-reveal/text-reveal\"\n\nexport function RevealWithoutBlurExample() {\n  return <TextReveal by=\"word\" blur={false}>Motion comes into focus.</TextReveal>\n}"
+            }
           ]
         },
         {

@@ -251,7 +251,7 @@
         {
           "name": "realtime-line-chart",
           "title": "Realtime Line Chart",
-          "description": "A continuously advancing line chart block with a live value, status, average, and configurable spike threshold.",
+          "description": "A continuously advancing line chart block with a live value, optional range tabs, average, and configurable spike threshold.",
           "lede": "Keeps a fixed time window moving beneath a stationary hover reader while new measurements enter from the right.",
           "keywords": [
             "realtime",
@@ -261,29 +261,35 @@
             "spike"
           ],
           "sourcePath": "registry/blocks/realtime-line-chart/realtime-line-chart.tsx",
-          "installation": "Installs Realtime Line Chart with Line Chart, Rolling Number, Morphing Text, and shared motion foundations.",
+          "installation": "Installs Realtime Line Chart with Line Chart, Tabs, Rolling Number, Morphing Text, and shared motion foundations.",
           "usage": "\"use client\"\n\nimport { RealtimeLineChart } from \"@/components/rhoe/blocks/realtime-line-chart\"\n\n<RealtimeLineChart\n  data={metrics}\n  title=\"API latency\"\n  windowSize={31}\n  updateInterval={1000}\n  domain={[0, 500]}\n  spikeThreshold={300}\n  spikeColor=\"var(--danger)\"\n  format={{ style: \"unit\", unit: \"millisecond\" }}\n/>",
           "examples": [
             {
               "title": "Custom spike color",
               "code": "<RealtimeLineChart data={metrics} title=\"Requests\" spikeThreshold={800} spikeColor=\"#f97316\" />"
+            },
+            {
+              "title": "Optional range tabs",
+              "description": "With one sample per second, 31, 61, and 121 samples cover 30 seconds, one minute, and two minutes. Keep enough history in metrics for the largest range. The caller updates windowSize; tabs do not filter data automatically.",
+              "code": "\"use client\"\n\nimport { useState } from \"react\"\nimport { RealtimeLineChart, type RealtimeLineChartProps } from \"@/components/rhoe/blocks/realtime-line-chart\"\n\nconst ranges = [\n  { value: \"30\", label: \"30s\" },\n  { value: \"60\", label: \"1m\" },\n  { value: \"120\", label: \"2m\" },\n]\n\nexport function LatencyChart({ metrics }: { metrics: RealtimeLineChartProps[\"data\"] }) {\n  const [range, setRange] = useState(\"30\")\n\n  return (\n    <RealtimeLineChart\n      data={metrics}\n      title=\"API latency\"\n      ranges={ranges}\n      range={range}\n      onRangeChange={setRange}\n      windowSize={Number(range) + 1}\n      updateInterval={1000}\n      domain={[0, 500]}\n      format={{ style: \"unit\", unit: \"millisecond\" }}\n    />\n  )\n}"
             }
           ],
           "guidance": [
             "Append new measurements to data instead of replacing the visible window.",
             "Match updateInterval to the real feed cadence so motion remains continuous.",
-            "Use a stable domain to prevent the vertical scale from jumping during live updates."
+            "Use a stable domain to prevent the vertical scale from jumping during live updates.",
+            "Provide ranges to show grouped tabs in the header. Handle onRangeChange to update windowSize or load the matching data; omit ranges to hide the tabs."
           ],
           "behavior": [
             "New samples enter from the right while the existing timeline advances left at a constant speed.",
-            "The latest value uses Rolling Number and status changes use Morphing Text.",
+            "The latest value uses Rolling Number. Optional range controls reuse the grouped Tabs component.",
             "Hover remains fixed under a stationary pointer while the timeline passes beneath it.",
             "Only the curve above spikeThreshold changes to spikeColor."
           ],
           "accessibility": [
             "The latest value remains readable outside the SVG.",
             "The underlying Line Chart exposes every visible label and value to assistive technology.",
-            "Status includes text and does not rely on the colored indicator alone."
+            "Range tabs support keyboard navigation and expose the selected state."
           ],
           "api": [
             [
@@ -307,10 +313,28 @@
               "Supporting context."
             ],
             [
-              "status",
+              "ranges",
+              "readonly LineChartRange[]",
+              "—",
+              "Optional range choices, each with a value and label. Omit or pass an empty array to hide tabs."
+            ],
+            [
+              "range",
               "string",
-              "Live",
-              "Current connection or feed state."
+              "—",
+              "Controlled active range."
+            ],
+            [
+              "defaultRange",
+              "string",
+              "first range",
+              "Initial range when uncontrolled."
+            ],
+            [
+              "onRangeChange",
+              "(range: string) => void",
+              "—",
+              "Receives the selected range. Update windowSize or data in the caller."
             ],
             [
               "windowSize",
@@ -349,7 +373,7 @@
               "Additional classes for the block root."
             ]
           ],
-          "customization": "Configure the visible window, feed interval, stable domain, spike threshold, number format, and status content.",
+          "customization": "Configure the visible window, optional grouped range tabs, feed interval, stable domain, spike threshold, and number format.",
           "files": [
             "components/rhoe/foundation.css",
             "components/rhoe/lib/motion-tokens.ts",
