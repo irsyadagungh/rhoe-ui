@@ -7,7 +7,7 @@
 <p align="center">
   <a href="./LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-111111?style=flat-square"></a>
   <a href="https://rhoe.syadah.my.id/docs/installation"><img alt="shadcn registry: @rhoe" src="https://img.shields.io/badge/shadcn%20registry-%40rhoe-111111?style=flat-square"></a>
-  <img alt="43 components" src="https://img.shields.io/badge/components-43-7C3AED?style=flat-square">
+  <img alt="42 components" src="https://img.shields.io/badge/components-42-7C3AED?style=flat-square">
   <img alt="3 blocks" src="https://img.shields.io/badge/blocks-3-7C3AED?style=flat-square">
   <img alt="React 19" src="https://img.shields.io/badge/React-19-111111?style=flat-square">
 </p>
@@ -26,13 +26,13 @@
 
 Rhoe UI is a library of React components with motion built in. Every item is plain source code you own — no runtime package to keep in sync. Install anything with the shadcn CLI or copy the files by hand. Works with Tailwind CSS v4 projects built with Next.js or Vite.
 
-This repository is the source of truth for the **free, open source** part: **43 components and 3 blocks**, plus the design and motion tokens they share. Every component has a live preview at [rhoe.syadah.my.id](https://rhoe.syadah.my.id).
+This repository is the source of truth for the **free, open source** part: **42 components and 3 blocks**, plus the design and motion tokens they share. Every component has a live preview at [rhoe.syadah.my.id](https://rhoe.syadah.my.id).
 
 ---
 
 Rhoe UI adalah library komponen React dengan animasi bawaan. Setiap item adalah source code murni yang langsung kamu miliki — tidak ada runtime package yang perlu dijaga sinkronnya. Install apapun dengan shadcn CLI atau salin filenya secara manual. Mendukung project Tailwind CSS v4 yang menggunakan Next.js atau Vite.
 
-Repository ini berisi bagian yang **gratis dan open source**: **43 komponen dan 3 blocks**, beserta design token dan motion token yang digunakan bersama. Setiap komponen memiliki live preview di [rhoe.syadah.my.id](https://rhoe.syadah.my.id).
+Repository ini berisi bagian yang **gratis dan open source**: **42 komponen dan 3 blocks**, beserta design token dan motion token yang digunakan bersama. Setiap komponen memiliki live preview di [rhoe.syadah.my.id](https://rhoe.syadah.my.id).
 
 ---
 
@@ -208,7 +208,7 @@ Components read semantic tokens, never raw colors. Change a token in `foundation
 
 ## Components / Komponen
 
-43 free components. Click a name for the live preview.
+42 free components. Click a name for the live preview.
 
 ### Recently added
 
@@ -221,7 +221,6 @@ Components read semantic tokens, never raw colors. Change a token in `foundation
 | [Date Picker](https://rhoe.syadah.my.id/components/date-picker) | Animated single date selection. | `npx shadcn@latest add @rhoe/date-picker` |
 | [Date Range Picker](https://rhoe.syadah.my.id/components/date-range-picker) | Animated date range selection. | `npx shadcn@latest add @rhoe/date-range-picker` |
 | [Verification Code](https://rhoe.syadah.my.id/components/verification-code) | Accessible one-time code input. | `npx shadcn@latest add @rhoe/verification-code` |
-| [Loading Indicator](https://rhoe.syadah.my.id/components/loading-indicator) | Loading indicators adapted from loading.dev. | `npx shadcn@latest add @rhoe/loading-indicator` |
 
 ### Actions
 

@@ -19,7 +19,6 @@ import { DropdownMenuSandbox } from "./previews/dropdown-menu";
 import { ExpandingSearchSandbox } from "./previews/expanding-search";
 import { IconMorphExample } from "./previews/icon-morph";
 import { InputExample } from "./previews/input";
-import { LoadingIndicatorExample } from "./previews/loading-indicator";
 import { LineChartExample } from "./previews/line-chart";
 import { MeterSandbox } from "./previews/meter";
 import { ModalSandbox } from "./previews/modal";
@@ -61,7 +60,6 @@ export function Status({ ready }: StatusProps) {
 
 export function getComponentPreview(name: string): PreviewDefinition {
   switch (name) {
-    case "loading-indicator": return { preview: <LoadingIndicatorExample />, showReplay: false };
     case "avatar": return { showReplay: false, variants: [
       { value: "default", label: "Default", preview: <AvatarExample /> },
       { value: "grouped", label: "Grouped", preview: <AvatarExample grouped /> },
