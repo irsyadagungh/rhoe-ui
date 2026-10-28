@@ -42,10 +42,10 @@ const triggerAppearanceClass: Record<TooltipVariant, string> = {
 };
 
 const panelPositionClass: Record<TooltipSide, string> = {
-  top: "bottom-full left-1/2 mb-2 -translate-x-1/2 origin-bottom",
-  right: "top-1/2 left-full ml-2 -translate-y-1/2 origin-left",
-  bottom: "top-full left-1/2 mt-2 -translate-x-1/2 origin-top",
-  left: "top-1/2 right-full mr-2 -translate-y-1/2 origin-right",
+  top: "bottom-full left-1/2 pb-2 -translate-x-1/2 origin-bottom",
+  right: "top-1/2 left-full pl-2 -translate-y-1/2 origin-left",
+  bottom: "top-full left-1/2 pt-2 -translate-x-1/2 origin-top",
+  left: "top-1/2 right-full pr-2 -translate-y-1/2 origin-right",
 };
 
 export const Tooltip = forwardRef<HTMLButtonElement, TooltipProps>(function Tooltip({
@@ -77,10 +77,11 @@ export const Tooltip = forwardRef<HTMLButtonElement, TooltipProps>(function Tool
   };
 
   return (
-    <span className="relative inline-flex">
+    <span className="relative inline-flex" onPointerLeave={(event) => { if (!event.currentTarget.contains(document.activeElement)) setOpen(false); }}>
       <button
         {...props}
         ref={ref}
+        id={props.id ?? `${tooltipId}-trigger`}
         type={props.type ?? "button"}
         disabled={disabled}
         className={[
@@ -89,14 +90,13 @@ export const Tooltip = forwardRef<HTMLButtonElement, TooltipProps>(function Tool
           triggerAppearanceClass[variant],
           className,
         ].filter(Boolean).join(" ")}
-        aria-describedby={isOpen ? tooltipId : undefined}
+        aria-describedby={[props["aria-describedby"], isOpen ? tooltipId : undefined].filter(Boolean).join(" ") || undefined}
         onPointerEnter={(event) => {
           onPointerEnter?.(event);
           if (!event.defaultPrevented && !disabled) setOpen(true);
         }}
         onPointerLeave={(event) => {
           onPointerLeave?.(event);
-          if (!event.defaultPrevented) setOpen(false);
         }}
         onFocus={(event) => {
           onFocus?.(event);
@@ -110,7 +110,6 @@ export const Tooltip = forwardRef<HTMLButtonElement, TooltipProps>(function Tool
           onKeyDown?.(event);
           if (!event.defaultPrevented && event.key === "Escape") {
             setOpen(false);
-            event.currentTarget.blur();
           }
         }}
       >
@@ -118,7 +117,7 @@ export const Tooltip = forwardRef<HTMLButtonElement, TooltipProps>(function Tool
       </button>
       <AnimatePresence>
         {isOpen ? (
-          <span className={["pointer-events-none absolute z-50", panelPositionClass[side]].join(" ")}>
+          <span className={["absolute z-50", panelPositionClass[side]].join(" ")}>
             <motion.span
               className="block w-max max-w-64 rounded-[10px] bg-[var(--text)] px-2.5 py-1.5 text-xs leading-[1.35] font-[560] text-[var(--surface)] shadow-[var(--shadow-floating)]"
               id={tooltipId}

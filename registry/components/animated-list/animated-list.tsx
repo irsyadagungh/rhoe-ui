@@ -298,7 +298,7 @@ export function AnimatedList<Item>({
     <motion.ul
       {...props}
       ref={listRef}
-      className={["relative m-0 grid w-full min-w-0 list-none gap-2.5 p-0 data-[dense]:gap-1.5 data-[dense]:[&_.sya-list-item]:min-h-12 data-[dense]:[&_.sya-list-item]:gap-2 data-[dense]:[&_.sya-list-item]:px-2.5 data-[dense]:[&_.sya-list-item]:py-2 data-[dense]:[&_.sya-list-copy]:gap-px", className].filter(Boolean).join(" ")}
+      className={["relative m-0 grid w-full min-w-0 list-none gap-2.5 p-0 data-[dense]:gap-1.5 data-[dense]:[&_.rhoe-list-item]:min-h-12 data-[dense]:[&_.rhoe-list-item]:gap-2 data-[dense]:[&_.rhoe-list-item]:px-2.5 data-[dense]:[&_.rhoe-list-item]:py-2 data-[dense]:[&_.rhoe-list-copy]:gap-px", className].filter(Boolean).join(" ")}
       data-dense={dense || undefined}
       onPointerMove={(event) => {
         const item = (event.target as HTMLElement).closest<HTMLElement>("[data-animated-list-item]");
@@ -375,7 +375,7 @@ function SwipeableListItem({
   };
 
   const actionClassName = (side: "left" | "right", action: AnimatedListSwipeAction) => [
-    "sya-swipe-action inline-flex w-[104px] items-center justify-center gap-1.5 border-0 text-center text-xs leading-[1.2] font-bold transition-[border-radius] duration-[var(--duration-standard)] ease-[var(--ease-standard)] focus-visible:relative focus-visible:z-[1] focus-visible:outline-2 focus-visible:outline-[var(--focus)] focus-visible:outline-offset-[-4px]",
+    "rhoe-swipe-action inline-flex w-[104px] items-center justify-center gap-1.5 border-0 text-center text-xs leading-[1.2] font-bold transition-[border-radius] duration-[var(--duration-standard)] ease-[var(--ease-standard)] focus-visible:relative focus-visible:z-[1] focus-visible:outline-2 focus-visible:outline-[var(--focus)] focus-visible:outline-offset-[-4px]",
     side === "left" ? "col-[1] bg-[var(--primary)] text-[var(--primary-foreground)]" : "col-[3] bg-[var(--primary)] text-[var(--primary-foreground)]",
     action.tone === "success" && "bg-[var(--success)] text-[var(--success-foreground)]",
     action.tone === "warning" && "bg-[var(--warning)] text-[var(--warning-foreground)]",
@@ -387,8 +387,8 @@ function SwipeableListItem({
     <div
       className={[
         "relative overflow-hidden rounded-[var(--radius-surface)] touch-pan-y",
-        openSide === "left" && "[&_.sya-swipe-left]:rounded-l-[var(--radius-surface)] [&_.sya-swipe-content_>:first-child]:rounded-tl-none [&_.sya-swipe-content_>:first-child]:rounded-bl-none",
-        openSide === "right" && "[&_.sya-swipe-right]:rounded-r-[var(--radius-surface)] [&_.sya-swipe-content_>:first-child]:rounded-tr-none [&_.sya-swipe-content_>:first-child]:rounded-br-none",
+        openSide === "left" && "[&_.rhoe-swipe-left]:rounded-l-[var(--radius-surface)] [&_.rhoe-swipe-content_>:first-child]:rounded-tl-none [&_.rhoe-swipe-content_>:first-child]:rounded-bl-none",
+        openSide === "right" && "[&_.rhoe-swipe-right]:rounded-r-[var(--radius-surface)] [&_.rhoe-swipe-content_>:first-child]:rounded-tr-none [&_.rhoe-swipe-content_>:first-child]:rounded-br-none",
       ].filter(Boolean).join(" ")}
       style={{
         "--swipe-left-width": `${leftWidth}px`,
@@ -433,7 +433,7 @@ function SwipeableListItem({
           <button
             ref={leftActionRef}
             type="button"
-            className={["sya-swipe-left", actionClassName("left", actions.left)].join(" ")}
+            className={["rhoe-swipe-left", actionClassName("left", actions.left)].join(" ")}
             tabIndex={openSide === "left" ? 0 : -1}
             aria-hidden={openSide !== "left" || undefined}
             aria-label={actions.left.ariaLabel}
@@ -447,12 +447,12 @@ function SwipeableListItem({
             <span>{actions.left.label}</span>
           </button>
         ) : null}
-        <div className="sya-swipe-content col-[2] touch-pan-y [&_>:first-child]:transition-[border-radius] [&_>:first-child]:duration-[var(--duration-standard)] [&_>:first-child]:ease-[var(--ease-standard)]">{children}</div>
+        <div className="rhoe-swipe-content col-[2] touch-pan-y [&_>:first-child]:transition-[border-radius] [&_>:first-child]:duration-[var(--duration-standard)] [&_>:first-child]:ease-[var(--ease-standard)]">{children}</div>
         {actions.right ? (
           <button
             ref={rightActionRef}
             type="button"
-            className={["sya-swipe-right", actionClassName("right", actions.right)].join(" ")}
+            className={["rhoe-swipe-right", actionClassName("right", actions.right)].join(" ")}
             tabIndex={openSide === "right" ? 0 : -1}
             aria-hidden={openSide !== "right" || undefined}
             aria-label={actions.right.ariaLabel}
@@ -490,16 +490,16 @@ export function AnimatedListItem({
     <>
       {leading ? <span className="grid shrink-0 place-items-center text-[var(--text-secondary)]">{leading}</span> : null}
       {title || description ? (
-        <span className={descriptionPlacement === "inline" ? "flex min-w-0 items-baseline gap-0 [&_.sya-list-title]:min-w-0 [&_.sya-list-description]:min-w-0 [&_.sya-list-description]:before:mr-2 [&_.sya-list-description]:before:text-[var(--border)] [&_.sya-list-description]:before:content-['·']" : "sya-list-copy grid min-w-0 gap-[3px]"}>
-          {title ? <span className="sya-list-title overflow-hidden text-sm font-[650] text-ellipsis whitespace-nowrap">{title}</span> : null}
-          {description ? <span className="sya-list-description overflow-hidden text-xs leading-[1.45] text-ellipsis whitespace-nowrap text-[var(--text-secondary)]">{description}</span> : null}
+        <span className={descriptionPlacement === "inline" ? "flex min-w-0 items-baseline gap-0 [&_.rhoe-list-title]:min-w-0 [&_.rhoe-list-description]:min-w-0 [&_.rhoe-list-description]:before:mr-2 [&_.rhoe-list-description]:before:text-[var(--border)] [&_.rhoe-list-description]:before:content-['·']" : "rhoe-list-copy grid min-w-0 gap-[3px]"}>
+          {title ? <span className="rhoe-list-title overflow-hidden text-sm font-[650] text-ellipsis whitespace-nowrap">{title}</span> : null}
+          {description ? <span className="rhoe-list-description overflow-hidden text-xs leading-[1.45] text-ellipsis whitespace-nowrap text-[var(--text-secondary)]">{description}</span> : null}
         </span>
       ) : null}
       {trailing ? <span className="ml-auto grid shrink-0 place-items-center text-[var(--text-secondary)]">{trailing}</span> : null}
     </>
   );
   const contentClassName = [
-    "sya-list-item flex min-h-16 w-full min-w-0 items-center gap-3 rounded-[var(--radius-surface)] border px-3.5 py-3 text-left no-underline text-[var(--text)]",
+    "rhoe-list-item flex min-h-16 w-full min-w-0 items-center gap-3 rounded-[var(--radius-surface)] border px-3.5 py-3 text-left no-underline text-[var(--text)]",
     variant === "filled" && "border-transparent bg-[var(--surface-muted)]",
     variant === "bordered" && "border-[var(--border)] bg-[var(--surface)]",
     variant === "transparent" && "border-transparent bg-transparent",
@@ -522,7 +522,7 @@ export function AnimatedListItem({
         className={contentClassName}
         aria-disabled={disabled || undefined}
         onClick={(event) => {
-          if (disabled) event.preventDefault();
+          if (disabled) { event.preventDefault(); return; }
           onClick?.(event);
         }}
       >

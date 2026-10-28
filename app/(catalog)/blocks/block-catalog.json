@@ -131,8 +131,8 @@
         {
           "name": "auth-form",
           "title": "Authentication Form",
-          "description": "Sign-in and sign-up forms with a responsive OAuth button grid and Rhoe UI form controls.",
-          "lede": "Combines social authentication, email credentials, consent, recovery, and account switching into a complete responsive authentication flow.",
+          "description": "Sign-in and sign-up forms that morph into password recovery or email verification flows.",
+          "lede": "Combines social authentication, email credentials, verification, recovery, consent, and account switching in one responsive surface.",
           "keywords": [
             "authentication",
             "sign in",
@@ -143,36 +143,69 @@
           ],
           "sourcePath": "registry/blocks/auth-form/auth-form.tsx",
           "installation": "Installs the Authentication Form block with Button, Input, Checkbox, and shared Rhoe UI foundations.",
-          "usage": "\"use client\"\n\nimport { AuthForm, type AuthFormValues } from \"@/components/rhoe/blocks/auth-form\"\n\nconst providers = [\n  {\n    label: \"GitHub\",\n    onClick: () => window.location.assign(\"/auth/github\"),\n  },\n]\n\nexport function SignInForm() {\n  const handleSubmit = async (values: AuthFormValues) => {\n    await fetch(\"/api/auth/sign-in\", {\n      method: \"POST\",\n      headers: { \"Content-Type\": \"application/json\" },\n      body: JSON.stringify(values),\n    })\n  }\n\n  return (\n    <AuthForm\n      mode=\"sign-in\"\n      oauthProviders={providers}\n      forgotPasswordAction={<a href=\"/forgot-password\">Forgot password?</a>}\n      alternateAction={<a href=\"/sign-up\">Sign up</a>}\n      onSubmit={handleSubmit}\n    />\n  )\n}",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { AuthForm, type AuthFormValues } from \"@/components/rhoe/blocks/auth-form\"\n\n// Replace these example endpoints with your application's authentication API.\nexport function SignInWithOtpRecovery() {\n  const [error, setError] = useState(\"\")\n\n  async function post(path: string, data: object): Promise<boolean> {\n    setError(\"\")\n\n    try {\n      const response = await fetch(path, {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify(data),\n      })\n\n      if (!response.ok) {\n        setError(\"The request failed. Please try again.\")\n        return false\n      }\n\n      return true\n    } catch {\n      setError(\"Could not connect. Please try again.\")\n      return false\n    }\n  }\n\n  async function handleSignIn(values: AuthFormValues) {\n    const success = await post(\"/api/auth/sign-in\", values)\n    if (success) window.location.assign(\"/dashboard\")\n  }\n\n  async function handleResetPassword(\n    password: string,\n    confirmPassword: string,\n    email: string,\n  ) {\n    if (password !== confirmPassword) {\n      setError(\"Passwords do not match.\")\n      return false\n    }\n\n    // The server must bind this reset request to a verified recovery session.\n    const success = await post(\"/api/auth/reset-password\", { email, password })\n    if (success) window.location.assign(\"/sign-in\")\n    return success\n  }\n\n  return (\n    <div>\n      {error && <p role=\"alert\">{error}</p>}\n\n      {/* AuthForm manages button states while each async callback is pending. */}\n      <AuthForm\n        mode=\"sign-in\"\n        forgotPasswordVariant=\"otp\"\n        verificationCodeLength={6}\n        resendCountdownSeconds={60}\n        alternateAction={<a href=\"/sign-up\">Sign up</a>}\n        // Sign in → Signing in while handleSignIn is pending.\n        onSubmit={handleSignIn}\n        // Send OTP → Sending OTP; return false to stay on the email step.\n        onForgotPassword={(email) =>\n          post(\"/api/auth/recovery/send-code\", { email })\n        }\n        // Verify code → Verifying code; return false for an invalid code.\n        onVerifyResetCode={(code, email) =>\n          post(\"/api/auth/recovery/verify-code\", { code, email })\n        }\n        // Reset password → Resetting password while the request is pending.\n        onResetPassword={handleResetPassword}\n        onStepChange={() => setError(\"\")}\n      />\n    </div>\n  )\n}",
           "examples": [
             {
               "title": "Submit form data",
               "code": "import type { AuthFormValues } from \"@/components/rhoe/blocks/auth-form\"\n\nasync function handleSignIn(values: AuthFormValues) {\n  const response = await fetch(\"/api/auth/sign-in\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(values),\n  })\n\n  if (!response.ok) {\n    throw new Error(\"Unable to sign in\")\n  }\n}\n\n<AuthForm mode=\"sign-in\" onSubmit={handleSignIn} />"
             },
             {
-              "title": "Sign up",
-              "code": "async function handleSignUp(values: AuthFormValues) {\n  await fetch(\"/api/auth/sign-up\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(values),\n  })\n}\n\n<AuthForm\n  mode=\"sign-up\"\n  oauthProviders={providers}\n  termsAction={<a href=\"/terms\">Terms of Service</a>}\n  privacyAction={<a href=\"/privacy\">Privacy Policy</a>}\n  alternateAction={<a href=\"/sign-in\">Sign in</a>}\n  onSubmit={handleSignUp}\n/>"
+              "title": "Sign up and verify",
+              "code": "async function handleSignUp(values: AuthFormValues) {\n  const response = await fetch(\"/api/auth/sign-up\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify(values),\n  })\n\n  return response.ok\n}\n\nasync function handleVerify(code: string, email: string) {\n  await fetch(\"/api/auth/verify\", {\n    method: \"POST\",\n    headers: { \"Content-Type\": \"application/json\" },\n    body: JSON.stringify({ code, email }),\n  })\n}\n\n<AuthForm\n  mode=\"sign-up\"\n  signUpVerificationVariant=\"otp\"\n  oauthProviders={providers}\n  termsAction={<a href=\"/terms\">Terms of Service</a>}\n  privacyAction={<a href=\"/privacy\">Privacy Policy</a>}\n  alternateAction={<a href=\"/sign-in\">Sign in</a>}\n  onSubmit={handleSignUp}\n  onVerifyCode={handleVerify}\n/>"
+            },
+            {
+              "title": "Sign up with verification link",
+              "code": "<AuthForm\n  mode=\"sign-up\"\n  signUpVerificationVariant=\"link\"\n  onSubmit={handleSignUp}\n  onResendVerification={resendVerificationLink}\n/>"
             },
             {
               "title": "Four OAuth providers",
               "code": "<AuthForm\n  mode=\"sign-in\"\n  oauthProviders={[github, google, microsoft, apple]}\n  onSubmit={handleSignIn}\n/>"
+            },
+            {
+              "title": "OTP password recovery",
+              "code": "<AuthForm\n  mode=\"sign-in\"\n  forgotPasswordVariant=\"otp\"\n  onForgotPassword={sendResetCode}\n  onVerifyResetCode={verifyResetCode}\n  onResetPassword={resetPassword}\n  onSubmit={handleSignIn}\n/>"
+            },
+            {
+              "title": "Show verification errors",
+              "code": "<AuthForm\n  mode=\"sign-up\"\n  signUpVerificationVariant=\"otp\"\n  onSubmit={handleSignUp}\n  onVerifyCode={async (code, email) => {\n    const response = await fetch(\"/api/auth/verify\", {\n      method: \"POST\",\n      headers: { \"Content-Type\": \"application/json\" },\n      body: JSON.stringify({ code, email }),\n    })\n\n    if (!response.ok) return { error: \"That code is invalid or has expired.\" }\n  }}\n/>"
+            },
+            {
+              "title": "Application-owned recovery",
+              "description": "The default variant does not prescribe what happens after submission.",
+              "code": "<AuthForm\n  mode=\"sign-in\"\n  onSubmit={handleSignIn}\n  onForgotPassword={async (email) => {\n    // Redirect, open a dialog, start passkey recovery, or use any custom flow.\n    await startCustomRecovery(email)\n  }}\n/>"
             }
           ],
           "guidance": [
             "Use one to four OAuth providers. The block automatically arranges them as 1, 2, 2 + 1, or 2 x 2.",
-            "Connect OAuth buttons and form submission to application-owned authentication routes.",
-            "Keep recovery, terms, privacy, and account-switching destinations explicit."
+            "Connect OAuth buttons and every async callback to application-owned authentication routes.",
+            "Return { error: message } from an async callback to show a specific error, or false for a generic error. Invalid verification codes appear on the OTP field.",
+            "Return false from sign-up onSubmit when account creation fails so the credentials form stays open.",
+            "Use the default variant for an application-owned continuation such as routing, dialogs, magic links, passkeys, security questions, or another custom recovery flow.",
+            "Use link for the built-in check-email confirmation or OTP for built-in code verification and password replacement.",
+            "Sign-up also defaults to an application-owned continuation; choose its link or OTP preset only when needed.",
+            "Keep terms, privacy, and account-switching destinations explicit."
           ],
           "behavior": [
             "Every OAuth and submit button overrides the Button default width with w-full inside the block.",
             "A single OAuth button spans one row; two share a row; the third spans the next row; four form two equal rows.",
-            "Sign-in includes email, password, recovery, and remember-device controls. Sign-up adds name, password confirmation, and required consent.",
+            "Sign-in includes email, password, and remember-device controls; recovery keeps the email and submit button as shared elements while OAuth and password controls morph away.",
+            "The shared submit button morphs through idle and pending labels including Sign in, Signing in, Sign up, Signing up, Send reset link, Sending reset link, Send OTP, Sending OTP, Verify code, Verifying code, Reset password, and Resetting password.",
+            "In OTP recovery, the email field morphs into Verification Code and then into new-password and confirmation fields.",
+            "In link recovery, a successful request morphs into Check your email and the shared action becomes Resend reset link.",
+            "Default sign-up delegates continuation to onSubmit; its link and OTP presets morph only after onSubmit resolves successfully.",
+            "Sign-up OTP keeps the email field and submit button as shared elements while they morph into Verification Code and Verify code.",
+            "Sign-up link morphs into Check your email while the shared action becomes Resend verification link.",
+            "Every OTP screen starts a configurable resend countdown and disables resend until it reaches zero.",
+            "Failed callbacks display an error; a failed OTP verification marks the code field invalid, and failed resend requests do not restart the countdown.",
+            "Password recovery checks that the new password and confirmation match before calling onResetPassword.",
+            "The surface animates its measured height while outgoing and incoming content meet at the center without scaling its fields.",
             "Only the first four OAuth providers are rendered."
           ],
           "accessibility": [
             "The block uses a semantic form with native email, password, required, autocomplete, and submit behavior.",
-            "Password visibility, checkboxes, focus rings, labels, and disabled OAuth states inherit accessible Rhoe UI primitives.",
-            "Actions supplied as links retain their native navigation semantics."
+            "Password visibility, checkboxes, focus rings, labels, and disabled states inherit accessible Rhoe UI primitives.",
+            "After a morph, focus moves to the first available control and the changing header is announced.",
+            "The verification input uses numeric input and one-time-code autocomplete."
           ],
           "api": [
             [
@@ -197,13 +230,13 @@
               "forgotPasswordAction",
               "ReactNode",
               "—",
-              "Recovery action shown beside the sign-in password label."
+              "Content for the internal trigger that opens password recovery beside the sign-in password label."
             ],
             [
               "termsAction / privacyAction",
               "ReactNode",
               "text labels",
-              "Destinations shown in required sign-up consent."
+              "Optional links or actions shown in required sign-up consent; omitted props remain visible as plain text."
             ],
             [
               "alternateAction",
@@ -213,15 +246,87 @@
             ],
             [
               "onSubmit",
-              "(values: AuthFormValues) => void | Promise<void>",
+              "(values: AuthFormValues) => AuthFormActionResult | Promise<AuthFormActionResult>",
               "—",
-              "Receives email, password, remember, and termsAccepted; sign-up also receives fullName and confirmPassword. Use it to send the values to your API, Server Action, or authentication service."
+              "Receives credentials. Default continuation is application-owned; link and OTP presets advance after a successful result. Return false to keep credentials visible."
+            ],
+            [
+              "AuthFormActionResult",
+              "boolean | void | { error: string }",
+              "—",
+              "Return false for a generic error, { error: message } for a specific error, or true / void for success."
+            ],
+            [
+              "verificationCodeLength",
+              "number",
+              "6",
+              "Sets the required verification-code length."
+            ],
+            [
+              "forgotPasswordVariant",
+              "default | link | otp",
+              "default",
+              "Default delegates continuation to onForgotPassword; link adds a check-email confirmation and OTP adds code verification plus password replacement."
+            ],
+            [
+              "signUpVerificationVariant",
+              "default | link | otp",
+              "default",
+              "Delegates continuation to onSubmit, or uses an OTP field or check-email verification-link screen."
+            ],
+            [
+              "resendCountdownSeconds",
+              "number",
+              "60",
+              "Countdown applied before OTP codes can be resent; set 0 to allow immediate resend."
+            ],
+            [
+              "onVerifyCode",
+              "(code: string, email: string) => AuthFormActionResult | Promise<AuthFormActionResult>",
+              "—",
+              "Handles verification-code submission after sign-up."
+            ],
+            [
+              "onResendVerification",
+              "(email: string) => AuthFormActionResult | Promise<AuthFormActionResult>",
+              "—",
+              "Requests another verification code."
+            ],
+            [
+              "onForgotPassword",
+              "(email: string) => AuthFormActionResult | Promise<AuthFormActionResult>",
+              "—",
+              "Owns any custom continuation in the default variant, or sends the reset link or OTP for built-in variants. Return false to keep the email step open."
+            ],
+            [
+              "onVerifyResetCode",
+              "(code: string, email: string) => AuthFormActionResult | Promise<AuthFormActionResult>",
+              "—",
+              "Verifies a recovery OTP. Return false to keep the code step open."
+            ],
+            [
+              "onResetPassword",
+              "(password: string, confirmPassword: string, email: string) => AuthFormActionResult | Promise<AuthFormActionResult>",
+              "—",
+              "Submits the replacement password after a recovery OTP succeeds."
+            ],
+            [
+              "onStepChange",
+              "(step: AuthFormStep) => void",
+              "—",
+              "Reports credentials, sign-up verification, recovery email, link confirmation, recovery code, and reset-password transitions."
             ],
             [
               "className",
               "string",
               "—",
               "Additional classes applied to the form root."
+            ],
+            [
+              "native form props",
+              "ComponentPropsWithoutRef<\"form\">",
+              "—",
+              "Form attributes such as id, name, aria attributes, noValidate, method, and action are forwarded to the root form."
             ]
           ],
           "customization": "Override title and description, provide application-owned actions, and pass one to four OAuth providers. Static layout and colors inherit the Rhoe UI Tailwind and token foundation.",
@@ -233,6 +338,7 @@
             "components/rhoe/button/button.tsx",
             "components/rhoe/input/input.tsx",
             "components/rhoe/checkbox/checkbox.tsx",
+            "components/rhoe/verification-code/verification-code.tsx",
             "components/rhoe/blocks/auth-form.tsx"
           ],
           "related": [

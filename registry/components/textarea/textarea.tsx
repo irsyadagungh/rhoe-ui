@@ -282,7 +282,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
                 {hasAnimatingCharacters
                   ? characterState.items.map((item) => (
                       <span
-                        className={item.isNew ? "inline-block animate-[sya-input-character-reveal_var(--textarea-character-duration,600ms)_cubic-bezier(0.16,1,0.3,1)_both] will-change-[transform,opacity] motion-reduce:inline motion-reduce:animate-none motion-reduce:transform-none motion-reduce:will-change-auto" : undefined}
+                        className={item.isNew ? "inline-block animate-[rhoe-input-character-reveal_var(--textarea-character-duration,600ms)_cubic-bezier(0.16,1,0.3,1)_both] will-change-[transform,opacity] motion-reduce:inline motion-reduce:animate-none motion-reduce:transform-none motion-reduce:will-change-auto" : undefined}
                         key={item.id}
                         onAnimationEnd={() => settleCharacter(item.id)}
                         style={{ animationDelay: item.delay ? `${item.delay}ms` : undefined }}

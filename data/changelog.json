@@ -2,6 +2,152 @@
   "schemaVersion": 1,
   "releases": [
     {
+      "date": "2026-10-28",
+      "title": "Authentication and Account Components",
+      "summary": "Added avatar and verification components, expanded authentication flows, and improved keyboard accessibility across interactive components.",
+      "changes": [
+        {
+          "type": "added",
+          "items": [
+            {
+              "text": "Added 29 editable loading indicators adapted from loading-dev, with accessible labels and reduced-motion support.",
+              "components": [
+                "Loading Indicator"
+              ],
+              "blocks": []
+            },
+            {
+              "text": "Added individual and grouped avatars with initials fallback, plus an expanding account menu with configurable actions, continuous hover, and optional morphing sign-out confirmation.",
+              "components": [
+                "Avatar",
+                "Avatar Info"
+              ],
+              "blocks": []
+            },
+            {
+              "text": "Added a configurable verification code input with six slots by default, numeric entry, paste, and one-time-code autofill.",
+              "components": [
+                "Verification Code"
+              ],
+              "blocks": []
+            }
+          ]
+        },
+        {
+          "type": "changed",
+          "items": [
+            {
+              "text": "Expanded sign-up and password recovery with optional link and OTP flows, shared-element transitions, animated button states, and configurable OTP resend countdowns. Default continuations remain application-owned.",
+              "components": [],
+              "blocks": [
+                "Authentication Form"
+              ]
+            },
+            {
+              "text": "Updated authentication previews, usage examples, and API documentation for the new flows and callbacks.",
+              "components": [
+                "Verification Code"
+              ],
+              "blocks": [
+                "Authentication Form"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "fixed",
+          "items": [
+            {
+              "text": "Improved focus handling, keyboard navigation, and accessible semantics across interactive controls, overlays, calendars, charts, and notifications.",
+              "components": [
+                "Animated List",
+                "Avatar Info",
+                "App Drawer",
+                "Bottom Sheet",
+                "Calendar",
+                "Code Block",
+                "Curved Carousel",
+                "Dialog",
+                "Expanding Search",
+                "Input",
+                "Line Chart",
+                "Modal",
+                "Select",
+                "Tabs",
+                "Toast",
+                "Tooltip",
+                "Verification Code"
+              ],
+              "blocks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-27",
+      "title": "Rhoe UI Identity",
+      "summary": "Completed the Rhoe UI rename across the public package, documentation, registry, and internal namespaces.",
+      "changes": [
+        {
+          "type": "changed",
+          "items": [
+            {
+              "text": "Renamed all remaining Sya UI branding, package metadata, storage keys, utility classes, and internal namespaces to Rhoe UI. Existing custom CSS overrides using the --sya-* prefix should be renamed to --rhoe-*.",
+              "components": [],
+              "blocks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-10-26",
+      "title": "Overlays, Date Pickers, and Range Selection",
+      "summary": "Added drawer and sheet overlays, form-ready date pickers, date range selection in Calendar, and expanded motion tokens.",
+      "changes": [
+        {
+          "type": "added",
+          "items": [
+            {
+              "text": "Published new overlay and date selection components.",
+              "components": [
+                "App Drawer",
+                "Bottom Sheet",
+                "Date Picker",
+                "Date Range Picker"
+              ],
+              "blocks": []
+            },
+            {
+              "text": "Added range selection mode to Calendar with continuous range highlighting.",
+              "components": [
+                "Calendar"
+              ],
+              "blocks": []
+            }
+          ]
+        },
+        {
+          "type": "changed",
+          "items": [
+            {
+              "text": "Added considered, reveal, and expand duration tokens plus an enter easing token to the shared CSS and Motion React foundation.",
+              "components": [],
+              "blocks": []
+            },
+            {
+              "text": "Input expanded content now reads its transition duration and easing from CSS variables.",
+              "components": [
+                "Input"
+              ],
+              "blocks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-23",
       "title": "Charts, Data Display, and Modal Overlays",
       "summary": "Added data visualization components, interactive tables, modal overlays, meters, authentication blocks, refined motion transitions, and Schema.org WebSite structured data.",

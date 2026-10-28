@@ -48,7 +48,7 @@ export const Switch = forwardRef<HTMLInputElement, SwitchProps>(function Switch(
 }, ref) {
   const reduceMotion = useReducedMotion() ?? false;
   const generatedId = useId();
-  const inputId = id ?? `sya-switch-${generatedId}`;
+  const inputId = id ?? `rhoe-switch-${generatedId}`;
   const isControlled = checked !== undefined;
   const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false);
   const isChecked = checked ?? internalChecked;

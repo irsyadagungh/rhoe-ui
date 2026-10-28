@@ -242,7 +242,7 @@ export function SidebarNavigation({
       return;
     }
 
-    const selectedRow = selected.closest<HTMLElement>(".sya-sidebar-row");
+    const selectedRow = selected.closest<HTMLElement>(".rhoe-sidebar-row");
     if (
       selectedRow &&
       selectedRow.getBoundingClientRect().height < rowHeight - 0.5
@@ -349,7 +349,7 @@ export function SidebarNavigation({
 
                     return (
                       <motion.div
-                        className="sya-sidebar-row relative flow-root h-[35px] min-w-0"
+                        className="rhoe-sidebar-row relative flow-root h-[35px] min-w-0"
                         key={id}
                         initial={
                           reduceMotion

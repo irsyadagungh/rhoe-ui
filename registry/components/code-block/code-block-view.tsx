@@ -83,7 +83,7 @@ export function CodeBlockView({
       </div>
       <motion.div
         ref={sourceRef}
-        className={["sya-code-source overflow-hidden [&_.shiki]:m-0 [&_.shiki]:overflow-x-auto [&_.shiki]:overflow-y-hidden [&_.shiki]:bg-[var(--surface-muted)] [&_.shiki]:p-2.5 [&_.shiki]:font-mono [&_.shiki]:text-xs [&_.shiki]:leading-[1.75] [&_.shiki]:[tab-size:2] [&_.shiki]:whitespace-normal [&_.shiki]:text-[var(--shiki-light)] [&_.shiki_span]:text-[var(--shiki-light)] [&_.shiki:focus-visible]:outline-2 [&_.shiki:focus-visible]:outline-[var(--focus)] [&_.shiki:focus-visible]:outline-offset-[-3px] [&_.line]:relative [&_.line]:block [&_.line]:min-h-[1.75em] [&_.line]:pl-10 [&_.line]:whitespace-pre [&_.line-number]:absolute [&_.line-number]:top-0 [&_.line-number]:left-0 [&_.line-number]:w-[1.875rem] [&_.line-number]:text-right [&_.line-number]:text-[var(--text-secondary)] [&_.line-number]:select-none max-[760px]:[&_.shiki]:px-2 max-[760px]:[&_.shiki]:py-2 max-[760px]:[&_.line]:pl-9", variant === "embedded" && "[&_.shiki]:min-h-[250px]"].join(" ")}
+        className={["rhoe-code-source overflow-hidden [&_.shiki]:m-0 [&_.shiki]:overflow-x-auto [&_.shiki]:overflow-y-hidden [&_.shiki]:bg-[var(--surface-muted)] [&_.shiki]:p-2.5 [&_.shiki]:font-mono [&_.shiki]:text-xs [&_.shiki]:leading-[1.75] [&_.shiki]:[tab-size:2] [&_.shiki]:whitespace-normal [&_.shiki]:text-[var(--shiki-light)] [&_.shiki_span]:text-[var(--shiki-light)] [&_.shiki:focus-visible]:outline-2 [&_.shiki:focus-visible]:outline-[var(--focus)] [&_.shiki:focus-visible]:outline-offset-[-3px] [&_.line]:relative [&_.line]:block [&_.line]:min-h-[1.75em] [&_.line]:pl-10 [&_.line]:whitespace-pre [&_.line-number]:absolute [&_.line-number]:top-0 [&_.line-number]:left-0 [&_.line-number]:w-[1.875rem] [&_.line-number]:text-right [&_.line-number]:text-[var(--text-secondary)] [&_.line-number]:select-none max-[760px]:[&_.shiki]:px-2 max-[760px]:[&_.shiki]:py-2 max-[760px]:[&_.line]:pl-9", variant === "embedded" && "[&_.shiki]:min-h-[250px]"].join(" ")}
         data-collapsed={canExpand && !expanded || undefined}
         id={sourceId}
         style={sourceStyle}
@@ -106,7 +106,7 @@ export function CodeBlockView({
           >
             {expanded
               ? <><ChevronUp aria-hidden="true" size={15} /> Show fewer lines</>
-              : <><ChevronDown aria-hidden="true" size={15} /> Show all ${lineCount} lines</>}
+              : <><ChevronDown aria-hidden="true" size={15} /> Show all {lineCount} lines</>}
           </Button>
         </div>
       ) : null}

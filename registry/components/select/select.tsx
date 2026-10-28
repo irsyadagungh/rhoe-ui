@@ -146,6 +146,7 @@ export function Select({
     if (!multiple) {
       setExpanded(false);
       setQuery("");
+      rootRef.current?.querySelector<HTMLInputElement>("[role=combobox]")?.focus();
     }
   };
 
@@ -225,6 +226,7 @@ export function Select({
   const close = () => {
     setExpanded(false);
     setQuery("");
+    rootRef.current?.querySelector<HTMLInputElement>("[role=combobox]")?.focus();
   };
 
   return (
@@ -268,6 +270,16 @@ export function Select({
           <div
             className={`grid h-full min-h-0 ${searchable ? "grid-rows-[auto_minmax(0,1fr)] gap-2.5 p-2.5 pb-3" : "p-2.5"}`}
             {...(!open ? { inert: true } : {})}
+            onKeyDown={(event) => {
+              if (!["ArrowDown", "ArrowUp", "Home", "End"].includes(event.key)) return;
+              if ((event.key === "Home" || event.key === "End") && event.target === searchRef.current) return;
+              const options = Array.from(listRef.current?.querySelectorAll<HTMLButtonElement>("[data-select-option]:not(:disabled)") ?? []);
+              if (!options.length) return;
+              event.preventDefault();
+              const current = options.indexOf(document.activeElement as HTMLButtonElement);
+              const next = event.key === "Home" ? 0 : event.key === "End" ? options.length - 1 : event.key === "ArrowDown" ? (current + 1) % options.length : (current <= 0 ? options.length - 1 : current - 1);
+              options[next].focus();
+            }}
           >
             {searchable ? (
               <Input

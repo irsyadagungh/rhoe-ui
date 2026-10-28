@@ -215,7 +215,7 @@ export function Tabs({
               type="button"
               tabIndex={active ? 0 : -1}
               aria-selected={active}
-              aria-controls={`${id}-panel-${index}`}
+              aria-controls={active ? `${id}-panel-${index}` : undefined}
               onClick={() => select(item.value)}
               onKeyDown={(event) => moveFocus(event, index)}
               key={item.value}

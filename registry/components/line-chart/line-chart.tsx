@@ -189,7 +189,22 @@ export function LineChart({
             viewBox={`${PADDING.left} 0 ${chart.innerWidth} ${chartHeight}`}
             preserveAspectRatio="none"
             role="img"
-            aria-label={title ? `${title} line chart` : "Line chart"}
+            tabIndex={0}
+            aria-label={title ? `${title} line chart; use left and right arrow keys to explore values` : "Line chart; use left and right arrow keys to explore values"}
+            onKeyDown={(event) => {
+              if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+              event.preventDefault();
+              const first = chart.visibleStart;
+              const last = first + chart.visibleCount - 1;
+              const next = event.key === "Home" ? first : event.key === "End" ? last : Math.max(first, Math.min(last, (activeIndex ?? first) + (event.key === "ArrowRight" ? 1 : -1)));
+              const local = next - first;
+              const x = PADDING.left + local / Math.max(1, chart.visibleCount - 1) * chart.innerWidth;
+              const bounds = event.currentTarget.getBoundingClientRect();
+              setGuideX(x);
+              setActiveIndex(next);
+              setTooltipPosition({ x: PADDING.left + (x - PADDING.left) / chart.innerWidth * bounds.width, y: Math.max(64, Math.min(bounds.height, chart.points[next]?.[1] ?? 64)) });
+            }}
+            onBlur={() => setActiveIndex(null)}
             onPointerMove={selectNearest}
             onPointerLeave={() => setActiveIndex(null)}
           >

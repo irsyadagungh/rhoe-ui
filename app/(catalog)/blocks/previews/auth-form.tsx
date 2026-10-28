@@ -5,6 +5,8 @@ import {
   AuthForm,
   type AuthFormMode,
   type AuthProvider,
+  type ForgotPasswordVariant,
+  type SignUpVerificationVariant,
 } from "@/registry/blocks/auth-form/auth-form";
 
 function GoogleMark() {
@@ -36,19 +38,34 @@ const signUpProviders: AuthProvider[] = [
   { label: "Passkey", icon: <KeyRound /> },
 ];
 
-export function AuthFormExample({ mode }: { mode: AuthFormMode }) {
+export function AuthFormExample({
+  mode,
+  forgotPasswordVariant = "default",
+  signUpVerificationVariant = "default",
+}: {
+  mode: AuthFormMode;
+  forgotPasswordVariant?: ForgotPasswordVariant;
+  signUpVerificationVariant?: SignUpVerificationVariant;
+}) {
   return (
     <div className="flex w-full justify-center px-1 py-5 sm:px-5 sm:py-8">
       <AuthForm
         mode={mode}
+        forgotPasswordVariant={forgotPasswordVariant}
+        signUpVerificationVariant={signUpVerificationVariant}
         oauthProviders={mode === "sign-up" ? signUpProviders : primaryProviders}
-        forgotPasswordAction={<a href="#forgot-password">Forgot password?</a>}
+        forgotPasswordAction="Forgot password?"
         termsAction={<a href="#terms">Terms of Service</a>}
         privacyAction={<a href="#privacy">Privacy Policy</a>}
         alternateAction={mode === "sign-in"
           ? <a href="#sign-up">Sign up</a>
           : <a href="#sign-in">Sign in</a>}
         onSubmit={() => {}}
+        onVerifyCode={() => {}}
+        onForgotPassword={() => {}}
+        onVerifyResetCode={() => {}}
+        onResetPassword={() => {}}
+        resendCountdownSeconds={10}
       />
     </div>
   );

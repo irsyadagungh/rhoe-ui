@@ -150,7 +150,6 @@ function ToastCard({
       animate={{ opacity: 1, transform: `translateY(${offset}px) scale(${scale})` }}
       exit={reduceMotion ? { opacity: 0 } : { opacity: 0, transform: `translateY(${fromY}px) scale(0.96)` }}
       transition={reduceMotion ? { duration: 0.1 } : motionTokens.spring.morph}
-      aria-hidden={!expanded && index > 0}
     >
       {item.icon ? <span className="grid shrink-0 place-items-center [&>svg]:size-5" aria-hidden="true">{item.icon}</span> : null}
       <span className="min-w-0 [overflow-wrap:anywhere]">{item.text}</span>
@@ -189,7 +188,7 @@ export function ToastProvider({
   }, []);
 
   const toast = useCallback((options: ToastOptions) => {
-    const id = options.id ?? `sya-toast-${++idRef.current}`;
+    const id = options.id ?? `rhoe-toast-${++idRef.current}`;
     const previousTimer = timersRef.current.get(id);
     if (previousTimer) clearTimeout(previousTimer);
 
@@ -234,6 +233,9 @@ export function ToastProvider({
             positionClasses[position],
           ].join(" ")}
           aria-label="Notifications"
+          tabIndex={orderedItems.length > 1 ? 0 : -1}
+          onClick={() => setStackExpanded((current) => !current)}
+          onKeyDown={(event) => { if (event.key === "Escape") setStackExpanded(false); }}
           animate={{ height: orderedItems.length === 0 ? 0 : stackExpanded ? expandedHeight : stackHeight }}
           transition={motionTokens.spring.morph}
           onPointerEnter={(event) => {

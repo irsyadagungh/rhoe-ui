@@ -4,6 +4,232 @@
   "homepage": "https://rhoe.syadah.my.id",
   "items": [
     {
+      "name": "loading-indicator",
+      "type": "registry:ui",
+      "title": "Loading Indicator",
+      "description": "Editable loading indicators adapted from loading-dev.",
+      "files": [
+        {
+          "path": "registry/components/loading-indicator/loading-indicator.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-indicator.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/LICENSE.md",
+          "type": "registry:file",
+          "target": "components/rhoe/loading-indicator/loading-dev/LICENSE.md"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/arc.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/arc.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/atom.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/atom.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/blocks.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/blocks.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/bouncing-dots.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/bouncing-dots.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/cap.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/loading-indicator/loading-dev/cap.ts"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/cascade.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/cascade.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/circular-dots.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/circular-dots.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/classic-v2.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/classic-v2.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/classic.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/classic.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/clock.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/clock.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/comet.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/comet.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/compass.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/compass.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/dual.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/dual.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/easing.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/loading-indicator/loading-dev/easing.ts"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/eclipse.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/eclipse.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/fade.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/loading-indicator/loading-dev/fade.ts"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/flip.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/flip.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/frame.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/frame.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/gather.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/gather.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/index.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/loading-indicator/loading-dev/index.ts"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/leap.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/leap.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/linear-dots.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/linear-dots.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/loading.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/loading.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/morph.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/motion.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/loading-indicator/loading-dev/motion.ts"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/orbit.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/orbit.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/pulse.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/pulse.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/radar.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/radar.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/ring.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/ring.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/ripple.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/ripple.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/slide.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/slide.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/snake.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/snake.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/spinners.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/loading-indicator/loading-dev/spinners.ts"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/swirl.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/swirl.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/trace.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/trace.tsx"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/types.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/loading-indicator/loading-dev/types.ts"
+        },
+        {
+          "path": "registry/components/loading-indicator/loading-dev/wave.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/loading-indicator/loading-dev/wave.tsx"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "An avatar and overlapping avatar group with initials fallback.",
+      "files": [
+        { "path": "registry/components/foundation.css", "type": "registry:style", "target": "components/rhoe/foundation.css" },
+        { "path": "registry/components/avatar/avatar.tsx", "type": "registry:ui", "target": "components/rhoe/avatar/avatar.tsx" }
+      ]
+    },
+    {
+      "name": "avatar-info",
+      "type": "registry:ui",
+      "title": "Avatar Info",
+      "description": "An avatar that expands into account details and actions.",
+      "dependencies": ["motion", "lucide-react"],
+      "files": [
+        { "path": "registry/components/foundation.css", "type": "registry:style", "target": "components/rhoe/foundation.css" },
+        { "path": "registry/components/lib/motion-tokens.ts", "type": "registry:lib", "target": "components/rhoe/lib/motion-tokens.ts" },
+        { "path": "registry/components/avatar/avatar.tsx", "type": "registry:ui", "target": "components/rhoe/avatar/avatar.tsx" },
+        { "path": "registry/components/avatar-info/avatar-info.tsx", "type": "registry:ui", "target": "components/rhoe/avatar-info/avatar-info.tsx" }
+      ]
+    },
+    {
       "name": "foundation",
       "type": "registry:style",
       "title": "Rhoe UI",
@@ -312,6 +538,32 @@
       ]
     },
     {
+      "name": "verification-code",
+      "type": "registry:ui",
+      "title": "Verification Code",
+      "description": "A six-slot numeric verification input with paste, autofill, and accessible single-field behavior.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/verification-code/verification-code.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/verification-code/verification-code.tsx"
+        }
+      ]
+    },
+    {
       "name": "currency-input",
       "type": "registry:ui",
       "title": "Currency Input",
@@ -396,6 +648,120 @@
       ]
     },
     {
+      "name": "date-picker",
+      "type": "registry:ui",
+      "title": "Date Picker",
+      "description": "A form-ready date field that morphs directly into the compact zoomable calendar.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/input/input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/input/input.tsx"
+        },
+        {
+          "path": "registry/components/lib/date-field-popover.tsx",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/date-field-popover.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/calendar/calendar.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/calendar/calendar.tsx"
+        },
+        {
+          "path": "registry/components/date-picker/date-picker.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/date-picker/date-picker.tsx"
+        }
+      ]
+    },
+    {
+      "name": "date-range-picker",
+      "type": "registry:ui",
+      "title": "Date Range Picker",
+      "description": "A form-ready range field with connected day selection and optional completion dismissal.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/input/input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/input/input.tsx"
+        },
+        {
+          "path": "registry/components/lib/date-field-popover.tsx",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/date-field-popover.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/calendar/calendar.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/calendar/calendar.tsx"
+        },
+        {
+          "path": "registry/components/date-range-picker/date-range-picker.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/date-range-picker/date-range-picker.tsx"
+        }
+      ]
+    },
+    {
       "name": "todo-calendar",
       "type": "registry:block",
       "title": "To-do Calendar",
@@ -441,7 +807,7 @@
       "name": "auth-form",
       "type": "registry:block",
       "title": "Authentication Form",
-      "description": "Sign-in and sign-up forms with a responsive OAuth grid composed from Rhoe UI controls.",
+      "description": "Sign-in and sign-up forms that morph into password recovery or email verification flows.",
       "dependencies": [
         "lucide-react",
         "motion"
@@ -481,6 +847,11 @@
           "path": "registry/components/checkbox/checkbox.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/checkbox/checkbox.tsx"
+        },
+        {
+          "path": "registry/components/verification-code/verification-code.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/verification-code/verification-code.tsx"
         },
         {
           "path": "registry/blocks/auth-form/auth-form.tsx",
@@ -1340,6 +1711,70 @@
           "path": "registry/components/modal/modal.tsx",
           "type": "registry:ui",
           "target": "components/rhoe/modal/modal.tsx"
+        }
+      ]
+    },
+    {
+      "name": "app-drawer",
+      "type": "registry:ui",
+      "title": "App Drawer",
+      "description": "An accessible left or right application drawer with focus trapping and interruptible slide motion.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/lib/overlay-panel.tsx",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/overlay-panel.tsx"
+        },
+        {
+          "path": "registry/components/app-drawer/app-drawer.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/app-drawer/app-drawer.tsx"
+        }
+      ]
+    },
+    {
+      "name": "bottom-sheet",
+      "type": "registry:ui",
+      "title": "Bottom Sheet",
+      "description": "An accessible bottom sheet with drag-to-dismiss, focus trapping, and viewport-safe scrolling.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/lib/overlay-panel.tsx",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/overlay-panel.tsx"
+        },
+        {
+          "path": "registry/components/bottom-sheet/bottom-sheet.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/bottom-sheet/bottom-sheet.tsx"
         }
       ]
     },

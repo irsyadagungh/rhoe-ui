@@ -76,7 +76,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(function Che
 }, ref) {
   const reduceMotion = useReducedMotion() ?? false;
   const generatedId = useId();
-  const inputId = id ?? `sya-checkbox-${generatedId}`;
+  const inputId = id ?? `rhoe-checkbox-${generatedId}`;
   const isControlled = checked !== undefined;
   const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false);
   const isChecked = checked ?? internalChecked;

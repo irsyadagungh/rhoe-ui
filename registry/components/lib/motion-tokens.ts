@@ -5,6 +5,7 @@ export const motionTokens = {
     standard: 0.24,
     considered: 0.48,
     reveal: 0.6,
+    expand: 0.72,
     lineReveal: 0.86,
   },
   ease: {

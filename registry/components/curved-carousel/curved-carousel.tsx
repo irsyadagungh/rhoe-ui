@@ -397,9 +397,18 @@ export function CurvedCarousel({
                   key={item.src}
                   type="button"
                   role="tab"
-                  tabIndex={-1}
+                  tabIndex={selected ? 0 : -1}
                   aria-selected={selected}
                   aria-label={`Show image ${index + 1}: ${item.alt}`}
+                  onKeyDown={(event) => {
+                    if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+                    event.stopPropagation();
+                    event.preventDefault();
+                    const next = (index + (event.key === "ArrowRight" ? 1 : -1) + items.length) % items.length;
+                    goToItem(next);
+                    const tabs = event.currentTarget.parentElement?.querySelectorAll<HTMLButtonElement>("[role=tab]");
+                    tabs?.[next]?.focus();
+                  }}
                   onClick={() => goToItem(index)}
                   className={`h-2.5 rounded-full transition-[width,background-color] duration-[480ms] ${ease} focus-visible:outline-2 focus-visible:outline-[var(--focus)] focus-visible:outline-offset-4 ${selected ? "w-7 bg-[var(--text)]" : "w-2.5 bg-[var(--text-secondary)] opacity-50 hover:opacity-90"}`}
                 />

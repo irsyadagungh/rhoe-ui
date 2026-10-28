@@ -75,7 +75,7 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(function Radio({
 }, ref) {
   const reduceMotion = useReducedMotion() ?? false;
   const generatedId = useId();
-  const inputId = id ?? `sya-radio-${generatedId}`;
+  const inputId = id ?? `rhoe-radio-${generatedId}`;
   const isControlled = checked !== undefined;
   const [internalChecked, setInternalChecked] = useState(defaultChecked ?? false);
   const isChecked = checked ?? internalChecked;
@@ -171,7 +171,7 @@ export function RadioList({
       {items.map((item) => (
         <li key={item.value}>
           <Radio
-            name={name ?? `sya-radio-list-${generatedName}`}
+            name={name ?? `rhoe-radio-list-${generatedName}`}
             value={item.value}
             checked={selectedValue === item.value}
             disabled={item.disabled}

@@ -5,6 +5,39 @@
       "description": "Stateful controls and visual transitions that keep feedback close to the action that caused it.",
       "components": [
         {
+          "name": "avatar",
+          "title": "Avatar",
+          "description": "Individual and grouped avatars with initials fallback.",
+          "lede": "Represent a person or a group using images and readable initials.",
+          "keywords": ["profile", "user", "group"],
+          "sourcePath": "registry/components/avatar/avatar.tsx",
+          "installation": "Installs Avatar and AvatarGroup with the shared foundation.",
+          "usage": "import { Avatar, AvatarGroup } from \"@/components/rhoe/avatar/avatar\"\n\nexport function TeamAvatars() {\n  return (\n    <div>\n      <Avatar name=\"Ava Morgan\" src=\"/avatars/ava.jpg\" />\n      <AvatarGroup items={[{ name: \"Ava Morgan\" }, { name: \"Noah Lee\" }]} />\n    </div>\n  )\n}",
+          "guidance": ["Use an individual avatar for one person and a group for a collection."],
+          "behavior": ["When src is omitted or empty, or the image fails to load, the first letters of up to two words in name are shown; an empty name displays ?.", "The group shows an overflow count after the configured maximum."],
+          "accessibility": ["Each avatar exposes the person's name; decorative images use empty alternative text."],
+          "api": [["name", "string", "—", "Person's name; used to derive initials and the accessible label.", true], ["src", "string", "—", "Optional image URL. Omitted, empty, or failed images use initials; pass null as undefined."], ["size", "number", "46", "Avatar or group member size in pixels."], ["items", "readonly AvatarProps[]", "—", "Members displayed by AvatarGroup.", true], ["max", "number", "4", "Maximum visible members before the overflow count."], ["className / style", "native span or div props", "—", "Additional styling and native attributes for Avatar or AvatarGroup."]],
+          "files": ["components/rhoe/foundation.css", "components/rhoe/avatar/avatar.tsx"],
+          "related": ["avatar-info"]
+        },
+        {
+          "name": "avatar-info",
+          "title": "Avatar Info",
+          "description": "An avatar that expands into account details and configurable actions.",
+          "lede": "Reveal a user's name, email, and account actions from a compact avatar.",
+          "keywords": ["account", "profile", "menu", "sign out"],
+          "sourcePath": "registry/components/avatar-info/avatar-info.tsx",
+          "installation": "Installs Avatar Info, Avatar, and motion tokens.",
+          "usage": "\"use client\"\n\nimport { AvatarInfo } from \"@/components/rhoe/avatar-info/avatar-info\"\n\nexport function AccountMenu() {\n  return <AvatarInfo name=\"Ava Morgan\" email=\"ava@example.com\" side=\"right\" items={[{ id: \"settings\", label: \"Settings\", onSelect: () => {} }]} onSignOut={() => {}} />\n}",
+          "examples": [{ "title": "Morphing sign-out confirmation", "description": "Install Dialog separately and keep the menu open while the dialog is active.", "code": "\"use client\"\n\nimport { useState } from \"react\"\nimport { AvatarInfo } from \"@/components/rhoe/avatar-info/avatar-info\"\nimport { Dialog } from \"@/components/rhoe/dialog/dialog\"\n\nexport function AccountMenu() {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <AvatarInfo\n      name=\"Ava Morgan\"\n      email=\"ava@example.com\"\n      signOutDialogOpen={open}\n      signOutTrigger={\n        <Dialog\n          open={open}\n          onOpenChange={setOpen}\n          title=\"Sign out?\"\n          description=\"You will need to sign in again.\"\n          tone=\"danger\"\n          continueLabel=\"Sign out\"\n          onContinue={() => { /* Call your sign-out action here. */ }}\n          trigger={<button type=\"button\">Sign out</button>}\n        />\n      }\n    />\n  )\n}" }],
+          "guidance": ["Provide application-owned callbacks for account actions and sign out."],
+          "behavior": ["The avatar expands horizontally before the actions open below; left opens toward the right and right opens toward the left, keeping the avatar to the left of the account details.", "Account details, actions and sign out are separated by subtle inset dividers. Sign out uses the danger tone.", "One shared hover highlight moves continuously between enabled actions, including sign out.", "The overlay uses a higher z-index when open and closes on outside press or Escape.", "A controlled custom sign-out dialog keeps the avatar menu open while the dialog is active, preserving its morph origin and focus target."],
+          "accessibility": ["The trigger exposes its expanded state and Escape returns focus to the trigger."],
+          "api": [["name", "string", "—", "Account name.", true], ["email", "string", "—", "Account email address.", true], ["src", "string", "—", "Optional avatar image; omitted, empty, or failed images use initials."], ["side", "left | right", "right", "Avatar placement: left expands rightward; right expands leftward."], ["items", "readonly AvatarInfoItem[]", "[]", "Account actions with id, label, optional icon, disabled state and onSelect callback."], ["onSignOut", "() => void", "—", "Application-owned sign-out action; required unless signOutTrigger is supplied."], ["signOutTrigger", "ReactNode", "—", "Custom sign-out control, such as a controlled Dialog with its own button trigger."], ["signOutDialogOpen", "boolean", "—", "Required with signOutTrigger; pass the controlled dialog state to keep the menu open while it is active."], ["signOutLabel", "string", "Sign out", "Label for the default sign-out action."], ["className", "string", "—", "Additional classes on the avatar menu root."]],
+          "files": ["components/rhoe/foundation.css", "components/rhoe/lib/motion-tokens.ts", "components/rhoe/avatar/avatar.tsx", "components/rhoe/avatar-info/avatar-info.tsx"],
+          "related": ["avatar", "popover", "animated-list"]
+        },
+        {
           "name": "button",
           "title": "Button",
           "description": "Filled, bordered, text, and animated action buttons across semantic tones.",
@@ -319,6 +352,107 @@
             "dialog",
             "tooltip"
           ]
+        },
+        {
+          "name": "app-drawer",
+          "title": "App Drawer",
+          "description": "A left or right application drawer for navigation, settings, and supporting workflows.",
+          "lede": "Moves an application-level panel in from either side while preserving focus, dismissal, and viewport scrolling behavior.",
+          "keywords": ["drawer", "sidebar", "overlay", "settings", "navigation"],
+          "sourcePath": "registry/components/app-drawer/app-drawer.tsx",
+          "installation": "Installs App Drawer with its shared accessible overlay primitive and motion tokens.",
+          "usage": "import { Button } from \"@/components/rhoe/button/button\"\nimport { AppDrawer } from \"@/components/rhoe/app-drawer/app-drawer\"\n\nexport function SettingsDrawer() {\n  return (\n    <AppDrawer trigger={<Button>Open settings</Button>} title=\"Workspace settings\">\n      {({ close }) => <Button onClick={close}>Done</Button>}\n    </AppDrawer>\n  )\n}",
+          "examples": [
+            { "title": "Left drawer", "code": "<AppDrawer side=\"left\" trigger={<Button>Menu</Button>} title=\"Navigation\">{navigation}</AppDrawer>" },
+            { "title": "Controlled drawer", "code": "<AppDrawer open={open} onOpenChange={setOpen} title=\"Settings\">{settings}</AppDrawer>" }
+          ],
+          "guidance": [
+            "Use for application navigation, settings, or supporting workflows that should remain beside the current page.",
+            "Use Modal when the user must focus on one centered task before continuing.",
+            "Keep the primary page context visible behind the drawer."
+          ],
+          "behavior": [
+            "The panel slides from its configured side and exits along the same path.",
+            "Escape and backdrop press close non-blocking drawers.",
+            "Page scrolling is locked while the drawer is open and restored after it closes."
+          ],
+          "accessibility": [
+            "Uses dialog and aria-modal semantics.",
+            "Focus moves into the drawer, stays trapped inside, and returns to the trigger after closing.",
+            "The close button, backdrop, and Escape key provide redundant dismissal paths."
+          ],
+          "api": [
+            ["trigger", "ReactNode", "—", "Optional element that opens the drawer."],
+            ["children", "ReactNode | ({ close }) => ReactNode", "—", "Drawer content with an optional close helper.", true],
+            ["side", "left | right", "right", "Side from which the drawer enters."],
+            ["open / defaultOpen", "boolean", "false", "Controlled or initial open state."],
+            ["onOpenChange", "(open: boolean) => void", "—", "Receives requested open-state changes."],
+            ["title / description", "ReactNode", "—", "Visible accessible heading and supporting text."],
+            ["ariaLabel", "string", "App drawer", "Accessible name used when no title is provided."],
+            ["width", "number | string", "min(28rem, viewport - 16px)", "Drawer width."],
+            ["blocking", "boolean", "false", "Disables Escape and backdrop dismissal."],
+            ["showCloseButton", "boolean", "true", "Shows the built-in close action."],
+            ["className", "string", "—", "Additional classes for the drawer surface."]
+          ],
+          "customization": "Place any application navigation or form content inside children. Width accepts pixels or a CSS length.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/lib/overlay-panel.tsx",
+            "components/rhoe/app-drawer/app-drawer.tsx"
+          ],
+          "related": ["bottom-sheet", "modal", "sidebar-navigation"]
+        },
+        {
+          "name": "bottom-sheet",
+          "title": "Bottom Sheet",
+          "description": "A mobile-friendly sheet that rises from the viewport edge and can be dismissed by dragging.",
+          "lede": "Keeps compact actions and supporting content within thumb reach while preserving dialog focus behavior.",
+          "keywords": ["sheet", "drawer", "mobile", "drag", "overlay"],
+          "sourcePath": "registry/components/bottom-sheet/bottom-sheet.tsx",
+          "installation": "Installs Bottom Sheet with its shared accessible overlay primitive and motion tokens.",
+          "usage": "import { Button } from \"@/components/rhoe/button/button\"\nimport { BottomSheet } from \"@/components/rhoe/bottom-sheet/bottom-sheet\"\n\nexport function ReviewSheet() {\n  return (\n    <BottomSheet trigger={<Button>Review changes</Button>} title=\"Publish changes?\">\n      {({ close }) => <Button onClick={close}>Publish</Button>}\n    </BottomSheet>\n  )\n}",
+          "examples": [
+            { "title": "Fixed-height sheet", "code": "<BottomSheet height=\"min(32rem, 80dvh)\" title=\"Filters\">{filters}</BottomSheet>" },
+            { "title": "Without drag dismissal", "code": "<BottomSheet dragToDismiss={false} title=\"Required action\">{content}</BottomSheet>" }
+          ],
+          "guidance": [
+            "Use for short mobile workflows, filters, and contextual actions.",
+            "Use App Drawer for persistent application navigation or wider settings panels.",
+            "Keep critical actions visible without requiring a long internal scroll."
+          ],
+          "behavior": [
+            "The sheet rises from the bottom and returns there when dismissed.",
+            "A downward drag past the distance or velocity threshold dismisses the sheet.",
+            "Content scrolls inside the viewport-safe panel.",
+            "Dragging starts from the handle at the top of the sheet, not from the content."
+          ],
+          "accessibility": [
+            "Uses dialog and aria-modal semantics with trapped focus.",
+            "Escape, backdrop press, close button, and drag provide dismissal when not blocking.",
+            "Reduced-motion mode replaces travel with a short fade."
+          ],
+          "api": [
+            ["trigger", "ReactNode", "—", "Optional element that opens the sheet."],
+            ["children", "ReactNode | ({ close }) => ReactNode", "—", "Sheet content with an optional close helper.", true],
+            ["title / description", "ReactNode", "—", "Visible accessible heading and supporting text."],
+            ["ariaLabel", "string", "Bottom sheet", "Accessible name used when no title is provided."],
+            ["open / defaultOpen", "boolean", "false", "Controlled or initial open state."],
+            ["onOpenChange", "(open: boolean) => void", "—", "Receives requested open-state changes."],
+            ["height", "number | string", "content height", "Optional sheet height."],
+            ["dragToDismiss", "boolean", "true", "Allows downward drag dismissal."],
+            ["blocking", "boolean", "false", "Disables Escape, backdrop, and drag dismissal."],
+            ["showCloseButton", "boolean", "true", "Shows the built-in close action."],
+            ["className", "string", "—", "Additional classes for the sheet surface."]
+          ],
+          "customization": "Use height for a stable task surface or allow content to determine the natural height.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/lib/overlay-panel.tsx",
+            "components/rhoe/bottom-sheet/bottom-sheet.tsx"
+          ],
+          "related": ["app-drawer", "modal", "popover"]
         },
         {
           "name": "dialog",
@@ -665,6 +799,128 @@
       "name": "Feedback",
       "description": "Compact semantic labels and feedback that clarify system status.",
       "components": [
+        {
+          "name": "loading-indicator",
+          "title": "Loading Indicator",
+          "description": "29 editable loading indicators adapted from loading-dev.",
+          "lede": "Show loading states with 29 editable indicators from loading.dev by Jakub Krehel, distributed under the MIT license.",
+          "keywords": [
+            "spinner",
+            "loading",
+            "progress",
+            "pending"
+          ],
+          "sourcePath": "registry/components/loading-indicator/loading-indicator.tsx",
+          "installation": "Installs the Rhoe wrapper, loading-dev source, and its MIT license. Requires React 19.",
+          "usage": "import { LoadingIndicator } from \"@/components/rhoe/loading-indicator/loading-indicator\"\n\nexport function LoadingContent() {\n  return <LoadingIndicator variant=\"atom\" size={32} label=\"Loading users\" />\n}",
+          "guidance": [
+            "Use a descriptive label for the pending operation. Set decorative when nearby status text already announces it.",
+            "The source includes all loading-dev indicators and their individual exports for advanced options. Keep the included MIT license when redistributing."
+          ],
+          "behavior": [
+            "All 29 indicators use the loading-dev implementation and inherit current text color by default.",
+            "Animations respect reduced motion. Duration and playback can be configured."
+          ],
+          "accessibility": [
+            "By default the indicator exposes a status role and accessible label.",
+            "Use decorative when an existing status message already communicates loading."
+          ],
+          "api": [
+            [
+              "variant",
+              "arc | atom | blocks | bouncing-dots | cascade | circular-dots | classic | classic-v2 | clock | comet | compass | dual | eclipse | flip | gather | leap | linear-dots | loading | morph | orbit | pulse | radar | ring | ripple | slide | snake | swirl | trace | wave",
+              "atom",
+              "Loading animation to display."
+            ],
+            [
+              "size",
+              "number",
+              "20",
+              "Indicator size in pixels."
+            ],
+            [
+              "color",
+              "string",
+              "currentColor",
+              "CSS color for the indicator."
+            ],
+            [
+              "duration",
+              "number",
+              "variant-specific",
+              "Animation duration in milliseconds."
+            ],
+            [
+              "playState",
+              "running | paused",
+              "running",
+              "Controls animation playback."
+            ],
+            [
+              "label",
+              "string",
+              "Loading",
+              "Accessible description for the status."
+            ],
+            [
+              "decorative",
+              "boolean",
+              "false",
+              "Hide the indicator from assistive technology when loading is already announced."
+            ],
+            [
+              "className",
+              "string",
+              "—",
+              "Additional class on the indicator."
+            ]
+          ],
+          "files": [
+            "components/rhoe/loading-indicator/loading-indicator.tsx",
+            "components/rhoe/loading-indicator/loading-dev/LICENSE.md",
+            "components/rhoe/loading-indicator/loading-dev/arc.tsx",
+            "components/rhoe/loading-indicator/loading-dev/atom.tsx",
+            "components/rhoe/loading-indicator/loading-dev/blocks.tsx",
+            "components/rhoe/loading-indicator/loading-dev/bouncing-dots.tsx",
+            "components/rhoe/loading-indicator/loading-dev/cap.ts",
+            "components/rhoe/loading-indicator/loading-dev/cascade.tsx",
+            "components/rhoe/loading-indicator/loading-dev/circular-dots.tsx",
+            "components/rhoe/loading-indicator/loading-dev/classic-v2.tsx",
+            "components/rhoe/loading-indicator/loading-dev/classic.tsx",
+            "components/rhoe/loading-indicator/loading-dev/clock.tsx",
+            "components/rhoe/loading-indicator/loading-dev/comet.tsx",
+            "components/rhoe/loading-indicator/loading-dev/compass.tsx",
+            "components/rhoe/loading-indicator/loading-dev/dual.tsx",
+            "components/rhoe/loading-indicator/loading-dev/easing.ts",
+            "components/rhoe/loading-indicator/loading-dev/eclipse.tsx",
+            "components/rhoe/loading-indicator/loading-dev/fade.ts",
+            "components/rhoe/loading-indicator/loading-dev/flip.tsx",
+            "components/rhoe/loading-indicator/loading-dev/frame.tsx",
+            "components/rhoe/loading-indicator/loading-dev/gather.tsx",
+            "components/rhoe/loading-indicator/loading-dev/index.ts",
+            "components/rhoe/loading-indicator/loading-dev/leap.tsx",
+            "components/rhoe/loading-indicator/loading-dev/linear-dots.tsx",
+            "components/rhoe/loading-indicator/loading-dev/loading.tsx",
+            "components/rhoe/loading-indicator/loading-dev/morph.tsx",
+            "components/rhoe/loading-indicator/loading-dev/motion.ts",
+            "components/rhoe/loading-indicator/loading-dev/orbit.tsx",
+            "components/rhoe/loading-indicator/loading-dev/pulse.tsx",
+            "components/rhoe/loading-indicator/loading-dev/radar.tsx",
+            "components/rhoe/loading-indicator/loading-dev/ring.tsx",
+            "components/rhoe/loading-indicator/loading-dev/ripple.tsx",
+            "components/rhoe/loading-indicator/loading-dev/slide.tsx",
+            "components/rhoe/loading-indicator/loading-dev/snake.tsx",
+            "components/rhoe/loading-indicator/loading-dev/spinners.ts",
+            "components/rhoe/loading-indicator/loading-dev/swirl.tsx",
+            "components/rhoe/loading-indicator/loading-dev/trace.tsx",
+            "components/rhoe/loading-indicator/loading-dev/types.ts",
+            "components/rhoe/loading-indicator/loading-dev/wave.tsx"
+          ],
+          "related": [
+            "button",
+            "toast"
+          ]
+        },
         {
           "name": "badge",
           "title": "Badge",
@@ -1348,6 +1604,99 @@
       "description": "Accessible controls for collecting, validating, and correcting user input.",
       "components": [
         {
+          "name": "verification-code",
+          "title": "Verification Code",
+          "description": "A six-slot verification input with paste, autofill, and accessible single-field behavior.",
+          "lede": "Collects a short numeric verification code while keeping native keyboard, paste, and one-time-code autofill behavior.",
+          "keywords": [
+            "verification",
+            "otp",
+            "one-time code",
+            "pin"
+          ],
+          "sourcePath": "registry/components/verification-code/verification-code.tsx",
+          "installation": "Installs Verification Code with shared Rhoe UI motion and theme foundations.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { VerificationCode } from \"@/components/rhoe/verification-code/verification-code\"\n\nexport function VerificationCodeExample() {\n  const [code, setCode] = useState(\"\")\n\n  return (\n    <VerificationCode\n      value={code}\n      onValueChange={setCode}\n      onComplete={(value) => console.log(value)}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Uncontrolled code",
+              "code": "<VerificationCode name=\"code\" required />"
+            },
+            {
+              "title": "Custom length",
+              "code": "<VerificationCode length={4} label=\"Security code\" />"
+            },
+            {
+              "title": "Validation message",
+              "code": "<VerificationCode error=\"That code has expired.\" />"
+            }
+          ],
+          "guidance": [
+            "Use the six-slot default for email and authenticator verification.",
+            "Keep a visible label and explain where the code was sent in hint text.",
+            "Use onComplete as a convenience signal; keep submission under application control."
+          ],
+          "behavior": [
+            "Six visual slots are backed by one native input, so typing, deletion, paste, and autofill remain continuous.",
+            "Only numeric characters are accepted and input is capped at the configured length.",
+            "The active slot and entered digits animate with shared motion tokens and respect reduced motion."
+          ],
+          "accessibility": [
+            "A single native input avoids six separate focus stops and announces one coherent value.",
+            "The component provides numeric input mode and one-time-code autocomplete by default.",
+            "Labels, hints, errors, required state, disabled state, and forwarded refs remain available."
+          ],
+          "api": [
+            [
+              "length",
+              "number",
+              "6",
+              "Number of numeric slots."
+            ],
+            [
+              "value / defaultValue",
+              "string",
+              "empty string",
+              "Controlled or initial uncontrolled code."
+            ],
+            [
+              "onValueChange",
+              "(value: string) => void",
+              "—",
+              "Receives each normalized numeric value."
+            ],
+            [
+              "onComplete",
+              "(value: string) => void",
+              "—",
+              "Runs when every slot has been filled."
+            ],
+            [
+              "label / hint / error",
+              "ReactNode",
+              "Verification code / — / —",
+              "Accessible field copy and validation feedback."
+            ],
+            [
+              "name / required / disabled",
+              "native input props",
+              "—",
+              "Native form and interaction behavior."
+            ]
+          ],
+          "customization": "Change the slot count and field copy while color, radius, focus, and motion inherit the Rhoe UI foundation.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/verification-code/verification-code.tsx"
+          ],
+          "related": [
+            "input",
+            "password-strength",
+            "button"
+          ]
+        },
+        {
           "name": "calendar",
           "title": "Calendar",
           "description": "Compact and full calendars with zoomable day, month, and year views.",
@@ -1369,6 +1718,11 @@
             {
               "title": "Full year overview",
               "code": "<Calendar variant=\"full\" value={date} onValueChange={setDate} />"
+            },
+            {
+              "title": "Date range",
+              "description": "Use the same calendar surface when a custom picker needs two endpoints.",
+              "code": "<Calendar selectionMode=\"range\" range={range} onRangeChange={setRange} />"
             }
           ],
           "guidance": [
@@ -1380,11 +1734,12 @@
             "The initial view shows one complete month with adjacent dates.",
             "Selecting the month header reveals month choices; the chosen mini calendar morphs into the full daily calendar and shrinks back to the same position when returning.",
             "Selecting the year header opens twelve-year pages, while Today returns to and selects the current date.",
+            "In range mode, Today selects a one-day range starting and ending on the current date.",
             "Hover and selected-date highlights glide continuously between day cells; hovering the selected day does not change its color.",
             "The selected-date heading morphs between date strings without replacing the whole line abruptly."
           ],
           "accessibility": [
-            "Day, month, and year choices use labeled grid cells and expose the selected state.",
+            "Day choices use labeled grid cells; month and year choices are labeled buttons that expose their selected state.",
             "Arrow keys move by day or week; Home and End move within the week; Page Up and Page Down move by month.",
             "All controls have visible keyboard focus and reduced-motion support."
           ],
@@ -1412,6 +1767,30 @@
               "(date: Date) => void",
               "\u2014",
               "Called after a date is selected."
+            ],
+            [
+              "selectionMode",
+              "single | range",
+              "single",
+              "Selects one date or a continuous date range."
+            ],
+            [
+              "range",
+              "{ from?: Date; to?: Date }",
+              "\u2014",
+              "Controlled range value when selectionMode is range."
+            ],
+            [
+              "defaultRange",
+              "{ from?: Date; to?: Date }",
+              "\u2014",
+              "Initial range for uncontrolled range selection."
+            ],
+            [
+              "onRangeChange",
+              "(range: CalendarDateRange) => void",
+              "\u2014",
+              "Called when a range starts or completes."
             ],
             [
               "locale",
@@ -1450,6 +1829,118 @@
             "input",
             "morphing-text"
           ]
+        },
+        {
+          "name": "date-picker",
+          "title": "Date Picker",
+          "description": "A form-ready date field backed by the compact zoomable Calendar.",
+          "lede": "Morphs a familiar input surface directly into a calendar and returns a native Date value.",
+          "keywords": ["date", "picker", "calendar", "form", "schedule"],
+          "sourcePath": "registry/components/date-picker/date-picker.tsx",
+          "installation": "Installs Date Picker, Calendar, Input, Button, Morphing Text, and their shared motion foundation.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { DatePicker } from \"@/components/rhoe/date-picker/date-picker\"\n\nexport function LaunchDateField() {\n  const [date, setDate] = useState<Date>()\n  return <DatePicker label=\"Launch date\" value={date} onValueChange={setDate} />\n}",
+          "examples": [
+            { "title": "Uncontrolled field", "code": "<DatePicker label=\"Due date\" defaultValue={new Date(2026, 9, 26)} />" },
+            { "title": "Native form value", "code": "<DatePicker name=\"launchDate\" label=\"Launch date\" />" }
+          ],
+          "guidance": [
+            "Use for one calendar date that belongs to a form.",
+            "Use Calendar directly when the calendar should remain visible.",
+            "Use Date Range Picker when both a start and end date are required."
+          ],
+          "behavior": [
+            "The input surface expands in place and morphs directly into the calendar.",
+            "Selecting a day lets the selected indicator finish moving before the calendar closes and restores focus.",
+            "Month and year headers retain Calendar's zoom navigation."
+          ],
+          "accessibility": [
+            "The field exposes dialog-expanded state and connects validation text.",
+            "Escape and outside press close the calendar and return focus to the field.",
+            "The calendar retains its keyboard navigation and labeled date cells."
+          ],
+          "api": [
+            ["value / defaultValue", "Date", "—", "Controlled or initial date."],
+            ["onValueChange", "(date: Date) => void", "—", "Called after selecting a day."],
+            ["label / placeholder", "ReactNode / string", "— / Choose a date", "Field text."],
+            ["variant", "filled | bordered", "filled", "Field surface treatment."],
+            ["locale", "string", "en-US", "Date formatting locale."],
+            ["weekStartsOn", "0 | 1", "0", "Starts weeks on Sunday or Monday."],
+            ["name", "string", "—", "Adds a hidden YYYY-MM-DD form value."],
+            ["open / defaultOpen", "boolean", "false", "Controlled or initial panel state."],
+            ["onOpenChange", "(open: boolean) => void", "—", "Receives requested open-state changes."],
+            ["disabled / errorMessage", "boolean / ReactNode", "false / —", "Disabled and validation states."],
+            ["className", "string", "—", "Additional classes for the field wrapper."]
+          ],
+          "customization": "Use filled or bordered to match nearby Input fields. The calendar surface inherits shared Rhoe tokens.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/input/input.tsx",
+            "components/rhoe/lib/date-field-popover.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/calendar/calendar.tsx",
+            "components/rhoe/date-picker/date-picker.tsx"
+          ],
+          "related": ["date-range-picker", "calendar", "input"]
+        },
+        {
+          "name": "date-range-picker",
+          "title": "Date Range Picker",
+          "description": "A form-ready start and end date field with continuous range highlighting.",
+          "lede": "Selects a chronological range in one compact calendar and emits both boundaries as Date values.",
+          "keywords": ["date range", "picker", "calendar", "booking", "timeline"],
+          "sourcePath": "registry/components/date-range-picker/date-range-picker.tsx",
+          "installation": "Installs Date Range Picker, range-enabled Calendar, Input, Button, Morphing Text, and their shared motion foundation.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { DateRangePicker, type DateRange } from \"@/components/rhoe/date-range-picker/date-range-picker\"\n\nexport function TimelineField() {\n  const [range, setRange] = useState<DateRange>({})\n  return <DateRangePicker label=\"Project timeline\" value={range} onValueChange={setRange} />\n}",
+          "examples": [
+            { "title": "Keep open after completion", "code": "<DateRangePicker closeOnComplete={false} value={range} onValueChange={setRange} />" },
+            { "title": "Native form values", "code": "<DateRangePicker fromName=\"startsAt\" toName=\"endsAt\" label=\"Travel dates\" />" }
+          ],
+          "guidance": [
+            "Use when start and end dates form one value, such as travel or project timelines.",
+            "Use two Date Pickers when the dates are independent.",
+            "Keep closeOnComplete enabled for short forms and disable it when users often revise both boundaries."
+          ],
+          "behavior": [
+            "The input surface expands in place and morphs directly into the calendar.",
+            "The first selection starts a new range and the second completes it.",
+            "Selecting an earlier second date normalizes the boundaries chronologically.",
+            "Completed ranges finish their selection feedback before closing automatically unless closeOnComplete is false.",
+            "Today selects a one-day range, which counts as complete and closes the picker unless closeOnComplete is false."
+          ],
+          "accessibility": [
+            "Range boundaries and intervening dates expose selected grid state.",
+            "The calendar header announces whether one or both boundaries have been chosen.",
+            "Keyboard navigation is inherited from Calendar."
+          ],
+          "api": [
+            ["value / defaultValue", "{ from?: Date; to?: Date }", "{}", "Controlled or initial range."],
+            ["onValueChange", "(range: DateRange) => void", "—", "Called after each boundary selection."],
+            ["label / placeholder", "ReactNode / string", "— / Choose a date range", "Field text."],
+            ["variant", "filled | bordered", "filled", "Field surface treatment."],
+            ["closeOnComplete", "boolean", "true", "Closes after both dates are selected."],
+            ["fromName / toName", "string", "—", "Adds hidden YYYY-MM-DD form values."],
+            ["locale / weekStartsOn", "string / 0 | 1", "en-US / 0", "Calendar localization."],
+            ["open / defaultOpen", "boolean", "false", "Controlled or initial panel state."],
+            ["onOpenChange", "(open: boolean) => void", "—", "Receives requested open-state changes."],
+            ["disabled / errorMessage", "boolean / ReactNode", "false / —", "Disabled and validation states."],
+            ["className", "string", "—", "Additional classes for the field wrapper."]
+          ],
+          "customization": "The field and range use existing Rhoe surfaces, focus color, radii, and motion tokens.",
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/input/input.tsx",
+            "components/rhoe/lib/date-field-popover.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/calendar/calendar.tsx",
+            "components/rhoe/date-range-picker/date-range-picker.tsx"
+          ],
+          "related": ["date-picker", "calendar", "input"]
         },
         {
           "name": "input",

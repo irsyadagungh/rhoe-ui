@@ -574,6 +574,7 @@ export function ExpandingSearch({
                   : { duration: 0.08 }}
               style={{ transformOrigin: `${anchorStyle.position} top` }}
               aria-hidden={!expanded}
+              inert={!expanded}
             >
             {animatedList ? (
               <AnimatedList

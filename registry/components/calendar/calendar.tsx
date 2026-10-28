@@ -23,12 +23,22 @@ import "../foundation.css";
 
 export type CalendarVariant = "compact" | "full";
 export type CalendarView = "days" | "months" | "years";
+export type CalendarSelectionMode = "single" | "range";
+
+export interface CalendarDateRange {
+  from?: Date;
+  to?: Date;
+}
 
 export interface CalendarProps {
   variant?: CalendarVariant;
   value?: Date;
   defaultValue?: Date;
   onValueChange?: (date: Date) => void;
+  selectionMode?: CalendarSelectionMode;
+  range?: CalendarDateRange;
+  defaultRange?: CalendarDateRange;
+  onRangeChange?: (range: CalendarDateRange) => void;
   locale?: string;
   weekStartsOn?: 0 | 1;
   ariaLabel?: string;
@@ -83,6 +93,23 @@ function isSameDay(first: Date, second: Date) {
   return first.getFullYear() === second.getFullYear()
     && first.getMonth() === second.getMonth()
     && first.getDate() === second.getDate();
+}
+
+function isBeforeDay(first: Date, second: Date) {
+  return localDate(first).getTime() < localDate(second).getTime();
+}
+
+function isBetweenDay(date: Date, from?: Date, to?: Date) {
+  if (!from || !to) return false;
+  const time = localDate(date).getTime();
+  return time > localDate(from).getTime() && time < localDate(to).getTime();
+}
+
+function normalizeRange(range?: CalendarDateRange): CalendarDateRange {
+  return {
+    from: range?.from ? localDate(range.from) : undefined,
+    to: range?.to ? localDate(range.to) : undefined,
+  };
 }
 
 function dateKey(date: Date) {
@@ -155,15 +182,24 @@ export function Calendar({
   value,
   defaultValue,
   onValueChange,
+  selectionMode = "single",
+  range,
+  defaultRange,
+  onRangeChange,
   locale = "en-US",
   weekStartsOn = 0,
   ariaLabel = "Calendar",
   className,
 }: CalendarProps) {
   const today = useMemo(() => localDate(new Date()), []);
-  const initialDate = localDate(value ?? defaultValue ?? today);
+  const initialRange = normalizeRange(range ?? defaultRange);
+  const initialDate = localDate(value ?? initialRange.to ?? initialRange.from ?? defaultValue ?? today);
   const [internalValue, setInternalValue] = useState(initialDate);
-  const selectedDate = value ? localDate(value) : internalValue;
+  const [internalRange, setInternalRange] = useState<CalendarDateRange>(initialRange);
+  const selectedRange = range ? normalizeRange(range) : internalRange;
+  const selectedDate = selectionMode === "range"
+    ? localDate(selectedRange.to ?? selectedRange.from ?? initialDate)
+    : value ? localDate(value) : internalValue;
   const [cursorMonth, setCursorMonth] = useState(firstOfMonth(initialDate));
   const [focusedDate, setFocusedDate] = useState(initialDate);
   const [controlledStamp, setControlledStamp] = useState(value?.getTime());
@@ -190,6 +226,10 @@ export function Calendar({
   );
   const selectedFormatter = useMemo(
     () => new Intl.DateTimeFormat(locale, { day: "numeric", month: "long", year: "numeric" }),
+    [locale],
+  );
+  const rangeFormatter = useMemo(
+    () => new Intl.DateTimeFormat(locale, { dateStyle: "medium" }),
     [locale],
   );
   const accessibleDateFormatter = useMemo(
@@ -255,6 +295,20 @@ export function Calendar({
   const selectDate = (date: Date) => {
     const next = localDate(date);
     setDayHoverVisible(false);
+    if (selectionMode === "range") {
+      const current = selectedRange;
+      const nextRange = !current.from || current.to
+        ? { from: next, to: undefined }
+        : isBeforeDay(next, current.from)
+          ? { from: next, to: current.from }
+          : { from: current.from, to: next };
+      if (range === undefined) setInternalRange(nextRange);
+      onRangeChange?.(nextRange);
+      setCursorMonth(firstOfMonth(next));
+      setFocusedDate(next);
+      setZoom(FADE);
+      return;
+    }
     if (value === undefined) setInternalValue(next);
     setCursorMonth(firstOfMonth(next));
     setFocusedDate(next);
@@ -266,7 +320,7 @@ export function Calendar({
     setFocusedDate(date);
     setCursorMonth(firstOfMonth(date));
     setZoom(FADE);
-    const calendar = origin.closest<HTMLElement>("[data-sya-calendar]");
+    const calendar = origin.closest<HTMLElement>("[data-rhoe-calendar]");
     requestAnimationFrame(() => {
       calendar?.querySelector<HTMLButtonElement>(`[data-date-key="${dateKey(date)}"]`)?.focus();
     });
@@ -371,6 +425,30 @@ export function Calendar({
 
   const renderDays = (month: Date) => {
     const days = monthDays(month, weekStartsOn);
+    const rangeKey = `${selectedRange.from?.getTime() ?? "empty"}-${selectedRange.to?.getTime() ?? "open"}`;
+    const rangeIndices = selectionMode === "range" && selectedRange.from
+      ? days.flatMap((date, index) => {
+          const inRange = isSameDay(date, selectedRange.from!)
+            || isSameDay(date, selectedRange.to ?? selectedRange.from!)
+            || isBetweenDay(date, selectedRange.from, selectedRange.to);
+          return inRange ? [index] : [];
+        })
+      : [];
+    const firstRangeIndex = rangeIndices[0] ?? -1;
+    const lastRangeIndex = rangeIndices.at(-1) ?? -1;
+    const firstRangeRow = firstRangeIndex >= 0 ? Math.floor(firstRangeIndex / 7) : -1;
+    const lastRangeRow = lastRangeIndex >= 0 ? Math.floor(lastRangeIndex / 7) : -1;
+    const rangeSegments = firstRangeRow >= 0
+      ? Array.from({ length: lastRangeRow - firstRangeRow + 1 }, (_, rowOffset) => {
+          const row = firstRangeRow + rowOffset;
+          return {
+            row,
+            startColumn: row === firstRangeRow ? firstRangeIndex % 7 : 0,
+            endColumn: row === lastRangeRow ? lastRangeIndex % 7 : 6,
+          };
+        })
+      : [];
+
     return (
       <div
         className="rounded-2xl"
@@ -394,9 +472,39 @@ export function Calendar({
           role="rowgroup"
           onPointerLeave={() => setDayHoverVisible(false)}
         >
-          {days.map((date) => {
+          <span
+            className="pointer-events-none absolute inset-0 z-0 grid grid-cols-7 grid-rows-6 gap-1"
+            aria-hidden="true"
+          >
+            {rangeSegments.map((segment, segmentIndex) => (
+              <span
+                key={`${rangeKey}-${segment.row}`}
+                className={cx(
+                  "h-full w-full bg-[color-mix(in_srgb,var(--focus)_16%,var(--surface-muted))] will-change-[clip-path]",
+                  segmentIndex === 0 && "rounded-l-full",
+                  segmentIndex === rangeSegments.length - 1 && "rounded-r-full",
+                )}
+                style={{
+                  gridColumn: `${segment.startColumn + 1} / ${segment.endColumn + 2}`,
+                  gridRow: segment.row + 1,
+                  animation: reduceMotion
+                    ? undefined
+                    : "rhoe-calendar-range-reveal var(--duration-standard) var(--ease-enter) both",
+                  animationDelay: reduceMotion
+                    ? undefined
+                    : `${segmentIndex * motionTokens.stagger.line}s`,
+                }}
+              />
+            ))}
+          </span>
+          {Array.from({ length: Math.ceil(days.length / 7) }, (_, row) => (
+            <div key={row} role="row" className="contents">
+          {days.slice(row * 7, row * 7 + 7).map((date) => {
             const outside = date.getMonth() !== month.getMonth();
-            const selected = isSameDay(date, selectedDate);
+            const rangeStart = selectionMode === "range" && Boolean(selectedRange.from && isSameDay(date, selectedRange.from));
+            const rangeEnd = selectionMode === "range" && Boolean(selectedRange.to && isSameDay(date, selectedRange.to));
+            const rangeMiddle = selectionMode === "range" && isBetweenDay(date, selectedRange.from, selectedRange.to);
+            const selected = selectionMode === "range" ? rangeStart || rangeEnd : isSameDay(date, selectedDate);
             const current = isSameDay(date, today);
             return (
               <button
@@ -407,7 +515,7 @@ export function Calendar({
                 data-selected={selected || undefined}
                 role="gridcell"
                 aria-label={accessibleDateFormatter.format(date)}
-                aria-selected={selected}
+                aria-selected={selected || rangeMiddle}
                 tabIndex={isSameDay(date, focusedDate) ? 0 : -1}
                 onFocus={() => setFocusedDate(date)}
                 onKeyDown={(event) => handleDayKeyDown(event, date)}
@@ -443,7 +551,7 @@ export function Calendar({
                 ) : null}
                 {selected ? (
                   <motion.span
-                    layoutId={`${calendarId}-selected-day`}
+                    layoutId={selectionMode === "single" ? `${calendarId}-selected-day` : undefined}
                     className="pointer-events-none absolute inset-0 rounded-full bg-[var(--primary)]"
                     transition={reduceMotion ? { duration: 0 } : motionTokens.spring.smooth}
                     aria-hidden="true"
@@ -453,6 +561,8 @@ export function Calendar({
               </button>
             );
           })}
+            </div>
+          ))}
         </div>
       </div>
     );
@@ -461,15 +571,14 @@ export function Calendar({
   const renderMonths = () => {
     if (variant === "compact") {
       return (
-        <div className="grid grid-cols-3 gap-2" role="grid" aria-label={`Months in ${cursorMonth.getFullYear()}`}>
+        <div className="grid grid-cols-3 gap-2" role="group" aria-label={`Months in ${cursorMonth.getFullYear()}`}>
           {monthLabels.map((label, month) => {
             const active = selectedDate.getFullYear() === cursorMonth.getFullYear() && selectedDate.getMonth() === month;
             return (
               <button
                 key={label}
                 type="button"
-                role="gridcell"
-                aria-selected={active}
+                aria-pressed={active}
                 onClick={() => {
                   setCursorMonth(new Date(cursorMonth.getFullYear(), month, 1));
                   setFocusedDate(new Date(cursorMonth.getFullYear(), month, 1));
@@ -492,7 +601,7 @@ export function Calendar({
     // Full variant: each cell is a scaled down copy of the days grid (square cells, 7 columns),
     // so the zoom can enlarge it into the real days page without it turning into another calendar.
     return (
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" role="grid" aria-label={`Months in ${cursorMonth.getFullYear()}`}>
+      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4" role="group" aria-label={`Months in ${cursorMonth.getFullYear()}`}>
         {monthLabels.map((label, month) => {
           const monthDate = new Date(cursorMonth.getFullYear(), month, 1);
           const active = selectedDate.getFullYear() === cursorMonth.getFullYear() && selectedDate.getMonth() === month;
@@ -500,9 +609,8 @@ export function Calendar({
             <button
               key={label}
               type="button"
-              role="gridcell"
               aria-label={`Open ${label} ${cursorMonth.getFullYear()}`}
-              aria-selected={active}
+              aria-pressed={active}
               onClick={(event) => {
                 setCursorMonth(monthDate);
                 setFocusedDate(monthDate);
@@ -544,7 +652,12 @@ export function Calendar({
                 <span className="grid grid-cols-7">
                   {monthDays(monthDate, weekStartsOn).map((date) => {
                     const outside = date.getMonth() !== month;
-                    const selected = isSameDay(date, selectedDate);
+                    const rangeSelected = selectionMode === "range" && Boolean(
+                      (selectedRange.from && isSameDay(date, selectedRange.from))
+                      || (selectedRange.to && isSameDay(date, selectedRange.to)),
+                    );
+                    const rangeMiddle = selectionMode === "range" && isBetweenDay(date, selectedRange.from, selectedRange.to);
+                    const selected = selectionMode === "range" ? rangeSelected : isSameDay(date, selectedDate);
                     const current = isSameDay(date, today);
                     return (
                       <span
@@ -552,6 +665,7 @@ export function Calendar({
                         className={cx(
                           "grid aspect-square place-items-center rounded-full text-[0.58rem] font-medium leading-none",
                           outside && "text-[color-mix(in_srgb,var(--text-secondary)_48%,transparent)]",
+                          rangeMiddle && "bg-[color-mix(in_srgb,var(--focus)_16%,var(--surface-muted))]",
                           selected && "bg-[var(--primary)] text-[var(--primary-foreground)]",
                           current && !selected && "text-[var(--focus)]",
                         )}
@@ -570,15 +684,14 @@ export function Calendar({
   };
 
   const renderYears = () => (
-    <div className="grid grid-cols-3 gap-2" role="grid" aria-label={`Years ${yearPageStart} to ${yearPageStart + 11}`}>
+    <div className="grid grid-cols-3 gap-2" role="group" aria-label={`Years ${yearPageStart} to ${yearPageStart + 11}`}>
       {Array.from({ length: 12 }, (_, index) => yearPageStart + index).map((year) => {
         const active = selectedDate.getFullYear() === year;
         return (
           <button
             key={year}
             type="button"
-            role="gridcell"
-            aria-selected={active}
+            aria-pressed={active}
             onClick={() => {
               setCursorMonth(new Date(year, cursorMonth.getMonth(), 1));
               setZoom({ kind: "origin", dir: 1, origin: gridOrigin(year - yearPageStart, 3) });
@@ -599,25 +712,45 @@ export function Calendar({
   return (
     <section
       aria-label={ariaLabel}
-      data-sya-calendar
+      data-rhoe-calendar
       className={cx(
         "w-full overflow-hidden rounded-[calc(var(--radius-surface)+6px)] border border-[var(--border)] bg-[var(--surface)] text-[var(--text)] shadow-[var(--shadow-resting)]",
         variant === "compact" ? "max-w-[23rem] p-4" : "max-w-[64rem] p-5 sm:p-6",
         className,
       )}
     >
-      <header className="mb-5 flex flex-wrap items-end justify-between gap-4 border-b border-[var(--border)] pb-4">
-        <div className="min-w-0">
-          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-secondary)]">Selected date</p>
-          <MorphingText value={selectedFormatter.format(selectedDate)} className="max-w-full text-xl font-semibold sm:text-2xl" />
+      <header className="mb-5 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 border-b border-[var(--border)] pb-4">
+        <div className="min-w-0 overflow-hidden">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-secondary)]">
+            {selectionMode === "range" ? "Selected range" : "Selected date"}
+          </p>
+          <MorphingText
+            value={selectionMode === "range"
+              ? selectedRange.from
+                ? selectedRange.to
+                  ? rangeFormatter.formatRange(selectedRange.from, selectedRange.to)
+                  : `${rangeFormatter.format(selectedRange.from)} – Select end`
+                : "Select a date range"
+              : selectedFormatter.format(selectedDate)}
+            className={cx(
+              "max-w-full font-semibold",
+              variant === "compact" ? "text-base sm:text-lg" : "text-lg sm:text-xl",
+            )}
+          />
         </div>
         <button
           type="button"
           onClick={() => {
-            selectDate(today);
+            if (selectionMode === "range") {
+              const todayRange = { from: today, to: today };
+              if (range === undefined) setInternalRange(todayRange);
+              onRangeChange?.(todayRange);
+            } else {
+              selectDate(today);
+            }
             changeView("days", today.getMonth());
           }}
-          className="min-h-9 rounded-full px-3 text-sm font-semibold text-[var(--text-secondary)] outline-none transition-colors hover:bg-[var(--surface-muted)] hover:text-[var(--text)] focus-visible:ring-2 focus-visible:ring-[var(--focus)]"
+          className="min-h-9 shrink-0 rounded-full px-3 text-sm font-semibold text-[var(--text-secondary)] outline-none transition-colors hover:bg-[var(--surface-muted)] hover:text-[var(--text)] focus-visible:ring-2 focus-visible:ring-[var(--focus)]"
         >
           Today
         </button>

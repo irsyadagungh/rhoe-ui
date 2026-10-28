@@ -108,7 +108,7 @@ function subscribeToPortal() {
 function getFocusableElements(container: HTMLElement) {
   return Array.from(container.querySelectorAll<HTMLElement>(
     'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
-  )).filter((element) => !element.hasAttribute("aria-hidden"));
+  )).filter((element) => !element.closest("[aria-hidden=true], [inert]") && element.tabIndex >= 0 && element.getClientRects().length > 0);
 }
 
 export function Dialog({
@@ -231,7 +231,7 @@ export function Dialog({
       }
       const first = focusable[0];
       const last = focusable.at(-1)!;
-      if (event.shiftKey && document.activeElement === first) {
+      if (event.shiftKey && (document.activeElement === first || document.activeElement === panelRef.current || !panelRef.current.contains(document.activeElement))) {
         event.preventDefault();
         last.focus();
       } else if (!event.shiftKey && document.activeElement === last) {

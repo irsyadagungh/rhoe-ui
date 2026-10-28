@@ -3,9 +3,14 @@ import { CodeBlock } from "@/registry/components/code-block/code-block";
 import { ExpandableCard } from "@/registry/components/expandable-card/expandable-card";
 import { AnimatedListExample } from "./previews/animated-list";
 import { BadgeExample } from "./previews/badge";
+import { AvatarExample, AvatarInfoExample } from "./previews/avatar";
 import { BarChartExample } from "./previews/bar-chart";
 import { ButtonExample } from "./previews/button";
 import { CalendarSandbox } from "./previews/calendar";
+import { AppDrawerSandbox } from "./previews/app-drawer";
+import { BottomSheetSandbox } from "./previews/bottom-sheet";
+import { DatePickerSandbox } from "./previews/date-picker";
+import { DateRangePickerSandbox } from "./previews/date-range-picker";
 import { CheckboxSandbox } from "./previews/checkbox";
 import { CurrencyInputExample } from "./previews/currency-input";
 import { CurvedCarouselExample } from "./previews/curved-carousel";
@@ -14,6 +19,7 @@ import { DropdownMenuSandbox } from "./previews/dropdown-menu";
 import { ExpandingSearchSandbox } from "./previews/expanding-search";
 import { IconMorphExample } from "./previews/icon-morph";
 import { InputExample } from "./previews/input";
+import { LoadingIndicatorExample } from "./previews/loading-indicator";
 import { LineChartExample } from "./previews/line-chart";
 import { MeterSandbox } from "./previews/meter";
 import { ModalSandbox } from "./previews/modal";
@@ -29,6 +35,7 @@ import { TextareaSandbox } from "./previews/textarea";
 import { TextAnimationExample } from "./previews/text-animation";
 import { ToastSandbox } from "./previews/toast";
 import { TooltipExample } from "./previews/tooltip";
+import { VerificationCodeExample } from "./previews/verification-code";
 import { TodoCalendarSandbox } from "../blocks/previews/todo-calendar";
 import { AuthFormExample } from "../blocks/previews/auth-form";
 import { RealtimeLineChartExample } from "../blocks/previews/realtime-line-chart";
@@ -54,6 +61,15 @@ export function Status({ ready }: StatusProps) {
 
 export function getComponentPreview(name: string): PreviewDefinition {
   switch (name) {
+    case "loading-indicator": return { preview: <LoadingIndicatorExample />, showReplay: false };
+    case "avatar": return { showReplay: false, variants: [
+      { value: "default", label: "Default", preview: <AvatarExample /> },
+      { value: "grouped", label: "Grouped", preview: <AvatarExample grouped /> },
+    ] };
+    case "avatar-info": return { showReplay: false, variants: [
+      { value: "right", label: "Right", preview: <AvatarInfoExample side="right" /> },
+      { value: "left", label: "Left", preview: <AvatarInfoExample side="left" /> },
+    ] };
     case "badge": return { showReplay: false, variants: [
       { value: "filled", label: "Filled", preview: <BadgeExample variant="filled" /> },
       { value: "bordered", label: "Bordered", preview: <BadgeExample variant="bordered" /> },
@@ -72,6 +88,10 @@ export function getComponentPreview(name: string): PreviewDefinition {
     case "radio": return { sandbox: <RadioSandbox />, showReplay: false };
     case "select": return { sandbox: <SelectSandbox />, showReplay: false };
     case "calendar": return { sandbox: <CalendarSandbox />, showReplay: false };
+    case "app-drawer": return { sandbox: <AppDrawerSandbox />, showReplay: false };
+    case "bottom-sheet": return { sandbox: <BottomSheetSandbox />, showReplay: false };
+    case "date-picker": return { sandbox: <DatePickerSandbox />, showReplay: false };
+    case "date-range-picker": return { sandbox: <DateRangePickerSandbox />, showReplay: false };
     case "line-chart": return { preview: <LineChartExample />, showReplay: false };
     case "bar-chart": return { showReplay: false, variants: [
       { value: "vertical", label: "Vertical", preview: <BarChartExample orientation="vertical" /> },
@@ -81,7 +101,11 @@ export function getComponentPreview(name: string): PreviewDefinition {
     case "todo-calendar": return { sandbox: <TodoCalendarSandbox />, showReplay: false };
     case "auth-form": return { showReplay: false, variants: [
       { value: "sign-in", label: "Sign in", preview: <AuthFormExample mode="sign-in" /> },
+      { value: "sign-in-link", label: "Forgot · Link", preview: <AuthFormExample mode="sign-in" forgotPasswordVariant="link" /> },
+      { value: "sign-in-otp", label: "Forgot · OTP", preview: <AuthFormExample mode="sign-in" forgotPasswordVariant="otp" /> },
       { value: "sign-up", label: "Sign up", preview: <AuthFormExample mode="sign-up" /> },
+      { value: "sign-up-otp", label: "Sign up · OTP", preview: <AuthFormExample mode="sign-up" signUpVerificationVariant="otp" /> },
+      { value: "sign-up-link", label: "Sign up · Link", preview: <AuthFormExample mode="sign-up" signUpVerificationVariant="link" /> },
     ] };
     case "realtime-line-chart": return { preview: <RealtimeLineChartExample />, showReplay: false };
     case "button": return { showReplay: false, variants: [
@@ -102,6 +126,7 @@ export function getComponentPreview(name: string): PreviewDefinition {
       { value: "filled", label: "Filled", preview: <PasswordStrengthExample variant="filled" /> },
       { value: "bordered", label: "Bordered", preview: <PasswordStrengthExample variant="bordered" /> },
     ] };
+    case "verification-code": return { preview: <VerificationCodeExample />, showReplay: false };
     case "currency-input": return { showReplay: false, variants: [
       { value: "filled", label: "Filled", preview: <CurrencyInputExample variant="filled" /> },
       { value: "bordered", label: "Bordered", preview: <CurrencyInputExample variant="bordered" /> },

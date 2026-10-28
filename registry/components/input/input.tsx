@@ -281,7 +281,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
             className={[
               "absolute inset-0 flex items-center overflow-hidden whitespace-nowrap text-[14px] leading-[1.5] tracking-[-0.01em] text-[var(--text)] [font-feature-settings:'kern'_0,'liga'_0,'clig'_0] [font-kerning:none] [font-variant-ligatures:none] select-none",
               valueDisplayInteractive ? "z-[2] pointer-events-auto" : "pointer-events-none",
-              valueFeedbackKey > 0 && "animate-[sya-input-value-error-feedback_200ms_cubic-bezier(0.23,1,0.32,1)] motion-reduce:animate-[sya-input-value-error-feedback-reduced_160ms_ease-out]",
+              valueFeedbackKey > 0 && "animate-[rhoe-input-value-error-feedback_200ms_cubic-bezier(0.23,1,0.32,1)] motion-reduce:animate-[rhoe-input-value-error-feedback-reduced_160ms_ease-out]",
             ].filter(Boolean).join(" ")}
             key={valueFeedbackKey}
             aria-hidden={valueDisplayInteractive ? undefined : true}
@@ -291,7 +291,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
               {valueDisplay ?? (hasAnimatingCharacters
                 ? characterState.items.map((item) => (
                     <span
-                      className={item.isNew ? "inline-block animate-[sya-input-character-reveal_var(--input-character-duration,600ms)_cubic-bezier(0.16,1,0.3,1)_both] will-change-[transform,opacity] motion-reduce:inline motion-reduce:animate-none motion-reduce:transform-none motion-reduce:will-change-auto" : undefined}
+                      className={item.isNew ? "inline-block animate-[rhoe-input-character-reveal_var(--input-character-duration,600ms)_cubic-bezier(0.16,1,0.3,1)_both] will-change-[transform,opacity] motion-reduce:inline motion-reduce:animate-none motion-reduce:transform-none motion-reduce:will-change-auto" : undefined}
                       key={item.id}
                       onAnimationEnd={() => settleCharacter(item.id)}
                       style={{ animationDelay: item.delay ? `${item.delay}ms` : undefined }}
@@ -379,7 +379,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
           </span>
         </div>
         {expandedContent ? (
-          <div className={["w-full min-h-0 shrink-0 basis-0 overflow-hidden transition-[flex-basis] duration-[480ms] ease-[cubic-bezier(0.16,1,0.3,1)] motion-reduce:duration-[0.01ms]", expanded && "basis-[var(--input-expanded-height,300px)]"].filter(Boolean).join(" ")} aria-hidden={!expanded}>
+          <div className={["w-full min-h-0 shrink-0 basis-0 overflow-hidden transition-[flex-basis] duration-[var(--input-expanded-duration)] ease-[var(--input-expanded-ease)] motion-reduce:duration-[0.01ms]", expanded && "basis-[var(--input-expanded-height,300px)]"].filter(Boolean).join(" ")} aria-hidden={!expanded} inert={!expanded}>
             <div className="min-h-0">{expandedContent}</div>
           </div>
         ) : null}
