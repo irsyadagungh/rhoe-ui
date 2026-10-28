@@ -10,6 +10,13 @@
           "type": "added",
           "items": [
             {
+              "text": "Added 29 editable loading indicators adapted from loading-dev, with accessible labels and reduced-motion support.",
+              "components": [
+                "Loading Indicator"
+              ],
+              "blocks": []
+            },
+            {
               "text": "Added individual and grouped avatars with initials fallback, plus an expanding account menu with configurable actions, continuous hover, and optional morphing sign-out confirmation.",
               "components": [
                 "Avatar",
