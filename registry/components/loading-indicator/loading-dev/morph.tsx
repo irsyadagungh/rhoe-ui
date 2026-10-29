@@ -32,9 +32,9 @@ export function Morph(props: SpinnerProps) {
   return (
     <>
       <SpinnerStyle name="morph">{css}</SpinnerStyle>
-      <div {...spinnerRoot("morph", props)}>
-        <div className="ld-morph-shape" />
-      </div>
+      <span {...spinnerRoot("morph", props)}>
+        <span className="ld-morph-shape" />
+      </span>
     </>
   );
 }

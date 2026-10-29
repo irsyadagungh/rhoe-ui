@@ -256,12 +256,12 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
       ].filter(Boolean).join(" ")}>
         <div
           className={[
-            "relative z-0 flex flex-col items-start overflow-hidden rounded-[18px] border text-[var(--text)] transition-[background-color,border-color,opacity] duration-[var(--duration-fast)] ease-[var(--ease-standard)] motion-reduce:duration-[0.01ms]",
-            expandedContent && "absolute inset-x-0 top-0 w-full",
+            "flex flex-col items-start overflow-hidden rounded-[18px] border text-[var(--text)] transition-[background-color,border-color,opacity] duration-[var(--duration-fast)] ease-[var(--ease-standard)] motion-reduce:duration-[0.01ms]",
+            expandedContent ? "absolute inset-x-0 top-0 w-full" : "relative",
             controlHeightClass,
             appearanceClass,
             disabled && "cursor-not-allowed opacity-[0.52]",
-            expanded && "z-[120] !border-transparent focus-within:!border-transparent",
+            expanded ? "z-[120] !border-transparent focus-within:!border-transparent" : "z-0",
           ].filter(Boolean).join(" ")}
           style={animationDuration
             ? ({ "--input-character-duration": `${animationDuration}ms` } as CSSProperties)

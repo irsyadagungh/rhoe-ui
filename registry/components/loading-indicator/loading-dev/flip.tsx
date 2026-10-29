@@ -33,9 +33,9 @@ export function Flip(props: SpinnerProps) {
   return (
     <>
       <SpinnerStyle name="flip">{css}</SpinnerStyle>
-      <div {...spinnerRoot("flip", props)}>
-        <div className="ld-flip-face" />
-      </div>
+      <span {...spinnerRoot("flip", props)}>
+        <span className="ld-flip-face" />
+      </span>
     </>
   );
 }

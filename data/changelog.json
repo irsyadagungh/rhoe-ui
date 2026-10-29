@@ -2,6 +2,43 @@
   "schemaVersion": 1,
   "releases": [
     {
+      "date": "2026-10-29",
+      "title": "Date Picker Refinements",
+      "summary": "Refined date selection surfaces and fixed expandable input and loading indicator markup.",
+      "changes": [
+        {
+          "type": "changed",
+          "items": [
+            {
+              "text": "Refined the attached calendar surface, added configurable calendar width, and moved Today beside the year in both date pickers.",
+              "components": ["Date Picker", "Date Range Picker"],
+              "blocks": []
+            },
+            {
+              "text": "Added an option to hide the selected-date header and place Today alongside month and year controls.",
+              "components": ["Calendar"],
+              "blocks": []
+            }
+          ]
+        },
+        {
+          "type": "fixed",
+          "items": [
+            {
+              "text": "Fixed expandable input positioning so the panel overlays nearby fields without shifting them.",
+              "components": ["Input", "Date Picker", "Date Range Picker"],
+              "blocks": []
+            },
+            {
+              "text": "Fixed loading indicator markup to avoid invalid nesting and hydration errors in inline content.",
+              "components": ["Loading Indicator"],
+              "blocks": []
+            }
+          ]
+        }
+      ]
+    },
+    {
       "date": "2026-10-28",
       "title": "Authentication and Account Components",
       "summary": "Added avatar and verification components, expanded authentication flows, and improved keyboard accessibility across interactive components.",

@@ -44,11 +44,11 @@ export function LinearDots(props: SpinnerProps) {
   return (
     <>
       <SpinnerStyle name="linear-dots">{css}</SpinnerStyle>
-      <div {...spinnerRoot("linear-dots", props)}>
+      <span {...spinnerRoot("linear-dots", props)}>
         {DOTS.map((dot) => (
-          <div className="ld-linear-dots-dot" key={dot} style={step(dot)} />
+          <span className="ld-linear-dots-dot" key={dot} style={step(dot)} />
         ))}
-      </div>
+      </span>
     </>
   );
 }

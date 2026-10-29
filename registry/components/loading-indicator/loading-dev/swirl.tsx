@@ -28,15 +28,15 @@ export function Swirl(props: SpinnerProps) {
   return (
     <>
       <SpinnerStyle name="swirl">{css}</SpinnerStyle>
-      <div {...spinnerRoot("swirl", props)}>
+      <span {...spinnerRoot("swirl", props)}>
         {RING.map((place, index) =>
           place === null ? (
-            <div key={index} />
+            <span key={index} />
           ) : (
-            <div className="ld-swirl-cell" key={index} style={step(place)} />
+            <span className="ld-swirl-cell" key={index} style={step(place)} />
           )
         )}
-      </div>
+      </span>
     </>
   );
 }

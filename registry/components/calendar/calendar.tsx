@@ -42,6 +42,8 @@ export interface CalendarProps {
   locale?: string;
   weekStartsOn?: 0 | 1;
   ariaLabel?: string;
+  /** Show the selected-date header. When hidden, Today appears beside the year. */
+  showSelectedDate?: boolean;
   className?: string;
 }
 
@@ -189,6 +191,7 @@ export function Calendar({
   locale = "en-US",
   weekStartsOn = 0,
   ariaLabel = "Calendar",
+  showSelectedDate = true,
   className,
 }: CalendarProps) {
   const today = useMemo(() => localDate(new Date()), []);
@@ -709,6 +712,17 @@ export function Calendar({
     </div>
   );
 
+  const goToToday = () => {
+    if (selectionMode === "range") {
+      const todayRange = { from: today, to: today };
+      if (range === undefined) setInternalRange(todayRange);
+      onRangeChange?.(todayRange);
+    } else {
+      selectDate(today);
+    }
+    changeView("days", today.getMonth());
+  };
+
   return (
     <section
       aria-label={ariaLabel}
@@ -719,7 +733,7 @@ export function Calendar({
         className,
       )}
     >
-      <header className="mb-5 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 border-b border-[var(--border)] pb-4">
+      {showSelectedDate && <header className="mb-5 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-3 border-b border-[var(--border)] pb-4">
         <div className="min-w-0 overflow-hidden">
           <p className="mb-1 text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-secondary)]">
             {selectionMode === "range" ? "Selected range" : "Selected date"}
@@ -740,21 +754,12 @@ export function Calendar({
         </div>
         <button
           type="button"
-          onClick={() => {
-            if (selectionMode === "range") {
-              const todayRange = { from: today, to: today };
-              if (range === undefined) setInternalRange(todayRange);
-              onRangeChange?.(todayRange);
-            } else {
-              selectDate(today);
-            }
-            changeView("days", today.getMonth());
-          }}
+          onClick={goToToday}
           className="min-h-9 shrink-0 rounded-full px-3 text-sm font-semibold text-[var(--text-secondary)] outline-none transition-colors hover:bg-[var(--surface-muted)] hover:text-[var(--text)] focus-visible:ring-2 focus-visible:ring-[var(--focus)]"
         >
           Today
         </button>
-      </header>
+      </header>}
 
       <div className="mb-4 flex items-center justify-between gap-3">
         <div className="flex min-w-0 items-center gap-1">
@@ -774,6 +779,7 @@ export function Calendar({
           >
             {view === "years" ? `${yearPageStart}–${yearPageStart + 11}` : cursorMonth.getFullYear()}
           </button>
+          {!showSelectedDate && <button type="button" onClick={goToToday} className="min-h-9 shrink-0 rounded-full px-2 text-sm font-semibold text-[var(--text-secondary)] outline-none transition-colors hover:bg-[var(--surface-muted)] hover:text-[var(--text)] focus-visible:ring-2 focus-visible:ring-[var(--focus)]">Today</button>}
         </div>
         <div className="flex shrink-0 items-center gap-1">
           <button type="button" aria-label="Previous" onClick={() => navigate(-1)} className="grid size-9 place-items-center rounded-full text-[var(--text-secondary)] outline-none transition-colors hover:bg-[var(--surface-muted)] hover:text-[var(--text)] focus-visible:ring-2 focus-visible:ring-[var(--focus)]"><ChevronLeft size={18} aria-hidden="true" /></button>

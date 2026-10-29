@@ -22,6 +22,8 @@ export interface DatePickerProps {
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
   className?: string;
+  /** Calendar width relative to the field, or a custom width in pixels. */
+  calendarWidth?: "full" | "three-quarter" | number;
 }
 
 function inputDate(date?: Date) {
@@ -82,7 +84,8 @@ export function DatePicker({
             locale={locale}
             weekStartsOn={weekStartsOn}
             ariaLabel="Date picker calendar"
-            className="!max-w-none !rounded-none !border-0 !shadow-none"
+            showSelectedDate={false}
+            className="!max-w-none !rounded-none !border-0 !bg-transparent !shadow-none"
             onValueChange={(date) => {
               if (value === undefined) setInternalValue(date);
               onValueChange?.(date);

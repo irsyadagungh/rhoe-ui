@@ -53,15 +53,15 @@ export function Wave({ origin = DEFAULT_WAVE_ORIGIN, ...rest }: WaveProps) {
   return (
     <>
       <SpinnerStyle name="wave">{css}</SpinnerStyle>
-      <div {...spinnerRoot("wave", rest)}>
+      <span {...spinnerRoot("wave", rest)}>
         {BARS.map((index) => (
-          <div
+          <span
             className={`ld-wave-bar ld-wave-bar-${origin}`}
             key={index}
             style={step(index)}
           />
         ))}
-      </div>
+      </span>
     </>
   );
 }

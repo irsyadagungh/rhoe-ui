@@ -43,12 +43,12 @@ export function Comet({ easing, ...rest }: CometProps) {
   return (
     <>
       <SpinnerStyle name="comet">{css}</SpinnerStyle>
-      <div {...spinnerRoot("comet", rest)}>
-        <div className={spinClass("comet", easing)}>
-          <div className="ld-comet-tail" />
-          <div className="ld-comet-head" />
-        </div>
-      </div>
+      <span {...spinnerRoot("comet", rest)}>
+        <span className={spinClass("comet", easing)}>
+          <span className="ld-comet-tail" />
+          <span className="ld-comet-head" />
+        </span>
+      </span>
     </>
   );
 }

@@ -59,11 +59,11 @@ export function Eclipse(props: SpinnerProps) {
   return (
     <>
       <SpinnerStyle name="eclipse">{css}</SpinnerStyle>
-      <div {...spinnerRoot("eclipse", props)}>
+      <span {...spinnerRoot("eclipse", props)}>
         {DOTS.map((index) => (
-          <div className="ld-eclipse-dot" key={index} style={step(index)} />
+          <span className="ld-eclipse-dot" key={index} style={step(index)} />
         ))}
-      </div>
+      </span>
     </>
   );
 }

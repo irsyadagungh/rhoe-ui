@@ -35,11 +35,11 @@ export function BouncingDots(props: SpinnerProps) {
   return (
     <>
       <SpinnerStyle name="bouncing-dots">{css}</SpinnerStyle>
-      <div {...spinnerRoot("bouncing-dots", props)}>
+      <span {...spinnerRoot("bouncing-dots", props)}>
         {DOTS.map((dot) => (
-          <div className="ld-bouncing-dots-dot" key={dot} style={step(dot)} />
+          <span className="ld-bouncing-dots-dot" key={dot} style={step(dot)} />
         ))}
-      </div>
+      </span>
     </>
   );
 }

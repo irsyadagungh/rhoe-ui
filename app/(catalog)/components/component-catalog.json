@@ -1811,6 +1811,12 @@
               "Accessible name for the calendar region."
             ],
             [
+              "showSelectedDate",
+              "boolean",
+              "true",
+              "Shows the selected-date header; when false, Today appears beside the year."
+            ],
+            [
               "className",
               "string",
               "\u2014",
@@ -1834,14 +1840,30 @@
           "name": "date-picker",
           "title": "Date Picker",
           "description": "A form-ready date field backed by the compact zoomable Calendar.",
-          "lede": "Morphs a familiar input surface directly into a calendar and returns a native Date value.",
-          "keywords": ["date", "picker", "calendar", "form", "schedule"],
+          "lede": "A date field with a separately expanding, resizable calendar panel.",
+          "keywords": [
+            "date",
+            "picker",
+            "calendar",
+            "form",
+            "schedule"
+          ],
           "sourcePath": "registry/components/date-picker/date-picker.tsx",
           "installation": "Installs Date Picker, Calendar, Input, Button, Morphing Text, and their shared motion foundation.",
           "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { DatePicker } from \"@/components/rhoe/date-picker/date-picker\"\n\nexport function LaunchDateField() {\n  const [date, setDate] = useState<Date>()\n  return <DatePicker label=\"Launch date\" value={date} onValueChange={setDate} />\n}",
           "examples": [
-            { "title": "Uncontrolled field", "code": "<DatePicker label=\"Due date\" defaultValue={new Date(2026, 9, 26)} />" },
-            { "title": "Native form value", "code": "<DatePicker name=\"launchDate\" label=\"Launch date\" />" }
+            {
+              "title": "Uncontrolled field",
+              "code": "<DatePicker label=\"Due date\" defaultValue={new Date(2026, 9, 26)} />"
+            },
+            {
+              "title": "Native form value",
+              "code": "<DatePicker name=\"launchDate\" label=\"Launch date\" />"
+            },
+            {
+              "title": "Smaller calendar",
+              "code": "<DatePicker label=\"Due date\" calendarWidth=\"three-quarter\" />"
+            }
           ],
           "guidance": [
             "Use for one calendar date that belongs to a form.",
@@ -1849,7 +1871,8 @@
             "Use Date Range Picker when both a start and end date are required."
           ],
           "behavior": [
-            "The input surface expands in place and morphs directly into the calendar.",
+            "The input stays in place while an attached, rounded calendar panel expands over following content.",
+            "The calendar omits the selected-date header and places Today beside the year.",
             "Selecting a day lets the selected indicator finish moving before the calendar closes and restores focus.",
             "Month and year headers retain Calendar's zoom navigation."
           ],
@@ -1859,17 +1882,78 @@
             "The calendar retains its keyboard navigation and labeled date cells."
           ],
           "api": [
-            ["value / defaultValue", "Date", "—", "Controlled or initial date."],
-            ["onValueChange", "(date: Date) => void", "—", "Called after selecting a day."],
-            ["label / placeholder", "ReactNode / string", "— / Choose a date", "Field text."],
-            ["variant", "filled | bordered", "filled", "Field surface treatment."],
-            ["locale", "string", "en-US", "Date formatting locale."],
-            ["weekStartsOn", "0 | 1", "0", "Starts weeks on Sunday or Monday."],
-            ["name", "string", "—", "Adds a hidden YYYY-MM-DD form value."],
-            ["open / defaultOpen", "boolean", "false", "Controlled or initial panel state."],
-            ["onOpenChange", "(open: boolean) => void", "—", "Receives requested open-state changes."],
-            ["disabled / errorMessage", "boolean / ReactNode", "false / —", "Disabled and validation states."],
-            ["className", "string", "—", "Additional classes for the field wrapper."]
+            [
+              "value / defaultValue",
+              "Date",
+              "—",
+              "Controlled or initial date."
+            ],
+            [
+              "onValueChange",
+              "(date: Date) => void",
+              "—",
+              "Called after selecting a day."
+            ],
+            [
+              "label / placeholder",
+              "ReactNode / string",
+              "— / Choose a date",
+              "Field text."
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Field surface treatment."
+            ],
+            [
+              "locale",
+              "string",
+              "en-US",
+              "Date formatting locale."
+            ],
+            [
+              "weekStartsOn",
+              "0 | 1",
+              "0",
+              "Starts weeks on Sunday or Monday."
+            ],
+            [
+              "name",
+              "string",
+              "—",
+              "Adds a hidden YYYY-MM-DD form value."
+            ],
+            [
+              "open / defaultOpen",
+              "boolean",
+              "false",
+              "Controlled or initial panel state."
+            ],
+            [
+              "onOpenChange",
+              "(open: boolean) => void",
+              "—",
+              "Receives requested open-state changes."
+            ],
+            [
+              "disabled / errorMessage",
+              "boolean / ReactNode",
+              "false / —",
+              "Disabled and validation states."
+            ],
+            [
+              "className",
+              "string",
+              "—",
+              "Additional classes for the field wrapper."
+            ],
+            [
+              "calendarWidth",
+              "full | three-quarter | number",
+              "full",
+              "Calendar panel width relative to the field, or a custom width in pixels; the calendar scales to fit."
+            ]
           ],
           "customization": "Use filled or bordered to match nearby Input fields. The calendar surface inherits shared Rhoe tokens.",
           "files": [
@@ -1883,20 +1967,40 @@
             "components/rhoe/calendar/calendar.tsx",
             "components/rhoe/date-picker/date-picker.tsx"
           ],
-          "related": ["date-range-picker", "calendar", "input"]
+          "related": [
+            "date-range-picker",
+            "calendar",
+            "input"
+          ]
         },
         {
           "name": "date-range-picker",
           "title": "Date Range Picker",
           "description": "A form-ready start and end date field with continuous range highlighting.",
-          "lede": "Selects a chronological range in one compact calendar and emits both boundaries as Date values.",
-          "keywords": ["date range", "picker", "calendar", "booking", "timeline"],
+          "lede": "Selects a chronological range in an expanding, resizable calendar panel.",
+          "keywords": [
+            "date range",
+            "picker",
+            "calendar",
+            "booking",
+            "timeline"
+          ],
           "sourcePath": "registry/components/date-range-picker/date-range-picker.tsx",
           "installation": "Installs Date Range Picker, range-enabled Calendar, Input, Button, Morphing Text, and their shared motion foundation.",
           "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { DateRangePicker, type DateRange } from \"@/components/rhoe/date-range-picker/date-range-picker\"\n\nexport function TimelineField() {\n  const [range, setRange] = useState<DateRange>({})\n  return <DateRangePicker label=\"Project timeline\" value={range} onValueChange={setRange} />\n}",
           "examples": [
-            { "title": "Keep open after completion", "code": "<DateRangePicker closeOnComplete={false} value={range} onValueChange={setRange} />" },
-            { "title": "Native form values", "code": "<DateRangePicker fromName=\"startsAt\" toName=\"endsAt\" label=\"Travel dates\" />" }
+            {
+              "title": "Keep open after completion",
+              "code": "<DateRangePicker closeOnComplete={false} value={range} onValueChange={setRange} />"
+            },
+            {
+              "title": "Native form values",
+              "code": "<DateRangePicker fromName=\"startsAt\" toName=\"endsAt\" label=\"Travel dates\" />"
+            },
+            {
+              "title": "Smaller calendar",
+              "code": "<DateRangePicker label=\"Travel dates\" calendarWidth={240} />"
+            }
           ],
           "guidance": [
             "Use when start and end dates form one value, such as travel or project timelines.",
@@ -1904,29 +2008,91 @@
             "Keep closeOnComplete enabled for short forms and disable it when users often revise both boundaries."
           ],
           "behavior": [
-            "The input surface expands in place and morphs directly into the calendar.",
+            "The input stays in place while an attached, rounded calendar panel expands over following content.",
             "The first selection starts a new range and the second completes it.",
+            "The calendar omits the selected-range header and places Today beside the year.",
             "Selecting an earlier second date normalizes the boundaries chronologically.",
             "Completed ranges finish their selection feedback before closing automatically unless closeOnComplete is false.",
             "Today selects a one-day range, which counts as complete and closes the picker unless closeOnComplete is false."
           ],
           "accessibility": [
             "Range boundaries and intervening dates expose selected grid state.",
-            "The calendar header announces whether one or both boundaries have been chosen.",
+            "The field displays the selected range, including when the end date is still pending.",
             "Keyboard navigation is inherited from Calendar."
           ],
           "api": [
-            ["value / defaultValue", "{ from?: Date; to?: Date }", "{}", "Controlled or initial range."],
-            ["onValueChange", "(range: DateRange) => void", "—", "Called after each boundary selection."],
-            ["label / placeholder", "ReactNode / string", "— / Choose a date range", "Field text."],
-            ["variant", "filled | bordered", "filled", "Field surface treatment."],
-            ["closeOnComplete", "boolean", "true", "Closes after both dates are selected."],
-            ["fromName / toName", "string", "—", "Adds hidden YYYY-MM-DD form values."],
-            ["locale / weekStartsOn", "string / 0 | 1", "en-US / 0", "Calendar localization."],
-            ["open / defaultOpen", "boolean", "false", "Controlled or initial panel state."],
-            ["onOpenChange", "(open: boolean) => void", "—", "Receives requested open-state changes."],
-            ["disabled / errorMessage", "boolean / ReactNode", "false / —", "Disabled and validation states."],
-            ["className", "string", "—", "Additional classes for the field wrapper."]
+            [
+              "value / defaultValue",
+              "{ from?: Date; to?: Date }",
+              "{}",
+              "Controlled or initial range."
+            ],
+            [
+              "onValueChange",
+              "(range: DateRange) => void",
+              "—",
+              "Called after each boundary selection."
+            ],
+            [
+              "label / placeholder",
+              "ReactNode / string",
+              "— / Choose a date range",
+              "Field text."
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Field surface treatment."
+            ],
+            [
+              "closeOnComplete",
+              "boolean",
+              "true",
+              "Closes after both dates are selected."
+            ],
+            [
+              "fromName / toName",
+              "string",
+              "—",
+              "Adds hidden YYYY-MM-DD form values."
+            ],
+            [
+              "locale / weekStartsOn",
+              "string / 0 | 1",
+              "en-US / 0",
+              "Calendar localization."
+            ],
+            [
+              "open / defaultOpen",
+              "boolean",
+              "false",
+              "Controlled or initial panel state."
+            ],
+            [
+              "onOpenChange",
+              "(open: boolean) => void",
+              "—",
+              "Receives requested open-state changes."
+            ],
+            [
+              "disabled / errorMessage",
+              "boolean / ReactNode",
+              "false / —",
+              "Disabled and validation states."
+            ],
+            [
+              "className",
+              "string",
+              "—",
+              "Additional classes for the field wrapper."
+            ],
+            [
+              "calendarWidth",
+              "full | three-quarter | number",
+              "full",
+              "Calendar panel width relative to the field, or a custom width in pixels; the calendar scales to fit."
+            ]
           ],
           "customization": "The field and range use existing Rhoe surfaces, focus color, radii, and motion tokens.",
           "files": [
@@ -1940,7 +2106,11 @@
             "components/rhoe/calendar/calendar.tsx",
             "components/rhoe/date-range-picker/date-range-picker.tsx"
           ],
-          "related": ["date-picker", "calendar", "input"]
+          "related": [
+            "date-picker",
+            "calendar",
+            "input"
+          ]
         },
         {
           "name": "input",

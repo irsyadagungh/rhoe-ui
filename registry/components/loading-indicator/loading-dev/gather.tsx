@@ -63,17 +63,17 @@ export function Gather(props: SpinnerProps) {
   return (
     <>
       <SpinnerStyle name="gather">{css}</SpinnerStyle>
-      <div {...spinnerRoot("gather", props)}>
-        <div className="ld-gather-group">
+      <span {...spinnerRoot("gather", props)}>
+        <span className="ld-gather-group">
           {BLOCKS.map(({ x, y }) => (
-            <div
+            <span
               className="ld-gather-block"
               key={`${x}${y}`}
               style={cssVars({ "--ld-gather-x": x, "--ld-gather-y": y })}
             />
           ))}
-        </div>
-      </div>
+        </span>
+      </span>
     </>
   );
 }

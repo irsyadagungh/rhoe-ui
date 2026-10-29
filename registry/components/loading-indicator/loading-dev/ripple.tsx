@@ -57,15 +57,15 @@ export function Ripple({
   return (
     <>
       <SpinnerStyle name="ripple">{css}</SpinnerStyle>
-      <div {...spinnerRoot("ripple", rest)}>
+      <span {...spinnerRoot("ripple", rest)}>
         {RINGS.map((index) => (
-          <div
+          <span
             className={`ld-ripple-ring ld-ripple-ring-${direction}`}
             key={index}
             style={step(index)}
           />
         ))}
-      </div>
+      </span>
     </>
   );
 }

@@ -66,15 +66,15 @@ export function Slide(props: SpinnerProps) {
   return (
     <>
       <SpinnerStyle name="slide">{css}</SpinnerStyle>
-      <div {...spinnerRoot("slide", props)}>
+      <span {...spinnerRoot("slide", props)}>
         {RESTS.map((rest, index) => (
-          <div
+          <span
             className="ld-slide-dot"
             key={rest}
             style={cssVars({ ...step(index), "--ld-slide-rest": rest })}
           />
         ))}
-      </div>
+      </span>
     </>
   );
 }

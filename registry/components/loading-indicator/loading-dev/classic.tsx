@@ -32,13 +32,13 @@ export function Classic(props: SpinnerProps) {
   return (
     <>
       <SpinnerStyle name="classic">{css}</SpinnerStyle>
-      <div {...spinnerRoot("classic", props)}>
-        <div className="ld-classic-inner">
+      <span {...spinnerRoot("classic", props)}>
+        <span className="ld-classic-inner">
           {BARS.map((bar) => (
-            <div className="ld-classic-bar" key={bar} style={step(bar)} />
+            <span className="ld-classic-bar" key={bar} style={step(bar)} />
           ))}
-        </div>
-      </div>
+        </span>
+      </span>
     </>
   );
 }

@@ -38,10 +38,10 @@ export function Orbit({ easing, ...rest }: OrbitProps) {
   return (
     <>
       <SpinnerStyle name="orbit">{css}</SpinnerStyle>
-      <div {...spinnerRoot("orbit", rest)}>
-        <div className="ld-orbit-dot" />
-        <div className={`ld-orbit-track ${spinClass("orbit", easing)}`} />
-      </div>
+      <span {...spinnerRoot("orbit", rest)}>
+        <span className="ld-orbit-dot" />
+        <span className={`ld-orbit-track ${spinClass("orbit", easing)}`} />
+      </span>
     </>
   );
 }

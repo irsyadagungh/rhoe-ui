@@ -55,13 +55,13 @@ export function Leap(props: SpinnerProps) {
   return (
     <>
       <SpinnerStyle name="leap">{css}</SpinnerStyle>
-      <div {...spinnerRoot("leap", props)} key={props.size}>
+      <span {...spinnerRoot("leap", props)} key={props.size}>
         {DOTS.map((index) => (
-          <div className="ld-leap-wrapper" key={index} style={step(index)}>
-            <div className="ld-leap-dot" />
-          </div>
+          <span className="ld-leap-wrapper" key={index} style={step(index)}>
+            <span className="ld-leap-dot" />
+          </span>
         ))}
-      </div>
+      </span>
     </>
   );
 }

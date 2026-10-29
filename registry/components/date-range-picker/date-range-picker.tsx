@@ -26,6 +26,8 @@ export interface DateRangePickerProps {
   onOpenChange?: (open: boolean) => void;
   closeOnComplete?: boolean;
   className?: string;
+  /** Calendar width relative to the field, or a custom width in pixels. */
+  calendarWidth?: "full" | "three-quarter" | number;
 }
 
 function inputDate(date?: Date) {
@@ -92,7 +94,8 @@ export function DateRangePicker({
             locale={locale}
             weekStartsOn={weekStartsOn}
             ariaLabel="Date range picker calendar"
-            className="!max-w-none !rounded-none !border-0 !shadow-none"
+            showSelectedDate={false}
+            className="!max-w-none !rounded-none !border-0 !bg-transparent !shadow-none"
             onRangeChange={(next) => {
               if (value === undefined) setInternalValue(next);
               onValueChange?.(next);

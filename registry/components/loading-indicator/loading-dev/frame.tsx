@@ -21,9 +21,11 @@ export function SpinnerStyle({
     <style href={`ld-${name}`} precedence="loading-dev">
       {`
 .ld-${name} {
+  display: inline-block;
   width: ${SIZE};
   height: ${SIZE};
 }
+:where(.ld-${name} span) { display: block; }
 ${children}
 @media (prefers-reduced-motion: reduce) {
   .ld-${name},

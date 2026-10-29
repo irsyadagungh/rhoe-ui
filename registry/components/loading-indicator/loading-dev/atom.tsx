@@ -62,20 +62,20 @@ export function Atom({ easing, ...rest }: AtomProps) {
   return (
     <>
       <SpinnerStyle name="atom">{css}</SpinnerStyle>
-      <div {...spinnerRoot("atom", rest)}>
-        <div className="ld-atom-shell" />
+      <span {...spinnerRoot("atom", rest)}>
+        <span className="ld-atom-shell" />
         {ORBITS.map((index) => (
-          <div
+          <span
             className="ld-atom-orbit"
             key={index}
             style={cssVars({ "--ld-atom-tilt": `${index * TILT}deg` })}
           >
-            <div className={spinClass("atom", easing)} style={step(index)}>
-              <div className="ld-atom-ring" />
-            </div>
-          </div>
+            <span className={spinClass("atom", easing)} style={step(index)}>
+              <span className="ld-atom-ring" />
+            </span>
+          </span>
         ))}
-      </div>
+      </span>
     </>
   );
 }

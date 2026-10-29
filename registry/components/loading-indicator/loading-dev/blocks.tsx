@@ -76,15 +76,15 @@ export function Blocks({ sweep = DEFAULT_BLOCKS_SWEEP, ...rest }: BlocksProps) {
   return (
     <>
       <SpinnerStyle name="blocks">{css}</SpinnerStyle>
-      <div {...spinnerRoot("blocks", rest)}>
+      <span {...spinnerRoot("blocks", rest)}>
         {CELLS.map((cell) => (
-          <div
+          <span
             className={`ld-blocks-cell ld-blocks-cell-${sweep}`}
             key={`${cell.col}-${cell.row}`}
             style={step(place(cell))}
           />
         ))}
-      </div>
+      </span>
     </>
   );
 }
