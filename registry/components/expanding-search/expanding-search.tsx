@@ -427,8 +427,8 @@ export function ExpandingSearch({
   }[inputSize];
   const triggerContent = <><Search aria-hidden="true" />{trigger !== "icon" ? <span>{triggerLabel}</span> : null}</>;
   const resultSurfaceClass = variant === "filled"
-    ? "border-transparent bg-[var(--surface-muted)]"
-    : "border-[var(--border)] bg-[var(--surface)]";
+    ? "border-[color-mix(in_srgb,var(--border)_75%,transparent)] bg-[var(--surface-muted)]"
+    : "border-[color-mix(in_srgb,var(--border)_75%,transparent)] bg-[var(--surface)]";
   const searchTrigger = () => isIconOnly ? (
     <Button
       ref={triggerRef}
@@ -472,7 +472,7 @@ export function ExpandingSearch({
           variant === "filled"
             ? "border-transparent bg-[var(--surface-muted)]"
             : "border-[var(--border)] bg-[color-mix(in_srgb,var(--surface-muted)_58%,var(--surface))]",
-          expanded && "border-[var(--focus)]",
+          expanded && "border-[color-mix(in_srgb,var(--border)_75%,transparent)] shadow-[var(--shadow-floating)]",
           disabled && "opacity-[0.52]",
           shouldPortalSurface && "fixed z-[111]",
         ].filter(Boolean).join(" ")}

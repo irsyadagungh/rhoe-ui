@@ -208,7 +208,7 @@ export function Popover({
       </span>
       <motion.div
         className={[
-          "absolute z-30 min-w-full overflow-hidden rounded-[18px] border text-[var(--text)] shadow-[var(--shadow-resting)] transition-[border-radius] duration-[320ms] ease-[var(--ease-standard)] data-[open]:rounded-[var(--radius-surface)]",
+          "absolute z-30 min-w-full overflow-hidden rounded-[18px] border text-[var(--text)] shadow-[var(--shadow-resting)] transition-[border-radius] duration-[320ms] ease-[var(--ease-standard)] data-[open]:rounded-[var(--radius-surface)] data-[open]:border-[color-mix(in_srgb,var(--border)_75%,transparent)] data-[open]:shadow-[var(--shadow-floating)]",
           tooltipTrigger && "rounded-full",
           variant === "filled" ? "border-transparent bg-[var(--surface-muted)]" : "border-[var(--border)] bg-[var(--surface)]",
           activePosition.surface,

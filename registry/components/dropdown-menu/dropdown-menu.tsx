@@ -111,7 +111,7 @@ export function DropdownMenu({ label, ariaLabel, icon, triggerContent = "icon-te
       {showIcon ? icon : null}{showLabel ? <span>{label}</span> : null}
     </span>
     <motion.div className={[
-      "absolute top-0 z-30 min-w-full overflow-hidden rounded-[18px] border text-[var(--text)] shadow-[var(--shadow-resting)] transition-[border-radius] duration-[320ms] ease-[var(--ease-standard)] data-[open]:rounded-[var(--radius-surface)]",
+      "absolute top-0 z-30 min-w-full overflow-hidden rounded-[18px] border text-[var(--text)] shadow-[var(--shadow-resting)] transition-[border-radius] duration-[320ms] ease-[var(--ease-standard)] data-[open]:rounded-[var(--radius-surface)] data-[open]:border-[color-mix(in_srgb,var(--border)_75%,transparent)] data-[open]:shadow-[var(--shadow-floating)]",
       variant === "filled" ? "border-transparent bg-[var(--surface-muted)]" : "border-[var(--border)] bg-[var(--surface)]",
       position.surface,
     ].join(" ")} data-open={open || undefined} data-variant={variant} style={{ width, height }}>

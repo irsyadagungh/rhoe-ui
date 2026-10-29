@@ -261,7 +261,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
             controlHeightClass,
             appearanceClass,
             disabled && "cursor-not-allowed opacity-[0.52]",
-            expanded ? "z-[120] !border-transparent focus-within:!border-transparent" : "z-0",
+            expanded ? "z-[120] !border-transparent focus-within:!border-transparent ring-1 ring-inset ring-[color-mix(in_srgb,var(--border)_75%,transparent)] shadow-[var(--shadow-floating)]" : "z-0",
           ].filter(Boolean).join(" ")}
           style={animationDuration
             ? ({ "--input-character-duration": `${animationDuration}ms` } as CSSProperties)
@@ -380,7 +380,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input({
         </div>
         {expandedContent ? (
           <div className={["w-full min-h-0 shrink-0 basis-0 overflow-hidden transition-[flex-basis] duration-[var(--input-expanded-duration)] ease-[var(--input-expanded-ease)] motion-reduce:duration-[0.01ms]", expanded && "basis-[var(--input-expanded-height,300px)]"].filter(Boolean).join(" ")} aria-hidden={!expanded} inert={!expanded}>
-            <div className="min-h-0">{expandedContent}</div>
+            <div className="h-full min-h-0">{expandedContent}</div>
           </div>
         ) : null}
         </div>

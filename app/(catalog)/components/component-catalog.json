@@ -709,6 +709,12 @@
               "Disables Escape and backdrop dismissal."
             ],
             [
+              "contentOpenDelay",
+              "number",
+              "0.1",
+              "Delay in seconds before modal content appears."
+            ],
+            [
               "className",
               "string",
               "—",
@@ -1603,6 +1609,253 @@
       "name": "Forms",
       "description": "Accessible controls for collecting, validating, and correcting user input.",
       "components": [
+        {
+          "name": "upload-manager",
+          "title": "Upload Manager",
+          "description": "An inline or morphing overlay uploader with progress, cancellation, and file lists.",
+          "lede": "Upload files using an inline drop area or a morphing overlay, with scrollable progress lists.",
+          "keywords": [
+            "file",
+            "upload",
+            "progress",
+            "dropzone"
+          ],
+          "sourcePath": "registry/components/upload-manager/upload-manager.tsx",
+          "installation": "Installs Upload Manager with Modal, Button, Icon Morph, Rolling Number, and shared motion dependencies.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { UploadManager } from \"@/components/rhoe/upload-manager/upload-manager\"\n\nexport function UploadDocuments() {\n  return <UploadManager accept=\"image/*,.pdf\" onUpload={async ({ file, signal }) => {\n    const body = new FormData()\n    body.append(\"file\", file)\n    const response = await fetch(\"/api/upload\", { method: \"POST\", body, signal })\n    if (!response.ok) throw new Error(\"Upload failed\")\n  }} />\n}\n\n// Keep files in memory until your form is submitted.\nexport function LocalUpload() {\n  const [files, setFiles] = useState<File[]>([])\n  async function submit() {\n    const body = new FormData()\n    files.forEach(file => body.append(\"files\", file))\n    const response = await fetch(\"/api/upload\", { method: \"POST\", body })\n    if (!response.ok) throw new Error(\"Upload failed\")\n  }\n  return <form onSubmit={event => { event.preventDefault(); void submit() }}>\n    <UploadManager uploadMode=\"local\" onFilesChange={setFiles} />\n    <button type=\"submit\">Upload files</button>\n  </form>\n}",
+          "guidance": [
+            "Provide an upload function for your own server. The preview uses simulated uploads.",
+            "Use XMLHttpRequest or another upload client that reports progress to call onProgress; fetch does not provide upload progress."
+          ],
+          "behavior": [
+            "The inline drop area is shown by default. In overlay mode, the trigger morphs into a modal. Direct mode calls onUpload for each selected file; local mode keeps files in memory and reports them through onFilesChange for a later form submission.",
+            "Closing the modal keeps the list visible on the page; uploads continue while the component remains mounted.",
+            "Cancellation signals the upload callback via AbortSignal. The callback must use the signal to stop its request.",
+            "Accept filters the file picker and dropped files; the server must independently validate file type and size.",
+            "Uploaded files can be removed from the list. Supply onRemove to delete the corresponding server file first; without it, removal only affects the list.",
+            "Rejected uploads show Failed and the error message; progress uses Rolling Number.",
+            "Select a file to open a full-screen local preview for images, video, audio, PDF, and text where the browser supports them. Local previews are released when closed and do not persist after reload."
+          ],
+          "accessibility": [
+            "A native file picker is available through the drop area button. Each progress indicator and cancel action identifies its file.",
+            "The preview dialog traps keyboard focus, restores focus on close, and keeps background controls inert. Escape closes the preview when focus is in the page; browser PDF viewers may handle keyboard events separately.",
+            "Upload, cancellation, removal, and failure outcomes are announced through a status region. Reduced motion disables layout transitions."
+          ],
+          "api": [
+            [
+              "onUpload",
+              "(request: UploadRequest) => Promise<void>",
+              "—",
+              "Required in direct mode. Receives file, AbortSignal, and onProgress(percentage); resolve when the server confirms success."
+            ],
+            [
+              "uploadMode",
+              "\"direct\" | \"local\"",
+              "direct",
+              "Choose immediate upload or keep selected files in browser memory until the parent submits them."
+            ],
+            [
+              "onFilesChange",
+              "(files: File[]) => void",
+              "—",
+              "Required in local mode. Receives the current pending files after selection or removal; submit these files from the parent form."
+            ],
+            [
+              "onRemove",
+              "(item: UploadItem) => void | Promise<void>",
+              "—",
+              "Optional server-side removal callback. If it rejects, the item remains visible with the error message; without it, only the local list entry is removed."
+            ],
+            [
+              "mode",
+              "\"inline\" | \"overlay\"",
+              "inline",
+              "Show the upload area on the page, or open it in a morphing overlay."
+            ],
+            [
+              "previewHint",
+              "string | false",
+              "Tap an item to see the preview",
+              "Hint above the file list. Set to false to hide it; automatically hidden when previewEnabled is false."
+            ],
+            [
+              "previewEnabled",
+              "boolean",
+              "true",
+              "Allow opening a local file preview by selecting an item."
+            ],
+            [
+              "triggerVariant",
+              "\"button\" | \"panel\"",
+              "button",
+              "In overlay mode, choose a compact button or a smaller dashed upload panel as the trigger."
+            ],
+            [
+              "removeTooltip",
+              "string",
+              "Remove",
+              "Tooltip text and accessible action label for removing an uploaded file."
+            ],
+            [
+              "accept",
+              "string",
+              "—",
+              "Accepted file extensions or MIME types, matching the native input accept syntax."
+            ],
+            [
+              "multiple",
+              "boolean",
+              "true",
+              "Allow multiple files. When false, remove the current item before choosing another."
+            ],
+            [
+              "allowCancel",
+              "boolean",
+              "true",
+              "Show a cancel action during uploads. The uploader must respect the signal."
+            ],
+            [
+              "overlayListHeight",
+              "number",
+              "240",
+              "Maximum modal list height in pixels."
+            ],
+            [
+              "listHeight",
+              "number",
+              "240",
+              "Maximum page list height in pixels."
+            ],
+            [
+              "label",
+              "string",
+              "Upload files",
+              "Text on the overlay trigger. The inline drop area uses its own instructions."
+            ],
+            [
+              "className",
+              "string",
+              "—",
+              "Classes for the root container."
+            ]
+          ],
+          "files": [
+            "components/rhoe/upload-manager/upload-manager.tsx",
+            "components/rhoe/modal/modal.tsx",
+            "components/rhoe/icon-morph/icon-morph.tsx",
+            "components/rhoe/tooltip/tooltip.tsx",
+            "components/rhoe/rolling-number/rolling-number.tsx"
+          ],
+          "related": [
+            "modal",
+            "button"
+          ]
+        },
+        {
+          "name": "dynamic-list-input",
+          "title": "Dynamic List Input",
+          "description": "An editable list with a dedicated input for adding items.",
+          "lede": "Collect a flexible list of text values using familiar inputs and inline actions.",
+          "keywords": [
+            "list",
+            "form",
+            "dynamic",
+            "input"
+          ],
+          "sourcePath": "registry/components/dynamic-list-input/dynamic-list-input.tsx",
+          "installation": "Installs Dynamic List Input and its Input, Button, and motion dependencies.",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { DynamicListInput } from \"@/components/rhoe/dynamic-list-input/dynamic-list-input\"\n\nexport function Tasks() {\n  const [tasks, setTasks] = useState([\"Design\"])\n  return <DynamicListInput label=\"Tasks\" placeholder=\"Task\" value={tasks} onValueChange={setTasks} />\n}",
+          "guidance": [
+            "Use a concise label and placeholder so each item is easy to identify."
+          ],
+          "behavior": [
+            "The last input adds a nonempty item using Enter or the add button. Existing values can be edited or removed.",
+            "Pressing Enter in the add input does not submit the surrounding form.",
+            "Actions can be displayed inside the input or always visible outside it."
+          ],
+          "accessibility": [
+            "Each input and action has an accessible name including its item number.",
+            "Adding an item returns focus to the add input. Removing an item moves focus to the next input, or to the add input when no next item exists.",
+            "Changes are announced to screen readers; exiting rows are removed from keyboard and screen reader navigation.",
+            "Reduced-motion preferences disable the liquid animation."
+          ],
+          "api": [
+            [
+              "label",
+              "string",
+              "—",
+              "Accessible group label.",
+              true
+            ],
+            [
+              "value",
+              "string[]",
+              "—",
+              "Controlled list of items."
+            ],
+            [
+              "defaultValue",
+              "string[]",
+              "[]",
+              "Initial items for uncontrolled use."
+            ],
+            [
+              "onValueChange",
+              "(values: string[]) => void",
+              "—",
+              "Called when the list changes."
+            ],
+            [
+              "placeholder",
+              "string",
+              "Item",
+              "Base placeholder followed by the item number."
+            ],
+            [
+              "hint",
+              "string",
+              "—",
+              "Optional help text."
+            ],
+            [
+              "disabled",
+              "boolean",
+              "false",
+              "Disables the list and actions."
+            ],
+            [
+              "variant",
+              "filled | bordered",
+              "filled",
+              "Input appearance."
+            ],
+            [
+              "actionPlacement",
+              "inside | outside",
+              "outside",
+              "Places add and remove buttons outside by default, or inside the input. Outside buttons are always visible."
+            ],
+            [
+              "size",
+              "small | medium | large",
+              "medium",
+              "Input size."
+            ],
+            [
+              "className",
+              "string",
+              "—",
+              "Classes applied to the list container."
+            ]
+          ],
+          "files": [
+            "components/rhoe/dynamic-list-input/dynamic-list-input.tsx"
+          ],
+          "related": [
+            "input",
+            "textarea"
+          ]
+        },
         {
           "name": "verification-code",
           "title": "Verification Code",

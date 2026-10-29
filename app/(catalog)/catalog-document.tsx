@@ -88,7 +88,7 @@ export function CatalogDocument({ component }: { component: CatalogItem }) {
               <td>
                 <span className="inline-flex flex-wrap items-center gap-2">
                   {prop}
-                  {required ? <Badge variant="bordered" tone="warning">Required</Badge> : null}
+                  {required ? <Badge variant="bordered" tone="warning">Required</Badge> : component.name === "upload-manager" && (prop === "onUpload" || prop === "onFilesChange") ? <Badge variant="bordered" tone="warning">{prop === "onUpload" ? "Required for direct" : "Required for local"}</Badge> : null}
                 </span>
               </td>
               <td>{type}</td>

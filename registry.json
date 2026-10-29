@@ -407,6 +407,110 @@
       ]
     },
     {
+      "name": "upload-manager",
+      "type": "registry:ui",
+      "title": "Upload Manager",
+      "description": "A morphing upload manager with progress, cancellation, and scrollable file lists.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/rolling-number/rolling-number.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/rolling-number/rolling-number.tsx"
+        },
+        {
+          "path": "registry/components/tooltip/tooltip.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/tooltip/tooltip.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/modal/modal.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/modal/modal.tsx"
+        },
+        {
+          "path": "registry/components/upload-manager/upload-manager.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/upload-manager/upload-manager.tsx"
+        }
+      ]
+    },
+    {
+      "name": "dynamic-list-input",
+      "type": "registry:ui",
+      "title": "Dynamic List Input",
+      "description": "Editable lists with an input to add items and remove actions.",
+      "dependencies": [
+        "lucide-react",
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/input/input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/input/input.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/dynamic-list-input/dynamic-list-input.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/dynamic-list-input/dynamic-list-input.tsx"
+        }
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",

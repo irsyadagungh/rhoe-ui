@@ -6,6 +6,7 @@ import {
   useContext,
   useEffect,
   useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -59,6 +60,14 @@ export interface ModalProps {
   width?: number;
   /** Target height in pixels. Defaults to 340, clamped to the viewport. */
   height?: number;
+  /** Delay in seconds before the modal content fades in. */
+  contentOpenDelay?: number;
+  /** Re-measure the trigger when surrounding layout can change while open. */
+  followTriggerOnClose?: boolean;
+  /** Hide the default trigger ghost when a custom morph surface is used. */
+  hideTriggerGhost?: boolean;
+  /** Temporarily yield keyboard handling to a nested overlay. */
+  suspendFocusTrap?: boolean;
   /** Additional CSS class names for the modal panel. */
   className?: string;
 }
@@ -99,6 +108,10 @@ export function Modal({
   blocking = false,
   width: requestedWidth,
   height: requestedHeight,
+  contentOpenDelay = 0.1,
+  followTriggerOnClose = false,
+  hideTriggerGhost = false,
+  suspendFocusTrap = false,
   className,
 }: ModalProps) {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
@@ -118,6 +131,19 @@ export function Modal({
   const descriptionId = useId();
   const reduceMotion = useReducedMotion() ?? false;
   const expanded = open ?? internalOpen;
+
+  useLayoutEffect(() => {
+    if (!followTriggerOnClose || expanded || !surfaceVisible || !hasTriggerOrigin) return;
+    const source = restoreFocusRef.current ?? triggerRef.current;
+    if (!source) return;
+    const rect = source.getBoundingClientRect();
+    // Layout may have moved the trigger while the modal was open. Update the
+    // closing target before Motion paints its first frame.
+    setMorph((current) => ({
+      ...current,
+      from: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
+    }));
+  }, [expanded, followTriggerOnClose, hasTriggerOrigin, surfaceVisible]);
 
   const setExpanded = useCallback(
     (nextOpen: boolean) => {
@@ -199,7 +225,7 @@ export function Modal({
 
   // Keyboard navigation & trap
   useEffect(() => {
-    if (!expanded) return;
+    if (!expanded || suspendFocusTrap) return;
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape" && !blocking) {
         event.preventDefault();
@@ -225,7 +251,7 @@ export function Modal({
     };
     document.addEventListener("keydown", onKeyDown);
     return () => document.removeEventListener("keydown", onKeyDown);
-  }, [blocking, close, expanded]);
+  }, [blocking, close, expanded, suspendFocusTrap]);
 
   const context = useMemo(() => ({ close }), [close]);
 
@@ -294,7 +320,7 @@ export function Modal({
               }}
             >
               {/* Trigger ghost for smooth morph exit */}
-              {trigger && hasTriggerOrigin ? (
+              {trigger && hasTriggerOrigin && !hideTriggerGhost ? (
                 <motion.div
                   aria-hidden="true"
                   {...({ inert: true } as Record<string, unknown>)}
@@ -319,7 +345,7 @@ export function Modal({
                 transition={reduceMotion
                   ? { duration: 0.1 }
                   : expanded
-                    ? { delay: 0.1, duration: motionTokens.duration.standard }
+                    ? { delay: contentOpenDelay, duration: motionTokens.duration.standard }
                     : { duration: motionTokens.duration.fast }}
               >
                 {/* Header bar (if title, description, or close button present) */}

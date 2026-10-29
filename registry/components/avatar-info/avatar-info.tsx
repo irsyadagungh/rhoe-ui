@@ -60,7 +60,7 @@ export function AvatarInfo({ name, email, src, side = "right", items = [], onSig
 
   return (
     <div ref={rootRef} className={["relative inline-block h-[46px] w-[46px]", open ? "z-50" : "z-0", className].filter(Boolean).join(" ")}>
-      <motion.div className={`absolute top-0 overflow-hidden rounded-[23px] bg-[var(--surface)] ${open ? "shadow-[0_12px_32px_rgba(0,0,0,0.12)] ring-1 ring-[var(--border)]" : ""} ${side === "left" ? "left-0" : "right-0"}`} initial={false} animate={{ width: open ? 272 : 46 }} transition={transition}>
+      <motion.div className={`absolute top-0 overflow-hidden rounded-[23px] bg-[var(--surface)] ${open ? "shadow-[var(--shadow-floating)] ring-1 ring-[color-mix(in_srgb,var(--border)_75%,transparent)]" : ""} ${side === "left" ? "left-0" : "right-0"}`} initial={false} animate={{ width: open ? 272 : 46 }} transition={transition}>
         <motion.button ref={buttonRef} type="button" aria-expanded={open} aria-controls={panelId} aria-label={`${open ? "Close" : "Open"} account menu for ${name}`} onClick={() => setOpen(!open)} initial={false} animate={{ padding: open ? 8 : 0, height: open ? 62 : 46 }} transition={transition} className="flex w-full items-center gap-3 text-left focus-visible:outline-2 focus-visible:outline-[var(--focus)]">
           <Avatar name={name} src={src} />
           <motion.span className="min-w-0 flex-1 overflow-hidden whitespace-nowrap pr-4" initial={false} animate={{ opacity: open ? 1 : 0 }} transition={reduceMotion ? { duration: 0 } : { duration: motionTokens.duration.fast, delay: open ? motionTokens.duration.fast : 0 }}>

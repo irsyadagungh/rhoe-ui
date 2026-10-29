@@ -142,7 +142,7 @@ export function DateFieldPopover({
         ref={inputRef}
         className={[
           "[&_input]:cursor-pointer [&_input:focus-visible]:!outline-2 [&_input:focus-visible]:!outline-[var(--focus)] [&_input:focus-visible]:!outline-offset-[-2px] [&>div>div:first-child]:transition-[border-radius,border-color] [&>div>div:first-child]:duration-[var(--duration-standard)]",
-          expanded && "[&>div>div:first-child]:!rounded-bl-none [&>div>div:first-child]:!border-transparent [&>div>div:first-child]:focus-within:!border-transparent",
+          expanded && "[&>div>div:first-child]:!rounded-bl-none [&>div>div:first-child]:!border-[color-mix(in_srgb,var(--border)_75%,transparent)] [&>div>div:first-child]:!border-b-transparent [&>div>div:first-child]:focus-within:!border-[color-mix(in_srgb,var(--border)_75%,transparent)] [&>div>div:first-child]:focus-within:!border-b-transparent",
           expanded && !narrower && "[&>div>div:first-child]:!rounded-br-none",
         ].filter(Boolean).join(" ")}
         label={typeof label === "string" ? label : undefined}
@@ -197,7 +197,7 @@ export function DateFieldPopover({
         }}
       >
         {narrower && <span aria-hidden="true" className="pointer-events-none absolute left-full top-0 h-[18px] w-[18px]" style={{ background: `radial-gradient(circle at 100% 100%, transparent 18px, ${surface} 18.5px)` }} />}
-        <div className="h-full overflow-hidden rounded-b-[var(--radius-surface)]" style={{ background: surface }}>
+        <div className="h-full overflow-hidden rounded-b-[var(--radius-surface)]" style={{ background: surface, boxShadow: expanded ? "inset 1px 0 color-mix(in srgb, var(--border) 75%, transparent), inset -1px 0 color-mix(in srgb, var(--border) 75%, transparent), inset 0 -1px color-mix(in srgb, var(--border) 75%, transparent), 0 14px 28px rgb(0 0 0 / 16%)" : undefined }}>
           <div ref={contentRef} style={{ width: `${100 / Math.min(Math.max(panelWidth / 320, 0.01), 1)}%`, transform: `scale(${Math.min(Math.max(panelWidth / 320, 0.01), 1)})`, transformOrigin: "top left" }}>
             {typeof children === "function" ? children({ close }) : children}
           </div>

@@ -2,12 +2,15 @@
 
 import {
   forwardRef,
+  useEffect,
   useId,
+  useRef,
   useState,
   type ComponentPropsWithoutRef,
   type ReactNode,
 } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { createPortal } from "react-dom";
 import { motionTokens } from "../lib/motion-tokens";
 import "../foundation.css";
 
@@ -28,6 +31,8 @@ export interface TooltipProps extends Omit<ComponentPropsWithoutRef<"button">, "
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
+  /** Render the tooltip outside clipping and scrolling containers. */
+  portal?: boolean;
 }
 
 const triggerSizeClass: Record<TooltipSize, string> = {
@@ -57,6 +62,7 @@ export const Tooltip = forwardRef<HTMLButtonElement, TooltipProps>(function Tool
   open,
   defaultOpen = false,
   onOpenChange,
+  portal = false,
   className,
   disabled,
   onPointerEnter,
@@ -69,7 +75,25 @@ export const Tooltip = forwardRef<HTMLButtonElement, TooltipProps>(function Tool
   const tooltipId = useId();
   const reduceMotion = useReducedMotion() ?? false;
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
+  const anchorRef = useRef<HTMLSpanElement>(null);
+  const [anchor, setAnchor] = useState<{ left: number; top: number; right: number; bottom: number } | null>(null);
   const isOpen = open ?? internalOpen;
+
+  useEffect(() => {
+    if (!portal || !isOpen) return;
+    const measure = () => {
+      const rect = anchorRef.current?.getBoundingClientRect();
+      if (rect) setAnchor({ left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom });
+    };
+    const frame = requestAnimationFrame(measure);
+    window.addEventListener("scroll", measure, true);
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", measure, true);
+      window.removeEventListener("resize", measure);
+    };
+  }, [isOpen, portal]);
 
   const setOpen = (nextOpen: boolean) => {
     if (open === undefined) setInternalOpen(nextOpen);
@@ -77,7 +101,7 @@ export const Tooltip = forwardRef<HTMLButtonElement, TooltipProps>(function Tool
   };
 
   return (
-    <span className="relative inline-flex" onPointerLeave={(event) => { if (!event.currentTarget.contains(document.activeElement)) setOpen(false); }}>
+    <span ref={anchorRef} className="relative inline-flex" onPointerLeave={(event) => { if (!event.currentTarget.contains(document.activeElement)) setOpen(false); }}>
       <button
         {...props}
         ref={ref}
@@ -115,7 +139,17 @@ export const Tooltip = forwardRef<HTMLButtonElement, TooltipProps>(function Tool
       >
         <span className="grid place-items-center" aria-hidden="true">{icon}</span>
       </button>
-      <AnimatePresence>
+      {portal && typeof document !== "undefined" && anchor ? createPortal(
+        <AnimatePresence>
+          {isOpen && <span className="pointer-events-none fixed z-[260]" style={{ left: side === "left" ? anchor.left : side === "right" ? anchor.right : (anchor.left + anchor.right) / 2, top: side === "top" ? anchor.top : side === "bottom" ? anchor.bottom : (anchor.top + anchor.bottom) / 2 }}>
+            <span className={["absolute", panelPositionClass[side]].join(" ")}>
+              <motion.span id={tooltipId} role="tooltip" className="block w-max max-w-64 rounded-[10px] bg-[var(--text)] px-2.5 py-1.5 text-xs leading-[1.35] font-[560] text-[var(--surface)] shadow-[var(--shadow-floating)]" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={reduceMotion ? { duration: 0 } : { duration: motionTokens.duration.fast }}>
+                {content}
+              </motion.span>
+            </span>
+          </span>}
+        </AnimatePresence>, document.body,
+      ) : !portal && <AnimatePresence>
         {isOpen ? (
           <span className={["absolute z-50", panelPositionClass[side]].join(" ")}>
             <motion.span
@@ -131,7 +165,7 @@ export const Tooltip = forwardRef<HTMLButtonElement, TooltipProps>(function Tool
             </motion.span>
           </span>
         ) : null}
-      </AnimatePresence>
+      </AnimatePresence>}
     </span>
   );
 });

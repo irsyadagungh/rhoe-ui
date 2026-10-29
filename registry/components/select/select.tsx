@@ -80,9 +80,11 @@ export function Select({
   const [internalValue, setInternalValue] = useState<SelectValue>(defaultValue ?? (multiple ? [] : ""));
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [panelHeight, setPanelHeight] = useState(searchable ? 300 : 260);
   const rootRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   const hoverTarget = useRef<HTMLButtonElement | null>(null);
   const hoverX = useMotionValue(0);
   const hoverY = useMotionValue(0);
@@ -116,6 +118,26 @@ export function Select({
     setOpen(nextOpen);
     onOpenChange?.(nextOpen);
   }, [disabled, onOpenChange]);
+
+  useEffect(() => {
+    if (!open || !listRef.current || !panelRef.current) return;
+    const list = listRef.current;
+    const panel = panelRef.current;
+    const rows = Array.from(list.querySelectorAll<HTMLElement>(":scope > li"));
+    const search = searchable ? panel.firstElementChild as HTMLElement | null : null;
+    const measure = () => {
+      const rowHeight = rows.reduce((sum, row) => sum + row.offsetHeight, 0);
+      const gaps = Math.max(0, rows.length - 1) * 2;
+      const padding = searchable ? 22 : 20;
+      const searchHeight = search ? search.offsetHeight + 10 : 0;
+      setPanelHeight(Math.min(searchable ? 300 : 260, rowHeight + gaps + padding + searchHeight));
+    };
+    const observer = new ResizeObserver(measure);
+    rows.forEach((row) => observer.observe(row));
+    if (search) observer.observe(search);
+    measure();
+    return () => observer.disconnect();
+  }, [open, filteredItems, searchable]);
 
   useEffect(() => {
     if (!open) return;
@@ -234,7 +256,7 @@ export function Select({
       ref={rootRef}
       className="group relative z-0 w-full data-[open]:z-[120]"
       data-open={open || undefined}
-      style={{ "--input-expanded-height": searchable ? "300px" : "260px" } as CSSProperties}
+      style={{ "--input-expanded-height": `${panelHeight}px` } as CSSProperties}
     >
       <Input
         {...inputProps}
@@ -268,6 +290,7 @@ export function Select({
         expanded={open}
         expandedContent={(
           <div
+            ref={panelRef}
             className={`grid h-full min-h-0 ${searchable ? "grid-rows-[auto_minmax(0,1fr)] gap-2.5 p-2.5 pb-3" : "p-2.5"}`}
             {...(!open ? { inert: true } : {})}
             onKeyDown={(event) => {
@@ -345,7 +368,7 @@ export function Select({
                   </li>
                 );
               }) : (
-                <li className="grid min-h-full place-items-center p-5 text-center text-[13px] text-[var(--text-secondary)]" role="status">{emptyState}</li>
+                <li className="grid place-items-center p-5 text-center text-[13px] text-[var(--text-secondary)]" role="status">{emptyState}</li>
               )}
             </ul>
           </div>

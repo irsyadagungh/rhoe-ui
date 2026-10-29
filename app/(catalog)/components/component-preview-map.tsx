@@ -18,6 +18,8 @@ import { DialogSandbox } from "./previews/dialog";
 import { DropdownMenuSandbox } from "./previews/dropdown-menu";
 import { ExpandingSearchSandbox } from "./previews/expanding-search";
 import { IconMorphExample } from "./previews/icon-morph";
+import { UploadManagerExample } from "./previews/upload-manager";
+import { DynamicListInputExample } from "./previews/dynamic-list-input";
 import { InputExample } from "./previews/input";
 import { LoadingIndicatorExample } from "./previews/loading-indicator";
 import { LineChartExample } from "./previews/line-chart";
@@ -61,6 +63,17 @@ export function Status({ ready }: StatusProps) {
 
 export function getComponentPreview(name: string): PreviewDefinition {
   switch (name) {
+    case "upload-manager": return { showReplay: false, variants: [
+      { value: "inline", label: "Inline", preview: <UploadManagerExample /> },
+      { value: "button", label: "Overlay button", preview: <UploadManagerExample mode="overlay" /> },
+      { value: "panel", label: "Overlay panel", preview: <UploadManagerExample mode="overlay" triggerVariant="panel" /> },
+    ] };
+    case "dynamic-list-input": return { showReplay: false, variants: [
+      { value: "outside-filled", label: "Default", preview: <DynamicListInputExample /> },
+      { value: "outside-bordered", label: "Bordered", preview: <DynamicListInputExample variant="bordered" /> },
+      { value: "inside-filled", label: "Inside", preview: <DynamicListInputExample actionPlacement="inside" /> },
+      { value: "inside-bordered", label: "Inside bordered", preview: <DynamicListInputExample actionPlacement="inside" variant="bordered" /> },
+    ] };
     case "loading-indicator": return { preview: <LoadingIndicatorExample />, showReplay: false };
     case "avatar": return { showReplay: false, variants: [
       { value: "default", label: "Default", preview: <AvatarExample /> },
