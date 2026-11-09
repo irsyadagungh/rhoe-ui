@@ -20,6 +20,7 @@ import { ExpandingSearchSandbox } from "./previews/expanding-search";
 import { IconMorphExample } from "./previews/icon-morph";
 import { UploadManagerExample } from "./previews/upload-manager";
 import { DynamicListInputExample } from "./previews/dynamic-list-input";
+import { PricingCardExample } from "./previews/pricing-card";
 import { InputExample } from "./previews/input";
 import { LoadingIndicatorExample } from "./previews/loading-indicator";
 import { LineChartExample } from "./previews/line-chart";
@@ -61,6 +62,12 @@ export function Status({ ready }: StatusProps) {
   );
 }`;
 
+/**
+ * IMPORTANT FOR AGENTS / DEVELOPERS:
+ * Whenever you add a new FREE component without a preview video to `getComponentPreview` below,
+ * you MUST also add its slug to `INLINE_PREVIEWS` in `services/catalog/catalog.service.ts`
+ * so Studio allows saving and publishing the item with `previewType: "INLINE"`.
+ */
 export function getComponentPreview(name: string): PreviewDefinition {
   switch (name) {
     case "upload-manager": return { showReplay: false, variants: [
@@ -178,6 +185,12 @@ export function getComponentPreview(name: string): PreviewDefinition {
     case "morphing-text": return { preview: <TextAnimationExample type="morph" />, showReplay: false };
     case "scramble-text": return { preview: <TextAnimationExample type="scramble" />, showReplay: false };
     case "rolling-number": return { preview: <TextAnimationExample type="number" />, showReplay: false };
+    case "pricing-card": return { showReplay: false, variants: [
+      { value: "with-tabs-bordered", label: "With tabs · Bordered", preview: <PricingCardExample tabMode="with-tabs" variant="bordered" /> },
+      { value: "with-tabs-filled", label: "With tabs · Filled", preview: <PricingCardExample tabMode="with-tabs" variant="filled" /> },
+      { value: "without-tabs-bordered", label: "Without tabs · Bordered", preview: <PricingCardExample tabMode="without-tabs" variant="bordered" /> },
+      { value: "without-tabs-filled", label: "Without tabs · Filled", preview: <PricingCardExample tabMode="without-tabs" variant="filled" /> },
+    ] };
     default: return {};
   }
 }

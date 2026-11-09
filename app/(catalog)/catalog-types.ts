@@ -7,6 +7,9 @@ export interface CatalogDocument {
   lede: string;
   keywords: string[];
   sourcePath: string;
+  /** Preview mode for Studio bulk import; free items are INLINE, special are IFRAME. */
+  previewType?: "INLINE" | "IFRAME" | string | null;
+  previewKey?: string | null;
   installation?: string;
   usage: string;
   examples?: Array<{ title?: string; description?: string; code: string }>;

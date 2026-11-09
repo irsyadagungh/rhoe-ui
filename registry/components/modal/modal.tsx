@@ -216,6 +216,26 @@ export function Modal({
     return () => cancelAnimationFrame(frame);
   }, [calculateTargetRect, expanded, portalContainer, surfaceVisible]);
 
+  // Update target rect when modal dimensions change dynamically while open
+  useEffect(() => {
+    if (!expanded || !surfaceVisible) return;
+    const target = calculateTargetRect();
+    setMorph((current) => {
+      if (
+        current.to.left === target.left &&
+        current.to.top === target.top &&
+        current.to.width === target.width &&
+        current.to.height === target.height
+      ) {
+        return current;
+      }
+      return {
+        ...current,
+        to: target,
+      };
+    });
+  }, [calculateTargetRect, expanded, surfaceVisible]);
+
   // Focus management
   useEffect(() => {
     if (!expanded || !surfaceVisible) return;
@@ -273,7 +293,7 @@ export function Modal({
             <motion.button
               type="button"
               aria-label="Close modal"
-              className="fixed inset-0 z-[230] cursor-default bg-black/45 backdrop-blur-[2px]"
+              className="fixed inset-0 z-[250] cursor-default bg-black/45 backdrop-blur-[2px]"
               initial={{ opacity: 0 }}
               animate={{ opacity: expanded ? 1 : 0 }}
               transition={reduceMotion ? { duration: 0.1 } : { duration: motionTokens.duration.standard }}
@@ -292,7 +312,7 @@ export function Modal({
               aria-describedby={description ? descriptionId : undefined}
               tabIndex={-1}
               className={[
-                "fixed z-[231] box-border overflow-y-auto rounded-[28px] border border-[var(--border)] bg-[var(--surface)] p-6 text-[var(--text)] shadow-[var(--shadow-floating)] outline-none",
+                "fixed z-[251] box-border overflow-y-auto rounded-[28px] border border-[var(--border)] bg-[var(--surface)] p-6 text-[var(--text)] shadow-[var(--shadow-floating)] outline-none",
                 className,
               ].filter(Boolean).join(" ")}
               initial={reduceMotion

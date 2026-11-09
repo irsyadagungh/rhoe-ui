@@ -9,9 +9,9 @@ const registry = JSON.parse(await readFile("registry.json", "utf8"));
 for (const item of registry.items) {
   const output = `public/r/${item.name}.json`;
   const built = JSON.parse(await readFile(output, "utf8"));
-  const files = new Map(item.files.map((file) => [file.path, file]));
+  const files = new Map((item.files ?? []).map((file) => [file.path, file]));
 
-  for (const file of built.files) {
+  for (const file of built.files ?? []) {
     if (!/\.[cm]?[jt]sx?$/.test(file.path)) continue;
     const source = ts.createSourceFile(file.path, file.content, ts.ScriptTarget.Latest, true);
     const edits = [];

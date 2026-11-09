@@ -1917,6 +1917,91 @@
           "target": "components/rhoe/morphing-text/morphing-text.tsx"
         }
       ]
+    },
+    {
+      "name": "pricing-card",
+      "type": "registry:ui",
+      "title": "Pricing Card",
+      "description": "Flexible subscription and tier cards with rolling numeric counters and morphing benefit transitions.",
+      "dependencies": [
+        "motion",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/components/foundation.css",
+          "type": "registry:style",
+          "target": "components/rhoe/foundation.css"
+        },
+        {
+          "path": "registry/components/lib/motion-tokens.ts",
+          "type": "registry:lib",
+          "target": "components/rhoe/lib/motion-tokens.ts"
+        },
+        {
+          "path": "registry/components/tabs/tabs.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/tabs/tabs.tsx"
+        },
+        {
+          "path": "registry/components/rolling-number/rolling-number.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/rolling-number/rolling-number.tsx"
+        },
+        {
+          "path": "registry/components/morphing-text/morphing-text.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/morphing-text/morphing-text.tsx"
+        },
+        {
+          "path": "registry/components/button/button.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/button/button.tsx"
+        },
+        {
+          "path": "registry/components/badge/badge.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/badge/badge.tsx"
+        },
+        {
+          "path": "registry/components/pricing-card/pricing-card.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/pricing-card/pricing-card.tsx"
+        },
+        {
+          "path": "registry/components/icon-morph/icon-morph.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/icon-morph/icon-morph.tsx"
+        }
+      ]
+    },
+    {
+      "name": "font-bebas-neue",
+      "type": "registry:font",
+      "title": "Bebas Neue",
+      "font": {
+        "family": "'Bebas Neue', sans-serif",
+        "provider": "google",
+        "import": "Bebas Neue",
+        "variable": "--font-bebas-neue",
+        "subsets": ["latin"],
+        "dependency": "@fontsource/bebas-neue"
+      }
+    },
+    {
+      "name": "hanging-hero",
+      "type": "registry:ui",
+      "title": "Hanging Hero",
+      "description": "An interactive hanging hero with flexible cords and animated content.",
+      "dependencies": ["motion"],
+      "registryDependencies": ["@rhoe/font-bebas-neue"],
+      "files": [
+        {
+          "path": "registry/special/hero/hanging-hero.tsx",
+          "type": "registry:ui",
+          "target": "components/rhoe/hanging-hero/hanging-hero.tsx"
+        }
+      ]
     }
   ]
 }

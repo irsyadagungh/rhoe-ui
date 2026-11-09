@@ -48,7 +48,7 @@
             [
               "items",
               "readonly TodoCalendarItem[]",
-              "—",
+              "\u2014",
               "Agenda items containing id, title, date, optional description, and completion state.",
               true
             ],
@@ -61,19 +61,19 @@
             [
               "onValueChange",
               "(date: Date) => void",
-              "—",
+              "\u2014",
               "Called when a day is selected."
             ],
             [
               "onItemToggle",
               "(item: TodoCalendarItem) => void",
-              "—",
+              "\u2014",
               "Makes agenda rows interactive and reports the item being toggled."
             ],
             [
               "addTodoAction",
               "ReactNode",
-              "—",
+              "\u2014",
               "Optional action rendered beside the calendar toggle, such as a Dialog with an add button trigger."
             ],
             [
@@ -103,7 +103,7 @@
             [
               "className",
               "string",
-              "—",
+              "\u2014",
               "Additional classes on the outer card."
             ]
           ],
@@ -120,7 +120,9 @@
             "calendar",
             "animated-list",
             "checkbox"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "todo-calendar"
         }
       ]
     },
@@ -143,7 +145,7 @@
           ],
           "sourcePath": "registry/blocks/auth-form/auth-form.tsx",
           "installation": "Installs the Authentication Form block with Button, Input, Checkbox, and shared Rhoe UI foundations.",
-          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { AuthForm, type AuthFormValues } from \"@/components/rhoe/blocks/auth-form\"\n\n// Replace these example endpoints with your application's authentication API.\nexport function SignInWithOtpRecovery() {\n  const [error, setError] = useState(\"\")\n\n  async function post(path: string, data: object): Promise<boolean> {\n    setError(\"\")\n\n    try {\n      const response = await fetch(path, {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify(data),\n      })\n\n      if (!response.ok) {\n        setError(\"The request failed. Please try again.\")\n        return false\n      }\n\n      return true\n    } catch {\n      setError(\"Could not connect. Please try again.\")\n      return false\n    }\n  }\n\n  async function handleSignIn(values: AuthFormValues) {\n    const success = await post(\"/api/auth/sign-in\", values)\n    if (success) window.location.assign(\"/dashboard\")\n  }\n\n  async function handleResetPassword(\n    password: string,\n    confirmPassword: string,\n    email: string,\n  ) {\n    if (password !== confirmPassword) {\n      setError(\"Passwords do not match.\")\n      return false\n    }\n\n    // The server must bind this reset request to a verified recovery session.\n    const success = await post(\"/api/auth/reset-password\", { email, password })\n    if (success) window.location.assign(\"/sign-in\")\n    return success\n  }\n\n  return (\n    <div>\n      {error && <p role=\"alert\">{error}</p>}\n\n      {/* AuthForm manages button states while each async callback is pending. */}\n      <AuthForm\n        mode=\"sign-in\"\n        forgotPasswordVariant=\"otp\"\n        verificationCodeLength={6}\n        resendCountdownSeconds={60}\n        alternateAction={<a href=\"/sign-up\">Sign up</a>}\n        // Sign in → Signing in while handleSignIn is pending.\n        onSubmit={handleSignIn}\n        // Send OTP → Sending OTP; return false to stay on the email step.\n        onForgotPassword={(email) =>\n          post(\"/api/auth/recovery/send-code\", { email })\n        }\n        // Verify code → Verifying code; return false for an invalid code.\n        onVerifyResetCode={(code, email) =>\n          post(\"/api/auth/recovery/verify-code\", { code, email })\n        }\n        // Reset password → Resetting password while the request is pending.\n        onResetPassword={handleResetPassword}\n        onStepChange={() => setError(\"\")}\n      />\n    </div>\n  )\n}",
+          "usage": "\"use client\"\n\nimport { useState } from \"react\"\nimport { AuthForm, type AuthFormValues } from \"@/components/rhoe/blocks/auth-form\"\n\n// Replace these example endpoints with your application's authentication API.\nexport function SignInWithOtpRecovery() {\n  const [error, setError] = useState(\"\")\n\n  async function post(path: string, data: object): Promise<boolean> {\n    setError(\"\")\n\n    try {\n      const response = await fetch(path, {\n        method: \"POST\",\n        headers: { \"Content-Type\": \"application/json\" },\n        body: JSON.stringify(data),\n      })\n\n      if (!response.ok) {\n        setError(\"The request failed. Please try again.\")\n        return false\n      }\n\n      return true\n    } catch {\n      setError(\"Could not connect. Please try again.\")\n      return false\n    }\n  }\n\n  async function handleSignIn(values: AuthFormValues) {\n    const success = await post(\"/api/auth/sign-in\", values)\n    if (success) window.location.assign(\"/dashboard\")\n  }\n\n  async function handleResetPassword(\n    password: string,\n    confirmPassword: string,\n    email: string,\n  ) {\n    if (password !== confirmPassword) {\n      setError(\"Passwords do not match.\")\n      return false\n    }\n\n    // The server must bind this reset request to a verified recovery session.\n    const success = await post(\"/api/auth/reset-password\", { email, password })\n    if (success) window.location.assign(\"/sign-in\")\n    return success\n  }\n\n  return (\n    <div>\n      {error && <p role=\"alert\">{error}</p>}\n\n      {/* AuthForm manages button states while each async callback is pending. */}\n      <AuthForm\n        mode=\"sign-in\"\n        forgotPasswordVariant=\"otp\"\n        verificationCodeLength={6}\n        resendCountdownSeconds={60}\n        alternateAction={<a href=\"/sign-up\">Sign up</a>}\n        // Sign in \u2192 Signing in while handleSignIn is pending.\n        onSubmit={handleSignIn}\n        // Send OTP \u2192 Sending OTP; return false to stay on the email step.\n        onForgotPassword={(email) =>\n          post(\"/api/auth/recovery/send-code\", { email })\n        }\n        // Verify code \u2192 Verifying code; return false for an invalid code.\n        onVerifyResetCode={(code, email) =>\n          post(\"/api/auth/recovery/verify-code\", { code, email })\n        }\n        // Reset password \u2192 Resetting password while the request is pending.\n        onResetPassword={handleResetPassword}\n        onStepChange={() => setError(\"\")}\n      />\n    </div>\n  )\n}",
           "examples": [
             {
               "title": "Submit form data",
@@ -229,7 +231,7 @@
             [
               "forgotPasswordAction",
               "ReactNode",
-              "—",
+              "\u2014",
               "Content for the internal trigger that opens password recovery beside the sign-in password label."
             ],
             [
@@ -241,19 +243,19 @@
             [
               "alternateAction",
               "ReactNode",
-              "—",
+              "\u2014",
               "Sign-up or sign-in action displayed below the form."
             ],
             [
               "onSubmit",
               "(values: AuthFormValues) => AuthFormActionResult | Promise<AuthFormActionResult>",
-              "—",
+              "\u2014",
               "Receives credentials. Default continuation is application-owned; link and OTP presets advance after a successful result. Return false to keep credentials visible."
             ],
             [
               "AuthFormActionResult",
               "boolean | void | { error: string }",
-              "—",
+              "\u2014",
               "Return false for a generic error, { error: message } for a specific error, or true / void for success."
             ],
             [
@@ -283,49 +285,49 @@
             [
               "onVerifyCode",
               "(code: string, email: string) => AuthFormActionResult | Promise<AuthFormActionResult>",
-              "—",
+              "\u2014",
               "Handles verification-code submission after sign-up."
             ],
             [
               "onResendVerification",
               "(email: string) => AuthFormActionResult | Promise<AuthFormActionResult>",
-              "—",
+              "\u2014",
               "Requests another verification code."
             ],
             [
               "onForgotPassword",
               "(email: string) => AuthFormActionResult | Promise<AuthFormActionResult>",
-              "—",
+              "\u2014",
               "Owns any custom continuation in the default variant, or sends the reset link or OTP for built-in variants. Return false to keep the email step open."
             ],
             [
               "onVerifyResetCode",
               "(code: string, email: string) => AuthFormActionResult | Promise<AuthFormActionResult>",
-              "—",
+              "\u2014",
               "Verifies a recovery OTP. Return false to keep the code step open."
             ],
             [
               "onResetPassword",
               "(password: string, confirmPassword: string, email: string) => AuthFormActionResult | Promise<AuthFormActionResult>",
-              "—",
+              "\u2014",
               "Submits the replacement password after a recovery OTP succeeds."
             ],
             [
               "onStepChange",
               "(step: AuthFormStep) => void",
-              "—",
+              "\u2014",
               "Reports credentials, sign-up verification, recovery email, link confirmation, recovery code, and reset-password transitions."
             ],
             [
               "className",
               "string",
-              "—",
+              "\u2014",
               "Additional classes applied to the form root."
             ],
             [
               "native form props",
               "ComponentPropsWithoutRef<\"form\">",
-              "—",
+              "\u2014",
               "Form attributes such as id, name, aria attributes, noValidate, method, and action are forwarded to the root form."
             ]
           ],
@@ -346,7 +348,9 @@
             "checkbox",
             "button",
             "password-strength"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "auth-form"
         }
       ]
     },
@@ -401,33 +405,33 @@
             [
               "data",
               "readonly LineChartDatum[]",
-              "—",
+              "\u2014",
               "Growing measurement history.",
               true
             ],
             [
               "title",
               "string",
-              "—",
+              "\u2014",
               "Metric title.",
               true
             ],
             [
               "description",
               "string",
-              "—",
+              "\u2014",
               "Supporting context."
             ],
             [
               "ranges",
               "readonly LineChartRange[]",
-              "—",
+              "\u2014",
               "Optional range choices, each with a value and label. Omit or pass an empty array to hide tabs."
             ],
             [
               "range",
               "string",
-              "—",
+              "\u2014",
               "Controlled active range."
             ],
             [
@@ -439,7 +443,7 @@
             [
               "onRangeChange",
               "(range: string) => void",
-              "—",
+              "\u2014",
               "Receives the selected range. Update windowSize or data in the caller."
             ],
             [
@@ -463,7 +467,7 @@
             [
               "spikeThreshold / spikeColor",
               "number / string",
-              "— / var(--danger)",
+              "\u2014 / var(--danger)",
               "Threshold and curve color for spikes."
             ],
             [
@@ -475,7 +479,7 @@
             [
               "className",
               "string",
-              "—",
+              "\u2014",
               "Additional classes for the block root."
             ]
           ],
@@ -493,7 +497,9 @@
             "line-chart",
             "rolling-number",
             "morphing-text"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "realtime-line-chart"
         }
       ]
     }

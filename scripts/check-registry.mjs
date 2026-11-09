@@ -17,6 +17,7 @@ try {
   await symlink(path.join(root, "node_modules"), path.join(temporaryRoot, "node_modules"), "dir");
   for (const item of registry.items) {
     const built = JSON.parse(await readFile(`public/r/${item.name}.json`, "utf8"));
+    if (!item.files) continue; // registry:font items carry font metadata only.
     assert.deepEqual(built.files.map((file) => {
       const metadata = { ...file };
       delete metadata.content;

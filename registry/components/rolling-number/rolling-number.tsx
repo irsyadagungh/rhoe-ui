@@ -104,17 +104,31 @@ function RollingColumn({
   digit,
   direction,
   reduceMotion,
+  animateOnMount = false,
+  spinIfUnchanged = false,
 }: {
   digit: number;
   direction: number;
   reduceMotion: boolean;
+  animateOnMount?: boolean;
+  spinIfUnchanged?: boolean;
 }) {
-  const position = useMotionValue(digit);
-  const wheel = useRef({ digit, target: digit });
+  const initialDigit = animateOnMount && !reduceMotion ? (direction < 0 ? 9 : 0) : digit;
+  const position = useMotionValue(initialDigit);
+  const wheel = useRef({ digit: initialDigit, target: initialDigit });
 
   useEffect(() => {
     const state = wheel.current;
-    if (state.digit === digit) return;
+    if (state.digit === digit) {
+      if (!spinIfUnchanged || reduceMotion) return;
+      const distance = direction < 0 ? -10 : 10;
+      state.target += distance;
+      const controls = animate(position, state.target, {
+        ...motionTokens.spring.smooth,
+        visualDuration: motionTokens.duration.standard,
+      });
+      return () => controls.stop();
+    }
 
     const distance =
       direction < 0
@@ -138,7 +152,7 @@ function RollingColumn({
     });
 
     return () => controls.stop();
-  }, [digit, direction, position, reduceMotion]);
+  }, [digit, direction, position, reduceMotion, spinIfUnchanged]);
 
   return (
     <span className="relative inline-block my-[calc(var(--digit-feather)*-1)] overflow-hidden py-[var(--digit-feather)] [--digit-feather:0.16em] [mask-image:linear-gradient(to_bottom,transparent,#000_calc(var(--digit-feather)*1.5),#000_calc(100%-var(--digit-feather)*1.5),transparent)] [-webkit-mask-image:linear-gradient(to_bottom,transparent,#000_calc(var(--digit-feather)*1.5),#000_calc(100%-var(--digit-feather)*1.5),transparent)]">
@@ -158,6 +172,8 @@ export function RollingNumber({
   ...props
 }: RollingNumberProps) {
   const reduceMotion = useReducedMotion() ?? false;
+  const isInitial = useRef(true);
+  const prevValue = useRef(value);
   const [change, setChange] = useState({ value, direction: 1 });
   if (change.value !== value) {
     setChange({
@@ -165,6 +181,13 @@ export function RollingNumber({
       direction: Math.abs(value) >= Math.abs(change.value) ? 1 : -1,
     });
   }
+
+  useEffect(() => {
+    isInitial.current = false;
+    prevValue.current = value;
+  }, [value]);
+
+  const valueChanged = !isInitial.current && prevValue.current !== value;
   const direction = change.direction;
   const parts = useMemo(
     () => getRollingParts(value, locale, format),
@@ -189,6 +212,8 @@ export function RollingNumber({
               digit={part.digit}
               direction={direction}
               reduceMotion={reduceMotion}
+              animateOnMount={!isInitial.current}
+              spinIfUnchanged={valueChanged}
             />
           ) : (
             <span key={part.key} className="inline-block whitespace-pre">

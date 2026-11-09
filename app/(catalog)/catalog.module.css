@@ -6,6 +6,8 @@
   gap: 8px;
   white-space: nowrap; color: inherit; font-size: 15px; font-weight: 680; letter-spacing: -0.02em; text-decoration: none; }
 .topSearch { width: min(100%, 360px); min-width: 0; justify-self: center; }
+.brandGroup { display: flex; align-items: center; gap: 20px; min-width: 0; justify-self: start; }
+.topLinks { display: flex; align-items: center; gap: 18px; }
 .topActions { display: flex; justify-self: end; align-items: center; gap: 18px; }
 .toplink { border-radius: 8px; color: var(--text-secondary); font-size: 13px; text-decoration: none; }
 .brand:focus-visible, .toplink:focus-visible { outline: 2px solid var(--focus); outline-offset: 4px; }
@@ -113,6 +115,8 @@
 @media (max-width: 760px) {
   .topbar { grid-template-columns: auto minmax(0, 1fr) auto; min-height: 64px; gap: 10px; padding: 8px 12px; background: var(--canvas); backdrop-filter: none; }
   .brand { min-height: 44px; justify-self: start; }
+  .brandGroup { gap: 10px; }
+  .topLinks { display: none; }
   .topSearch { display: none; }
   .topActions { gap: 8px; }
   .toplink { display: none; }

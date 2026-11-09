@@ -9,33 +9,185 @@
           "title": "Avatar",
           "description": "Individual and grouped avatars with initials fallback.",
           "lede": "Represent a person or a group using images and readable initials.",
-          "keywords": ["profile", "user", "group"],
+          "keywords": [
+            "profile",
+            "user",
+            "group"
+          ],
           "sourcePath": "registry/components/avatar/avatar.tsx",
           "installation": "Installs Avatar and AvatarGroup with the shared foundation.",
           "usage": "import { Avatar, AvatarGroup } from \"@/components/rhoe/avatar/avatar\"\n\nexport function TeamAvatars() {\n  return (\n    <div>\n      <Avatar name=\"Ava Morgan\" src=\"/avatars/ava.jpg\" />\n      <AvatarGroup items={[{ name: \"Ava Morgan\" }, { name: \"Noah Lee\" }]} />\n    </div>\n  )\n}",
-          "guidance": ["Use an individual avatar for one person and a group for a collection."],
-          "behavior": ["When src is omitted or empty, or the image fails to load, the first letters of up to two words in name are shown; an empty name displays ?.", "The group shows an overflow count after the configured maximum."],
-          "accessibility": ["Each avatar exposes the person's name; decorative images use empty alternative text."],
-          "api": [["name", "string", "—", "Person's name; used to derive initials and the accessible label.", true], ["src", "string", "—", "Optional image URL. Omitted, empty, or failed images use initials; pass null as undefined."], ["size", "number", "46", "Avatar or group member size in pixels."], ["items", "readonly AvatarProps[]", "—", "Members displayed by AvatarGroup.", true], ["max", "number", "4", "Maximum visible members before the overflow count."], ["className / style", "native span or div props", "—", "Additional styling and native attributes for Avatar or AvatarGroup."]],
-          "files": ["components/rhoe/foundation.css", "components/rhoe/avatar/avatar.tsx"],
-          "related": ["avatar-info"]
+          "guidance": [
+            "Use an individual avatar for one person and a group for a collection."
+          ],
+          "behavior": [
+            "When src is omitted or empty, or the image fails to load, the first letters of up to two words in name are shown; an empty name displays ?.",
+            "The group shows an overflow count after the configured maximum."
+          ],
+          "accessibility": [
+            "Each avatar exposes the person's name; decorative images use empty alternative text."
+          ],
+          "api": [
+            [
+              "name",
+              "string",
+              "\u2014",
+              "Person's name; used to derive initials and the accessible label.",
+              true
+            ],
+            [
+              "src",
+              "string",
+              "\u2014",
+              "Optional image URL. Omitted, empty, or failed images use initials; pass null as undefined."
+            ],
+            [
+              "size",
+              "number",
+              "46",
+              "Avatar or group member size in pixels."
+            ],
+            [
+              "items",
+              "readonly AvatarProps[]",
+              "\u2014",
+              "Members displayed by AvatarGroup.",
+              true
+            ],
+            [
+              "max",
+              "number",
+              "4",
+              "Maximum visible members before the overflow count."
+            ],
+            [
+              "className / style",
+              "native span or div props",
+              "\u2014",
+              "Additional styling and native attributes for Avatar or AvatarGroup."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/avatar/avatar.tsx"
+          ],
+          "related": [
+            "avatar-info"
+          ],
+          "previewType": "INLINE",
+          "previewKey": "avatar"
         },
         {
           "name": "avatar-info",
           "title": "Avatar Info",
           "description": "An avatar that expands into account details and configurable actions.",
           "lede": "Reveal a user's name, email, and account actions from a compact avatar.",
-          "keywords": ["account", "profile", "menu", "sign out"],
+          "keywords": [
+            "account",
+            "profile",
+            "menu",
+            "sign out"
+          ],
           "sourcePath": "registry/components/avatar-info/avatar-info.tsx",
           "installation": "Installs Avatar Info, Avatar, and motion tokens.",
           "usage": "\"use client\"\n\nimport { AvatarInfo } from \"@/components/rhoe/avatar-info/avatar-info\"\n\nexport function AccountMenu() {\n  return <AvatarInfo name=\"Ava Morgan\" email=\"ava@example.com\" side=\"right\" items={[{ id: \"settings\", label: \"Settings\", onSelect: () => {} }]} onSignOut={() => {}} />\n}",
-          "examples": [{ "title": "Morphing sign-out confirmation", "description": "Install Dialog separately and keep the menu open while the dialog is active.", "code": "\"use client\"\n\nimport { useState } from \"react\"\nimport { AvatarInfo } from \"@/components/rhoe/avatar-info/avatar-info\"\nimport { Dialog } from \"@/components/rhoe/dialog/dialog\"\n\nexport function AccountMenu() {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <AvatarInfo\n      name=\"Ava Morgan\"\n      email=\"ava@example.com\"\n      signOutDialogOpen={open}\n      signOutTrigger={\n        <Dialog\n          open={open}\n          onOpenChange={setOpen}\n          title=\"Sign out?\"\n          description=\"You will need to sign in again.\"\n          tone=\"danger\"\n          continueLabel=\"Sign out\"\n          onContinue={() => { /* Call your sign-out action here. */ }}\n          trigger={<button type=\"button\">Sign out</button>}\n        />\n      }\n    />\n  )\n}" }],
-          "guidance": ["Provide application-owned callbacks for account actions and sign out."],
-          "behavior": ["The avatar expands horizontally before the actions open below; left opens toward the right and right opens toward the left, keeping the avatar to the left of the account details.", "Account details, actions and sign out are separated by subtle inset dividers. Sign out uses the danger tone.", "One shared hover highlight moves continuously between enabled actions, including sign out.", "The overlay uses a higher z-index when open and closes on outside press or Escape.", "A controlled custom sign-out dialog keeps the avatar menu open while the dialog is active, preserving its morph origin and focus target."],
-          "accessibility": ["The trigger exposes its expanded state and Escape returns focus to the trigger."],
-          "api": [["name", "string", "—", "Account name.", true], ["email", "string", "—", "Account email address.", true], ["src", "string", "—", "Optional avatar image; omitted, empty, or failed images use initials."], ["side", "left | right", "right", "Avatar placement: left expands rightward; right expands leftward."], ["items", "readonly AvatarInfoItem[]", "[]", "Account actions with id, label, optional icon, disabled state and onSelect callback."], ["onSignOut", "() => void", "—", "Application-owned sign-out action; required unless signOutTrigger is supplied."], ["signOutTrigger", "ReactNode", "—", "Custom sign-out control, such as a controlled Dialog with its own button trigger."], ["signOutDialogOpen", "boolean", "—", "Required with signOutTrigger; pass the controlled dialog state to keep the menu open while it is active."], ["signOutLabel", "string", "Sign out", "Label for the default sign-out action."], ["className", "string", "—", "Additional classes on the avatar menu root."]],
-          "files": ["components/rhoe/foundation.css", "components/rhoe/lib/motion-tokens.ts", "components/rhoe/avatar/avatar.tsx", "components/rhoe/avatar-info/avatar-info.tsx"],
-          "related": ["avatar", "popover", "animated-list"]
+          "examples": [
+            {
+              "title": "Morphing sign-out confirmation",
+              "description": "Install Dialog separately and keep the menu open while the dialog is active.",
+              "code": "\"use client\"\n\nimport { useState } from \"react\"\nimport { AvatarInfo } from \"@/components/rhoe/avatar-info/avatar-info\"\nimport { Dialog } from \"@/components/rhoe/dialog/dialog\"\n\nexport function AccountMenu() {\n  const [open, setOpen] = useState(false)\n\n  return (\n    <AvatarInfo\n      name=\"Ava Morgan\"\n      email=\"ava@example.com\"\n      signOutDialogOpen={open}\n      signOutTrigger={\n        <Dialog\n          open={open}\n          onOpenChange={setOpen}\n          title=\"Sign out?\"\n          description=\"You will need to sign in again.\"\n          tone=\"danger\"\n          continueLabel=\"Sign out\"\n          onContinue={() => { /* Call your sign-out action here. */ }}\n          trigger={<button type=\"button\">Sign out</button>}\n        />\n      }\n    />\n  )\n}"
+            }
+          ],
+          "guidance": [
+            "Provide application-owned callbacks for account actions and sign out."
+          ],
+          "behavior": [
+            "The avatar expands horizontally before the actions open below; left opens toward the right and right opens toward the left, keeping the avatar to the left of the account details.",
+            "Account details, actions and sign out are separated by subtle inset dividers. Sign out uses the danger tone.",
+            "One shared hover highlight moves continuously between enabled actions, including sign out.",
+            "The overlay uses a higher z-index when open and closes on outside press or Escape.",
+            "A controlled custom sign-out dialog keeps the avatar menu open while the dialog is active, preserving its morph origin and focus target."
+          ],
+          "accessibility": [
+            "The trigger exposes its expanded state and Escape returns focus to the trigger."
+          ],
+          "api": [
+            [
+              "name",
+              "string",
+              "\u2014",
+              "Account name.",
+              true
+            ],
+            [
+              "email",
+              "string",
+              "\u2014",
+              "Account email address.",
+              true
+            ],
+            [
+              "src",
+              "string",
+              "\u2014",
+              "Optional avatar image; omitted, empty, or failed images use initials."
+            ],
+            [
+              "side",
+              "left | right",
+              "right",
+              "Avatar placement: left expands rightward; right expands leftward."
+            ],
+            [
+              "items",
+              "readonly AvatarInfoItem[]",
+              "[]",
+              "Account actions with id, label, optional icon, disabled state and onSelect callback."
+            ],
+            [
+              "onSignOut",
+              "() => void",
+              "\u2014",
+              "Application-owned sign-out action; required unless signOutTrigger is supplied."
+            ],
+            [
+              "signOutTrigger",
+              "ReactNode",
+              "\u2014",
+              "Custom sign-out control, such as a controlled Dialog with its own button trigger."
+            ],
+            [
+              "signOutDialogOpen",
+              "boolean",
+              "\u2014",
+              "Required with signOutTrigger; pass the controlled dialog state to keep the menu open while it is active."
+            ],
+            [
+              "signOutLabel",
+              "string",
+              "Sign out",
+              "Label for the default sign-out action."
+            ],
+            [
+              "className",
+              "string",
+              "\u2014",
+              "Additional classes on the avatar menu root."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/avatar/avatar.tsx",
+            "components/rhoe/avatar-info/avatar-info.tsx"
+          ],
+          "related": [
+            "avatar",
+            "popover",
+            "animated-list"
+          ],
+          "previewType": "INLINE",
+          "previewKey": "avatar-info"
         },
         {
           "name": "button",
@@ -145,7 +297,9 @@
           "related": [
             "dropdown-menu",
             "icon-morph"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "button"
         },
         {
           "name": "dropdown-menu",
@@ -227,7 +381,9 @@
           "related": [
             "button",
             "expanding-search"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "dropdown-menu"
         },
         {
           "name": "popover",
@@ -351,20 +507,34 @@
             "dropdown-menu",
             "dialog",
             "tooltip"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "popover"
         },
         {
           "name": "app-drawer",
           "title": "App Drawer",
           "description": "A left or right application drawer for navigation, settings, and supporting workflows.",
           "lede": "Moves an application-level panel in from either side while preserving focus, dismissal, and viewport scrolling behavior.",
-          "keywords": ["drawer", "sidebar", "overlay", "settings", "navigation"],
+          "keywords": [
+            "drawer",
+            "sidebar",
+            "overlay",
+            "settings",
+            "navigation"
+          ],
           "sourcePath": "registry/components/app-drawer/app-drawer.tsx",
           "installation": "Installs App Drawer with its shared accessible overlay primitive and motion tokens.",
           "usage": "import { Button } from \"@/components/rhoe/button/button\"\nimport { AppDrawer } from \"@/components/rhoe/app-drawer/app-drawer\"\n\nexport function SettingsDrawer() {\n  return (\n    <AppDrawer trigger={<Button>Open settings</Button>} title=\"Workspace settings\">\n      {({ close }) => <Button onClick={close}>Done</Button>}\n    </AppDrawer>\n  )\n}",
           "examples": [
-            { "title": "Left drawer", "code": "<AppDrawer side=\"left\" trigger={<Button>Menu</Button>} title=\"Navigation\">{navigation}</AppDrawer>" },
-            { "title": "Controlled drawer", "code": "<AppDrawer open={open} onOpenChange={setOpen} title=\"Settings\">{settings}</AppDrawer>" }
+            {
+              "title": "Left drawer",
+              "code": "<AppDrawer side=\"left\" trigger={<Button>Menu</Button>} title=\"Navigation\">{navigation}</AppDrawer>"
+            },
+            {
+              "title": "Controlled drawer",
+              "code": "<AppDrawer open={open} onOpenChange={setOpen} title=\"Settings\">{settings}</AppDrawer>"
+            }
           ],
           "guidance": [
             "Use for application navigation, settings, or supporting workflows that should remain beside the current page.",
@@ -382,17 +552,73 @@
             "The close button, backdrop, and Escape key provide redundant dismissal paths."
           ],
           "api": [
-            ["trigger", "ReactNode", "—", "Optional element that opens the drawer."],
-            ["children", "ReactNode | ({ close }) => ReactNode", "—", "Drawer content with an optional close helper.", true],
-            ["side", "left | right", "right", "Side from which the drawer enters."],
-            ["open / defaultOpen", "boolean", "false", "Controlled or initial open state."],
-            ["onOpenChange", "(open: boolean) => void", "—", "Receives requested open-state changes."],
-            ["title / description", "ReactNode", "—", "Visible accessible heading and supporting text."],
-            ["ariaLabel", "string", "App drawer", "Accessible name used when no title is provided."],
-            ["width", "number | string", "min(28rem, viewport - 16px)", "Drawer width."],
-            ["blocking", "boolean", "false", "Disables Escape and backdrop dismissal."],
-            ["showCloseButton", "boolean", "true", "Shows the built-in close action."],
-            ["className", "string", "—", "Additional classes for the drawer surface."]
+            [
+              "trigger",
+              "ReactNode",
+              "\u2014",
+              "Optional element that opens the drawer."
+            ],
+            [
+              "children",
+              "ReactNode | ({ close }) => ReactNode",
+              "\u2014",
+              "Drawer content with an optional close helper.",
+              true
+            ],
+            [
+              "side",
+              "left | right",
+              "right",
+              "Side from which the drawer enters."
+            ],
+            [
+              "open / defaultOpen",
+              "boolean",
+              "false",
+              "Controlled or initial open state."
+            ],
+            [
+              "onOpenChange",
+              "(open: boolean) => void",
+              "\u2014",
+              "Receives requested open-state changes."
+            ],
+            [
+              "title / description",
+              "ReactNode",
+              "\u2014",
+              "Visible accessible heading and supporting text."
+            ],
+            [
+              "ariaLabel",
+              "string",
+              "App drawer",
+              "Accessible name used when no title is provided."
+            ],
+            [
+              "width",
+              "number | string",
+              "min(28rem, viewport - 16px)",
+              "Drawer width."
+            ],
+            [
+              "blocking",
+              "boolean",
+              "false",
+              "Disables Escape and backdrop dismissal."
+            ],
+            [
+              "showCloseButton",
+              "boolean",
+              "true",
+              "Shows the built-in close action."
+            ],
+            [
+              "className",
+              "string",
+              "\u2014",
+              "Additional classes for the drawer surface."
+            ]
           ],
           "customization": "Place any application navigation or form content inside children. Width accepts pixels or a CSS length.",
           "files": [
@@ -401,20 +627,38 @@
             "components/rhoe/lib/overlay-panel.tsx",
             "components/rhoe/app-drawer/app-drawer.tsx"
           ],
-          "related": ["bottom-sheet", "modal", "sidebar-navigation"]
+          "related": [
+            "bottom-sheet",
+            "modal",
+            "sidebar-navigation"
+          ],
+          "previewType": "INLINE",
+          "previewKey": "app-drawer"
         },
         {
           "name": "bottom-sheet",
           "title": "Bottom Sheet",
           "description": "A mobile-friendly sheet that rises from the viewport edge and can be dismissed by dragging.",
           "lede": "Keeps compact actions and supporting content within thumb reach while preserving dialog focus behavior.",
-          "keywords": ["sheet", "drawer", "mobile", "drag", "overlay"],
+          "keywords": [
+            "sheet",
+            "drawer",
+            "mobile",
+            "drag",
+            "overlay"
+          ],
           "sourcePath": "registry/components/bottom-sheet/bottom-sheet.tsx",
           "installation": "Installs Bottom Sheet with its shared accessible overlay primitive and motion tokens.",
           "usage": "import { Button } from \"@/components/rhoe/button/button\"\nimport { BottomSheet } from \"@/components/rhoe/bottom-sheet/bottom-sheet\"\n\nexport function ReviewSheet() {\n  return (\n    <BottomSheet trigger={<Button>Review changes</Button>} title=\"Publish changes?\">\n      {({ close }) => <Button onClick={close}>Publish</Button>}\n    </BottomSheet>\n  )\n}",
           "examples": [
-            { "title": "Fixed-height sheet", "code": "<BottomSheet height=\"min(32rem, 80dvh)\" title=\"Filters\">{filters}</BottomSheet>" },
-            { "title": "Without drag dismissal", "code": "<BottomSheet dragToDismiss={false} title=\"Required action\">{content}</BottomSheet>" }
+            {
+              "title": "Fixed-height sheet",
+              "code": "<BottomSheet height=\"min(32rem, 80dvh)\" title=\"Filters\">{filters}</BottomSheet>"
+            },
+            {
+              "title": "Without drag dismissal",
+              "code": "<BottomSheet dragToDismiss={false} title=\"Required action\">{content}</BottomSheet>"
+            }
           ],
           "guidance": [
             "Use for short mobile workflows, filters, and contextual actions.",
@@ -433,17 +677,73 @@
             "Reduced-motion mode replaces travel with a short fade."
           ],
           "api": [
-            ["trigger", "ReactNode", "—", "Optional element that opens the sheet."],
-            ["children", "ReactNode | ({ close }) => ReactNode", "—", "Sheet content with an optional close helper.", true],
-            ["title / description", "ReactNode", "—", "Visible accessible heading and supporting text."],
-            ["ariaLabel", "string", "Bottom sheet", "Accessible name used when no title is provided."],
-            ["open / defaultOpen", "boolean", "false", "Controlled or initial open state."],
-            ["onOpenChange", "(open: boolean) => void", "—", "Receives requested open-state changes."],
-            ["height", "number | string", "content height", "Optional sheet height."],
-            ["dragToDismiss", "boolean", "true", "Allows downward drag dismissal."],
-            ["blocking", "boolean", "false", "Disables Escape, backdrop, and drag dismissal."],
-            ["showCloseButton", "boolean", "true", "Shows the built-in close action."],
-            ["className", "string", "—", "Additional classes for the sheet surface."]
+            [
+              "trigger",
+              "ReactNode",
+              "\u2014",
+              "Optional element that opens the sheet."
+            ],
+            [
+              "children",
+              "ReactNode | ({ close }) => ReactNode",
+              "\u2014",
+              "Sheet content with an optional close helper.",
+              true
+            ],
+            [
+              "title / description",
+              "ReactNode",
+              "\u2014",
+              "Visible accessible heading and supporting text."
+            ],
+            [
+              "ariaLabel",
+              "string",
+              "Bottom sheet",
+              "Accessible name used when no title is provided."
+            ],
+            [
+              "open / defaultOpen",
+              "boolean",
+              "false",
+              "Controlled or initial open state."
+            ],
+            [
+              "onOpenChange",
+              "(open: boolean) => void",
+              "\u2014",
+              "Receives requested open-state changes."
+            ],
+            [
+              "height",
+              "number | string",
+              "content height",
+              "Optional sheet height."
+            ],
+            [
+              "dragToDismiss",
+              "boolean",
+              "true",
+              "Allows downward drag dismissal."
+            ],
+            [
+              "blocking",
+              "boolean",
+              "false",
+              "Disables Escape, backdrop, and drag dismissal."
+            ],
+            [
+              "showCloseButton",
+              "boolean",
+              "true",
+              "Shows the built-in close action."
+            ],
+            [
+              "className",
+              "string",
+              "\u2014",
+              "Additional classes for the sheet surface."
+            ]
           ],
           "customization": "Use height for a stable task surface or allow content to determine the natural height.",
           "files": [
@@ -452,7 +752,13 @@
             "components/rhoe/lib/overlay-panel.tsx",
             "components/rhoe/bottom-sheet/bottom-sheet.tsx"
           ],
-          "related": ["app-drawer", "modal", "popover"]
+          "related": [
+            "app-drawer",
+            "modal",
+            "popover"
+          ],
+          "previewType": "INLINE",
+          "previewKey": "bottom-sheet"
         },
         {
           "name": "dialog",
@@ -587,7 +893,9 @@
             "button",
             "toast",
             "dropdown-menu"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "dialog"
         },
         {
           "name": "modal",
@@ -644,32 +952,32 @@
             [
               "trigger",
               "ReactNode",
-              "—",
+              "\u2014",
               "Optional interactive element that opens the modal with spatial morphing."
             ],
             [
               "children",
               "ReactNode | ((helpers: { close: () => void }) => ReactNode)",
-              "—",
+              "\u2014",
               "Free-form content or render function.",
               true
             ],
             [
               "title",
               "ReactNode",
-              "—",
+              "\u2014",
               "Optional visible modal heading."
             ],
             [
               "description",
               "ReactNode",
-              "—",
+              "\u2014",
               "Optional supporting text below the title."
             ],
             [
               "ariaLabel",
               "string",
-              "—",
+              "\u2014",
               "Accessible name when no visible title is present."
             ],
             [
@@ -681,13 +989,13 @@
             [
               "onOpenChange",
               "(open: boolean) => void",
-              "—",
+              "\u2014",
               "Receives requested open-state changes."
             ],
             [
               "onClose",
               "() => void",
-              "—",
+              "\u2014",
               "Called when Escape, backdrop, close button, useModal().close(), or the children close helper requests dismissal. Changing the controlled open prop externally does not call onClose."
             ],
             [
@@ -717,7 +1025,7 @@
             [
               "className",
               "string",
-              "—",
+              "\u2014",
               "Additional classes applied to the modal panel."
             ]
           ],
@@ -731,7 +1039,9 @@
             "dialog",
             "popover",
             "button"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "modal"
         },
         {
           "name": "icon-morph",
@@ -797,7 +1107,9 @@
           "related": [
             "button",
             "morphing-text"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "icon-morph"
         }
       ]
     },
@@ -877,7 +1189,7 @@
             [
               "className",
               "string",
-              "—",
+              "\u2014",
               "Additional class on the indicator."
             ]
           ],
@@ -925,7 +1237,9 @@
           "related": [
             "button",
             "toast"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "loading-indicator"
         },
         {
           "name": "badge",
@@ -1010,7 +1324,9 @@
           "related": [
             "button",
             "animated-list"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "badge"
         },
         {
           "name": "toast",
@@ -1131,7 +1447,9 @@
           "related": [
             "badge",
             "button"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "toast"
         },
         {
           "name": "tooltip",
@@ -1234,7 +1552,9 @@
           "related": [
             "button",
             "badge"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "tooltip"
         },
         {
           "name": "meter",
@@ -1294,7 +1614,7 @@
             [
               "value",
               "number",
-              "—",
+              "\u2014",
               "Current measured value.",
               true
             ],
@@ -1325,13 +1645,13 @@
             [
               "label",
               "ReactNode",
-              "—",
+              "\u2014",
               "Optional descriptive label (animates with MorphingText if string)."
             ],
             [
               "valueText",
               "ReactNode",
-              "—",
+              "\u2014",
               "Custom visible value for the linear variant. Replaces its percentage display even when showValue is false. For custom circle content, use children."
             ],
             [
@@ -1349,8 +1669,8 @@
             [
               "children",
               "ReactNode | ((props: { value: number; percentage: number }) => ReactNode)",
-              "—",
-              "Custom content inside the capsule or circle. Receives the raw value and a percentage clamped to 0–100. Ignored for size=\"2xs\". Takes precedence over the default inner content."
+              "\u2014",
+              "Custom content inside the capsule or circle. Receives the raw value and a percentage clamped to 0\u2013100. Ignored for size=\"2xs\". Takes precedence over the default inner content."
             ],
             [
               "railClassName",
@@ -1385,7 +1705,7 @@
             [
               "ref",
               "Ref<HTMLDivElement>",
-              "—",
+              "\u2014",
               "Forwarded reference to the root meter element."
             ]
           ],
@@ -1402,7 +1722,9 @@
             "morphing-text",
             "badge",
             "button"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "meter"
         }
       ]
     },
@@ -1476,7 +1798,9 @@
           "related": [
             "table-of-contents",
             "tabs"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "sidebar-navigation"
         },
         {
           "name": "table-of-contents",
@@ -1533,7 +1857,9 @@
           "related": [
             "sidebar-navigation",
             "tabs"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "table-of-contents"
         },
         {
           "name": "tabs",
@@ -1601,7 +1927,9 @@
           "related": [
             "sidebar-navigation",
             "table-of-contents"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "tabs"
         }
       ]
     },
@@ -1645,7 +1973,7 @@
             [
               "onUpload",
               "(request: UploadRequest) => Promise<void>",
-              "—",
+              "\u2014",
               "Required in direct mode. Receives file, AbortSignal, and onProgress(percentage); resolve when the server confirms success."
             ],
             [
@@ -1657,13 +1985,13 @@
             [
               "onFilesChange",
               "(files: File[]) => void",
-              "—",
+              "\u2014",
               "Required in local mode. Receives the current pending files after selection or removal; submit these files from the parent form."
             ],
             [
               "onRemove",
               "(item: UploadItem) => void | Promise<void>",
-              "—",
+              "\u2014",
               "Optional server-side removal callback. If it rejects, the item remains visible with the error message; without it, only the local list entry is removed."
             ],
             [
@@ -1699,7 +2027,7 @@
             [
               "accept",
               "string",
-              "—",
+              "\u2014",
               "Accepted file extensions or MIME types, matching the native input accept syntax."
             ],
             [
@@ -1735,7 +2063,7 @@
             [
               "className",
               "string",
-              "—",
+              "\u2014",
               "Classes for the root container."
             ]
           ],
@@ -1749,7 +2077,9 @@
           "related": [
             "modal",
             "button"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "upload-manager"
         },
         {
           "name": "dynamic-list-input",
@@ -1783,14 +2113,14 @@
             [
               "label",
               "string",
-              "—",
+              "\u2014",
               "Accessible group label.",
               true
             ],
             [
               "value",
               "string[]",
-              "—",
+              "\u2014",
               "Controlled list of items."
             ],
             [
@@ -1802,7 +2132,7 @@
             [
               "onValueChange",
               "(values: string[]) => void",
-              "—",
+              "\u2014",
               "Called when the list changes."
             ],
             [
@@ -1814,7 +2144,7 @@
             [
               "hint",
               "string",
-              "—",
+              "\u2014",
               "Optional help text."
             ],
             [
@@ -1844,7 +2174,7 @@
             [
               "className",
               "string",
-              "—",
+              "\u2014",
               "Classes applied to the list container."
             ]
           ],
@@ -1854,7 +2184,9 @@
           "related": [
             "input",
             "textarea"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "dynamic-list-input"
         },
         {
           "name": "verification-code",
@@ -1915,25 +2247,25 @@
             [
               "onValueChange",
               "(value: string) => void",
-              "—",
+              "\u2014",
               "Receives each normalized numeric value."
             ],
             [
               "onComplete",
               "(value: string) => void",
-              "—",
+              "\u2014",
               "Runs when every slot has been filled."
             ],
             [
               "label / hint / error",
               "ReactNode",
-              "Verification code / — / —",
+              "Verification code / \u2014 / \u2014",
               "Accessible field copy and validation feedback."
             ],
             [
               "name / required / disabled",
               "native input props",
-              "—",
+              "\u2014",
               "Native form and interaction behavior."
             ]
           ],
@@ -1947,7 +2279,9 @@
             "input",
             "password-strength",
             "button"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "verification-code"
         },
         {
           "name": "calendar",
@@ -2087,7 +2421,9 @@
             "popover",
             "input",
             "morphing-text"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "calendar"
         },
         {
           "name": "date-picker",
@@ -2138,19 +2474,19 @@
             [
               "value / defaultValue",
               "Date",
-              "—",
+              "\u2014",
               "Controlled or initial date."
             ],
             [
               "onValueChange",
               "(date: Date) => void",
-              "—",
+              "\u2014",
               "Called after selecting a day."
             ],
             [
               "label / placeholder",
               "ReactNode / string",
-              "— / Choose a date",
+              "\u2014 / Choose a date",
               "Field text."
             ],
             [
@@ -2174,7 +2510,7 @@
             [
               "name",
               "string",
-              "—",
+              "\u2014",
               "Adds a hidden YYYY-MM-DD form value."
             ],
             [
@@ -2186,19 +2522,19 @@
             [
               "onOpenChange",
               "(open: boolean) => void",
-              "—",
+              "\u2014",
               "Receives requested open-state changes."
             ],
             [
               "disabled / errorMessage",
               "boolean / ReactNode",
-              "false / —",
+              "false / \u2014",
               "Disabled and validation states."
             ],
             [
               "className",
               "string",
-              "—",
+              "\u2014",
               "Additional classes for the field wrapper."
             ],
             [
@@ -2224,7 +2560,9 @@
             "date-range-picker",
             "calendar",
             "input"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "date-picker"
         },
         {
           "name": "date-range-picker",
@@ -2283,13 +2621,13 @@
             [
               "onValueChange",
               "(range: DateRange) => void",
-              "—",
+              "\u2014",
               "Called after each boundary selection."
             ],
             [
               "label / placeholder",
               "ReactNode / string",
-              "— / Choose a date range",
+              "\u2014 / Choose a date range",
               "Field text."
             ],
             [
@@ -2307,7 +2645,7 @@
             [
               "fromName / toName",
               "string",
-              "—",
+              "\u2014",
               "Adds hidden YYYY-MM-DD form values."
             ],
             [
@@ -2325,19 +2663,19 @@
             [
               "onOpenChange",
               "(open: boolean) => void",
-              "—",
+              "\u2014",
               "Receives requested open-state changes."
             ],
             [
               "disabled / errorMessage",
               "boolean / ReactNode",
-              "false / —",
+              "false / \u2014",
               "Disabled and validation states."
             ],
             [
               "className",
               "string",
-              "—",
+              "\u2014",
               "Additional classes for the field wrapper."
             ],
             [
@@ -2363,7 +2701,9 @@
             "date-picker",
             "calendar",
             "input"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "date-range-picker"
         },
         {
           "name": "input",
@@ -2463,7 +2803,9 @@
             "password-strength",
             "number-input",
             "currency-input"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "input"
         },
         {
           "name": "textarea",
@@ -2576,7 +2918,9 @@
             "input",
             "text-reveal",
             "expanding-search"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "textarea"
         },
         {
           "name": "checkbox",
@@ -2700,7 +3044,9 @@
             "switch",
             "input",
             "tabs"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "checkbox"
         },
         {
           "name": "radio",
@@ -2824,7 +3170,9 @@
             "checkbox",
             "switch",
             "input"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "radio"
         },
         {
           "name": "switch",
@@ -2912,7 +3260,9 @@
             "input",
             "button",
             "tabs"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "switch"
         },
         {
           "name": "password-strength",
@@ -2998,7 +3348,9 @@
           "related": [
             "input",
             "number-input"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "password-strength"
         },
         {
           "name": "currency-input",
@@ -3088,7 +3440,9 @@
             "input",
             "number-input",
             "morphing-text"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "currency-input"
         },
         {
           "name": "select",
@@ -3209,7 +3563,9 @@
             "dropdown-menu",
             "animated-list",
             "text-reveal"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "select"
         },
         {
           "name": "number-input",
@@ -3299,7 +3655,9 @@
             "input",
             "currency-input",
             "rolling-number"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "number-input"
         },
         {
           "name": "expanding-search",
@@ -3465,7 +3823,9 @@
             "dropdown-menu",
             "animated-list",
             "input"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "expanding-search"
         }
       ]
     },
@@ -3542,7 +3902,9 @@
           "related": [
             "animated-list",
             "dropdown-menu"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "expandable-card"
         },
         {
           "name": "animated-list",
@@ -3624,7 +3986,9 @@
           "related": [
             "expanding-search",
             "expandable-card"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "animated-list"
         },
         {
           "name": "curved-carousel",
@@ -3696,7 +4060,185 @@
           "related": [
             "animated-list",
             "expanding-search"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "curved-carousel"
+        },
+        {
+          "name": "pricing-card",
+          "title": "Pricing Card",
+          "description": "Flexible subscription and tier cards with rolling numeric counters and morphing benefit transitions.",
+          "lede": "Presents product plans, pricing intervals, and dynamic feature lists with smooth numeric rolls and morphing text.",
+          "keywords": [
+            "pricing",
+            "subscription",
+            "card",
+            "tier",
+            "plan",
+            "billing",
+            "tabs"
+          ],
+          "sourcePath": "registry/components/pricing-card/pricing-card.tsx",
+          "installation": "Installs Pricing Card, Tabs, Rolling Number, Morphing Text, Badge, Button, and shared motion tokens.",
+          "usage": "\"use client\"\n\nimport { PricingCard } from \"@/components/rhoe/pricing-card/pricing-card\"\n\nexport function PricingCardExample() {\n  return (\n    <PricingCard\n      name=\"Pro All-Access\"\n      description=\"Production-ready UI components for modern applications.\"\n      badge=\"Popular\"\n      highlight\n      tabs={[\n        { key: \"monthly\", label: \"Monthly\", interval: \"mo\" },\n        { key: \"yearly\", label: \"Yearly\", interval: \"yr\", badge: \"Save 20%\" },\n      ]}\n      price={{ monthly: 19, yearly: 190 }}\n      features={[\n        { text: \"30+ core UI components\" },\n        {\n          text: (tab) =>\n            tab === \"yearly\"\n              ? \"Unlimited production apps (Annual perk)\"\n              : \"Up to 5 production apps\",\n        },\n        { text: \"Priority developer support\" },\n      ]}\n      action={{\n        label: \"Get Started\",\n        variant: \"filled\",\n        tone: \"primary\",\n        href: \"/signup\",\n      }}\n    />\n  )\n}",
+          "examples": [
+            {
+              "title": "Filled variant with static tier",
+              "description": "Use variant=\"filled\" for a calm, muted background surface treatment.",
+              "code": "<PricingCard\n  name=\"Starter Free\"\n  description=\"Essential UI primitives for individual builders and exploration.\"\n  badge=\"Free Tier\"\n  variant=\"filled\"\n  price={0}\n  features={[\n    { text: \"Access to 30+ core UI components\" },\n    { text: \"Community Discord support\" },\n    { text: \"Single personal project\" },\n  ]}\n  action={{\n    label: \"Get Started Free\",\n    variant: \"bordered\",\n    href: \"#\",\n  }}\n/>"
+            },
+            {
+              "title": "Connecting custom external tabs",
+              "description": "Pass activeTab from an external state or custom switcher to control one or multiple pricing cards simultaneously.",
+              "code": "\"use client\"\n\nimport { useState } from \"react\"\nimport { Tabs } from \"@/components/rhoe/tabs/tabs\"\nimport { PricingCard } from \"@/components/rhoe/pricing-card/pricing-card\"\n\nexport function PricingGrid() {\n  const [cycle, setCycle] = useState(\"monthly\")\n\n  return (\n    <div>\n      <Tabs\n        variant=\"grouped\"\n        items={[\n          { value: \"monthly\", label: \"Monthly\", content: null },\n          { value: \"yearly\", label: \"Yearly \u00b7 -20%\", content: null },\n        ]}\n        value={cycle}\n        onValueChange={setCycle}\n      />\n      <PricingCard\n        name=\"Team Plan\"\n        activeTab={cycle}\n        price={{ monthly: 49, yearly: 470 }}\n        interval={cycle === \"monthly\" ? \"mo\" : \"yr\"}\n        features={[\n          { text: (tab) => tab === \"yearly\" ? \"50 team seats (Yearly bonus)\" : \"10 team seats\" },\n          { text: \"Centralized billing\" },\n        ]}\n      />\n    </div>\n  )\n}"
+            }
+          ],
+          "guidance": [
+            "Use tabs inside the card when showcasing a self-contained tier with billing options.",
+            "Use activeTab when controlling multiple cards with a shared page-level billing toggle.",
+            "Combine bordered and filled variants to establish clear visual hierarchy between free and featured plans."
+          ],
+          "behavior": [
+            "Prices transition smoothly using RollingNumber odometer scrolling.",
+            "Plan names and feature text differences morph smoothly with MorphingText without re-rendering unaffected words.",
+            "The tab switcher aligns to the top right of the card, while the status badge sits directly above the plan name.",
+            "Reduced motion swaps numbers and text immediately without scrolling."
+          ],
+          "accessibility": [
+            "Tabs inside the card support ArrowLeft, ArrowRight, Home, and End keyboard navigation.",
+            "Current price, plan title, and full feature text are exposed cleanly to assistive technology."
+          ],
+          "api": [
+            [
+              "name",
+              "string | ((tab: string) => string)",
+              "\u2014",
+              "Plan or tier heading. Animates with MorphingText.",
+              true
+            ],
+            [
+              "description",
+              "string | ((tab: string) => string | undefined)",
+              "\u2014",
+              "Supporting explanation of the plan's target audience."
+            ],
+            [
+              "variant",
+              "bordered | filled",
+              "bordered",
+              "Visual container surface treatment."
+            ],
+            [
+              "badge",
+              "string | ((tab: string) => string | undefined)",
+              "\u2014",
+              "Optional label tag shown in top-left header above the plan title."
+            ],
+            [
+              "badgeTone",
+              "BadgeTone | ((tab: string) => BadgeTone | undefined)",
+              "success / neutral",
+              "Color tone for the badge."
+            ],
+            [
+              "highlight",
+              "boolean",
+              "false",
+              "Elevates the card with primary border and subtle shadow."
+            ],
+            [
+              "borderColor",
+              "string",
+              "\u2014",
+              "Custom border color override (e.g. for highlight or brand accent)."
+            ],
+            [
+              "price",
+              "number | Record<string, number> | ((tab: string) => number)",
+              "\u2014",
+              "Numeric price value or mapping keyed by active tab.",
+              true
+            ],
+            [
+              "currency",
+              "string",
+              "$",
+              "Currency symbol shown before price."
+            ],
+            [
+              "activeTab",
+              "string",
+              "\u2014",
+              "Controlled active tab key from external state."
+            ],
+            [
+              "defaultTab",
+              "string",
+              "\u2014",
+              "Initial tab key when uncontrolled. Defaults to first tab's key."
+            ],
+            [
+              "interval",
+              "string | ((tab: string) => string | undefined)",
+              "\u2014",
+              "Suffix after price (e.g. mo, yr). Defaults to active tab's interval."
+            ],
+            [
+              "subPrice",
+              "string | null | ((tab: string) => string | null | undefined)",
+              "\u2014",
+              "Optional secondary caption below interval (e.g. billed monthly). Omitted if null or undefined."
+            ],
+            [
+              "tabs",
+              "PricingTab[]",
+              "\u2014",
+              "List of tabs rendered in the top-right header."
+            ],
+            [
+              "onTabChange",
+              "(tabKey: string) => void",
+              "\u2014",
+              "Callback fired when internal tab selection changes."
+            ],
+            [
+              "features",
+              "PricingFeature[]",
+              "\u2014",
+              "List of features with morphing text support.",
+              true
+            ],
+            [
+              "action",
+              "PricingCardAction | ((tab: string) => PricingCardAction | undefined)",
+              "\u2014",
+              "Call-to-action button or link configuration."
+            ],
+            [
+              "className",
+              "string",
+              "\u2014",
+              "Additional CSS classes on card container."
+            ]
+          ],
+          "files": [
+            "components/rhoe/foundation.css",
+            "components/rhoe/lib/motion-tokens.ts",
+            "components/rhoe/tabs/tabs.tsx",
+            "components/rhoe/rolling-number/rolling-number.tsx",
+            "components/rhoe/morphing-text/morphing-text.tsx",
+            "components/rhoe/button/button.tsx",
+            "components/rhoe/badge/badge.tsx",
+            "components/rhoe/pricing-card/pricing-card.tsx"
+          ],
+          "related": [
+            "tabs",
+            "rolling-number",
+            "morphing-text",
+            "button"
+          ],
+          "previewType": "INLINE",
+          "previewKey": "pricing-card"
         }
       ]
     },
@@ -3783,21 +4325,21 @@
             [
               "data",
               "readonly Row[]",
-              "—",
+              "\u2014",
               "Records rendered in the table.",
               true
             ],
             [
               "columns",
               "readonly TableColumn<Row>[]",
-              "—",
+              "\u2014",
               "Column headings, cell renderers, alignment, width, and optional sort values.",
               true
             ],
             [
               "getRowId",
               "(row: Row) => string",
-              "—",
+              "\u2014",
               "Returns a unique, stable row ID for React keys, selection, and sorting motion. Do not derive it from the visible row number.",
               true
             ],
@@ -3828,7 +4370,7 @@
             [
               "selectedRows",
               "readonly string[]",
-              "—",
+              "\u2014",
               "Controlled selected row IDs. Update this prop in onSelectionChange; selection is retained when edit mode closes."
             ],
             [
@@ -3840,25 +4382,25 @@
             [
               "onSelectionChange",
               "(rowIds: string[]) => void",
-              "—",
+              "\u2014",
               "Called with the next selected row identifiers."
             ],
             [
               "sort",
               "TableSort",
-              "—",
+              "\u2014",
               "Controlled local sorting. Update this prop in onSortChange. Without sort or defaultSort, input order is used."
             ],
             [
               "defaultSort",
               "TableSort",
-              "—",
+              "\u2014",
               "Initial uncontrolled sort state. Only read on mount."
             ],
             [
               "onSortChange",
               "(sort: TableSort) => void",
-              "—",
+              "\u2014",
               "Receives the next column key and direction. Clicking a new column sorts ascending; clicking again toggles descending. Columns need sortValue to enable sorting."
             ],
             [
@@ -3882,34 +4424,34 @@
             [
               "className",
               "string",
-              "—",
+              "\u2014",
               "Classes on the scrollable root. For example, max-h-[420px] creates a vertically scrollable body; there is no default height limit."
             ],
             [
               "columns[].key",
               "string",
-              "—",
+              "\u2014",
               "TableColumn<Row>: unique column identifier used by sorting and React keys.",
               true
             ],
             [
               "columns[].header",
               "ReactNode",
-              "—",
+              "\u2014",
               "TableColumn<Row>: visible column heading.",
               true
             ],
             [
               "columns[].cell",
               "(row: Row) => ReactNode",
-              "—",
+              "\u2014",
               "TableColumn<Row>: renders a cell from its row data.",
               true
             ],
             [
               "columns[].sortValue",
               "(row: Row) => string | number",
-              "—",
+              "\u2014",
               "TableColumn<Row>: enables sorting. Numbers compare numerically; strings use numeric-aware, case-insensitive locale comparison. Ties retain input order."
             ],
             [
@@ -3927,14 +4469,14 @@
             [
               "sort.key / defaultSort.key",
               "string",
-              "—",
+              "\u2014",
               "TableSort: must match a column key with sortValue. Unknown or non-sortable keys leave the data in input order.",
               true
             ],
             [
               "sort.direction / defaultSort.direction",
               "\"ascending\" | \"descending\"",
-              "—",
+              "\u2014",
               "TableSort: direction of the local sort. Required when supplying sort or defaultSort.",
               true
             ]
@@ -3950,7 +4492,9 @@
             "checkbox",
             "animated-list",
             "bar-chart"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "table"
         }
       ]
     },
@@ -4105,7 +4649,9 @@
           "related": [
             "rolling-number",
             "animated-list"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "line-chart"
         },
         {
           "name": "bar-chart",
@@ -4238,7 +4784,9 @@
           "related": [
             "line-chart",
             "rolling-number"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "bar-chart"
         }
       ]
     },
@@ -4329,7 +4877,9 @@
           "related": [
             "tabs",
             "sidebar-navigation"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "code-block"
         }
       ]
     },
@@ -4412,7 +4962,9 @@
               "title": "Reveal without blur",
               "code": "import { TextReveal } from \"@/components/rhoe/text-reveal/text-reveal\"\n\nexport function RevealWithoutBlurExample() {\n  return <TextReveal by=\"word\" blur={false}>Motion comes into focus.</TextReveal>\n}"
             }
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "text-reveal"
         },
         {
           "name": "morphing-text",
@@ -4469,7 +5021,9 @@
           "related": [
             "text-reveal",
             "button"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "morphing-text"
         },
         {
           "name": "scramble-text",
@@ -4531,7 +5085,9 @@
           "related": [
             "text-reveal",
             "morphing-text"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "scramble-text"
         },
         {
           "name": "rolling-number",
@@ -4595,7 +5151,9 @@
           "related": [
             "number-input",
             "text-reveal"
-          ]
+          ],
+          "previewType": "INLINE",
+          "previewKey": "rolling-number"
         }
       ]
     }

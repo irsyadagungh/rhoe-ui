@@ -259,7 +259,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
   return (
     <div className={["grid w-full gap-2", className].filter(Boolean).join(" ")}>
       {label ? <label className="text-[13px] leading-[1.4] font-[620] text-[var(--text)]" htmlFor={textareaId}>{label}{required ? <span aria-hidden="true"> *</span> : null}</label> : null}
-      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)_40px] items-start gap-1">
+      <div className={`grid min-w-0 items-start ${clearable && !disabled ? "grid-cols-[minmax(0,1fr)_40px] gap-1" : "grid-cols-[minmax(0,1fr)]"}`}>
         <div
           className={[
             "relative grid min-w-0 grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-2 rounded-[18px] border text-[var(--text)] transition-[background-color,border-color,opacity] duration-[var(--duration-fast)] ease-[var(--ease-standard)] motion-reduce:duration-[0.01ms]",
@@ -271,8 +271,8 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
             ? ({ "--textarea-character-duration": `${animationDuration}ms` } as CSSProperties)
             : undefined}
         >
-          {prefixIcon ? <span className="grid shrink-0 place-items-center pt-0.5 text-[var(--text-secondary)] [&>svg]:size-[18px]" aria-hidden="true">{prefixIcon}</span> : null}
-          <div className="relative min-h-[24px] min-w-0 overflow-hidden">
+          {prefixIcon ? <span className="col-start-1 grid shrink-0 place-items-center pt-0.5 text-[var(--text-secondary)] [&>svg]:size-[18px]" aria-hidden="true">{prefixIcon}</span> : null}
+          <div className="relative col-start-2 min-h-[24px] min-w-0 overflow-hidden">
             <div
               ref={overlayRef}
               className="pointer-events-none absolute inset-0 z-[1] overflow-hidden whitespace-pre-wrap break-words text-[14px] leading-[1.5] tracking-[-0.01em] text-[var(--text)] [font-feature-settings:'kern'_0,'liga'_0,'clig'_0] [font-kerning:none] [font-variant-ligatures:none] select-none"
@@ -344,7 +344,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
               }}
             />
           </div>
-          <span className="inline-flex min-w-0 items-center gap-2 pt-0.5">
+          <span className="col-start-3 inline-flex min-w-0 items-center gap-2 pt-0.5">
             {suffixIcon ? <span className="grid shrink-0 place-items-center text-[var(--text-secondary)] [&>svg]:size-[18px]" aria-hidden="true">{suffixIcon}</span> : null}
             {suffixControl ? <span className="inline-flex shrink-0 items-center">{suffixControl}</span> : null}
           </span>
@@ -360,7 +360,7 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(function 
             aria-label={clearLabel}
             onClick={clear}
           />
-        ) : <span aria-hidden="true" />}
+        ) : clearable && !disabled ? <span aria-hidden="true" /> : null}
       </div>
       {error || hint || typeof props.maxLength === "number" ? (
         <div className="-mt-0.5 flex min-w-0 items-start justify-between gap-3">

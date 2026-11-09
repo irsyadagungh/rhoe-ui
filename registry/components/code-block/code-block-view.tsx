@@ -58,7 +58,25 @@ export function CodeBlockView({
   }, [html]);
 
   const copyCode = async () => {
-    await navigator.clipboard.writeText(code);
+    // navigator.clipboard requires HTTPS — fall back to execCommand on HTTP.
+    if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(code);
+        setCopied(true);
+        window.setTimeout(() => setCopied(false), 1600);
+        return;
+      } catch {
+        // fall through to the legacy method
+      }
+    }
+    const textarea = document.createElement("textarea");
+    textarea.value = code;
+    textarea.style.position = "fixed";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textarea);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1600);
   };

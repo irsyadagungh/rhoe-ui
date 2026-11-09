@@ -19,6 +19,8 @@ export interface DynamicListInputProps {
   value?: string[];
   defaultValue?: string[];
   onValueChange?: (values: string[]) => void;
+  /** Reports text in the pending add field before it becomes an item. */
+  onDraftChange?: (draft: string) => void;
   placeholder?: string;
   hint?: string;
   disabled?: boolean;
@@ -33,6 +35,7 @@ export function DynamicListInput({
   value,
   defaultValue = [],
   onValueChange,
+  onDraftChange,
   placeholder = "Item",
   hint,
   disabled = false,
@@ -128,6 +131,7 @@ export function DynamicListInput({
     setKeys([...rowKeys, key]);
     update([...values, next]);
     setDraft("");
+    onDraftChange?.("");
     setAnnouncement(`Added item ${values.length + 1}.`);
     draftRef.current?.focus();
   };
@@ -354,7 +358,10 @@ export function DynamicListInput({
             size={size}
             disabled={disabled}
             clearable={false}
-            onValueChange={setDraft}
+            onValueChange={(next) => {
+              setDraft(next);
+              onDraftChange?.(next);
+            }}
             onKeyDown={(event) => {
               if (event.key === "Enter" && !event.nativeEvent.isComposing) {
                 event.preventDefault();

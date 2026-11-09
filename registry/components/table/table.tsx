@@ -51,6 +51,8 @@ export interface TableProps<Row> {
   selectable?: boolean;
   /** Shows the dedicated checkbox column when selection is enabled without row numbers. */
   editMode?: boolean;
+  /** Called when a data row is clicked; adds pointer affordances to rows. */
+  onRowClick?: (row: Row) => void;
   /** Controlled selected row identifiers. */
   selectedRows?: readonly string[];
   /** Initial selected row identifiers. */
@@ -126,6 +128,7 @@ export function Table<Row>({
   showRowNumbers = true,
   selectable = false,
   editMode = false,
+  onRowClick,
   selectedRows,
   defaultSelectedRows = [],
   onSelectionChange,
@@ -363,12 +366,13 @@ export function Table<Row>({
                   key={rowId}
                   data-table-row=""
                   data-selected={selected || undefined}
-                  className="group relative focus-within:z-[2]"
+                  className={`group relative focus-within:z-[2] ${onRowClick ? "cursor-pointer" : ""}`}
                   transition={reduceMotion ? { duration: 0 } : motionTokens.spring.smooth}
                   onFocus={(event) => moveHover(event.currentTarget)}
                   onBlur={(event) => {
                     if (!event.currentTarget.contains(event.relatedTarget)) hideHover();
                   }}
+                  onClick={onRowClick ? () => onRowClick(row) : undefined}
                 >
                   {hasLeadingColumn ? (
                     <td
