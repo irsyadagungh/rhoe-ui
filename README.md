@@ -342,6 +342,6 @@ Kontribusi sangat disambut! Silakan baca [CONTRIBUTING.md](./CONTRIBUTING.md) se
 
 ## License
 
-MIT © [Irsyad Agung Hermawan](https://github.com/irsyadagungh)
+MIT © [Irsyad Agung Hidayatullah](https://github.com/irsyadagungh)
 
 See [LICENSE](./LICENSE) for full text.
